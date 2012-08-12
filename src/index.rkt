@@ -14,12 +14,12 @@
           (man-options
             '("-v, --blog" "http://blog.r-wos.org"
               "a programmer's view of the world")
-            '("-a, --about" "http://blog.r-wos.org/2011/about"
-              "about the author")
             '("-h, --hacks" "/hacks/"
               "small random hacks")
             '("-s, --github" "http://github.com/rwos"
-              "source code repository")))
+              "source code repository")
+            '("-a, --about" "/about"
+              "about the author")))
         (man-section "AUTHOR"
           "Richard Wossal " (mailto "richard@r-wos.org")))))
 

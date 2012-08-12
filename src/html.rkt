@@ -1,6 +1,7 @@
 (module html racket
 
-  (provide html head title body link/css div/class div/id a/href
+  (provide j
+           html head title body link/css div/class div/id a/href
            b br p h dl dt dd
            mailto signature
            std-skeleton std-body std-page std-nav-links
@@ -116,8 +117,8 @@
   (define std-nav-links
     `(("/" . ,(b "r-wos.org"))
       ("http://blog.r-wos.org"  . "blog")
-      ("http://blog.r-wos.org/2011/about" . "about")
       ("/hacks" . "hacks")
+      ("/about" . "about")
       ))
 
   (define (man-option text href descr)
