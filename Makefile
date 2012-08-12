@@ -21,7 +21,7 @@ sync: final.tmp
 # merging generated html with static stuff
 final.tmp: generated/index static/*
 	mkdir -p final.tmp
-	cp -R static/* $@
+	cp -R static/* static/.h* $@
 	cp -R generated/index/* $@
 
 # html generation

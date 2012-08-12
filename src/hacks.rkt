@@ -4,7 +4,7 @@
 
   (provide (prefix-out hacks: (all-defined-out)))
 
-  (define index
+  (define index.html
     (std-page std-nav-links "Hacks"
       (dl
         (man-section "PROCESSING"
@@ -38,5 +38,6 @@
                   "."))))
         (man-section "AUTHOR"
           "Richard Wossal " (mailto "richard@r-wos.org")))))
+
 )
 

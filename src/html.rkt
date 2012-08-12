@@ -5,7 +5,9 @@
            b br p h dl dt dd
            mailto signature
            std-skeleton std-body std-page std-nav-links
-           man-option man-options man-section)
+           man-option man-options man-section
+           ;; movve to extra module
+           css)
 
   ;;; string-joining helpers
 
@@ -133,6 +135,12 @@
     (j (dt heading)
        (dd content)))
 
-
+  (define (css . s)
+    (let ([src (j s)])
+      (regexp-replace* #rx" *([{};:,]) *"
+        (regexp-replace* #rx"[\n\t ]+" src " ")
+        "\\1")
+      ))
+      
 )
 

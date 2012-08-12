@@ -8,6 +8,8 @@
 ;;       write-gzipped
 ;;
 
+(require file/gzip)
+
 ;; TODO: move non-page stuff into lib-directory
 
 ;; TODO: automatic requires
@@ -36,25 +38,24 @@
                 ":"))
             ns))))
 
-(define (page name)
-  (file name))
-
 ;;; actual site configuration
 
 (define complete-site
   (dir 'index
-    (page 'index)
-    (page 'about)
+    (file 'web.css)
+    (file 'index.html)
+    (file 'about.html)
     (dir 'hacks
-      (page 'index))))
+      (file 'index.html))))
 
 ;;; writing out the generated files
 
 (define (write-page dir name content)
   (unless (directory-exists? dir)
     (make-directory dir))
-  (let ([path (string-join (list dir "/" name ".html") "")])
-    (display-to-file content path #:exists 'replace)))
+  (let ([path (string-join (list dir "/" name) "")])
+    (display-to-file content path #:exists 'replace)
+    (gzip path)))
 
 (define (generate page-conf-list base-dir)
   (map (lambda (page-conf)
