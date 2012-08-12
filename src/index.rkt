@@ -30,8 +30,7 @@
       (p "I'm currently mostly doing web development professionally and
           try to do more interesting things unprofessionally.")
       (p "You can contact me at " (mailto "richard@r-wos.org") ".")
-      (p "Thanks for stepping by!")
-      (signature "Richard Wossal")))
+      (p "Thanks for stepping by!")))
 
 )
 

@@ -63,8 +63,9 @@ dd .descr {
 }
 .block {
     margin: 1em;
-    padding: 3em;
+    padding: 4em;
     padding-top: 2em;
+    padding-bottom: 3em;
     border: 1pt solid #339933;
     box-shadow: inset 0em 0em 2em #339933;
     border-radius: 2em;
