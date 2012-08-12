@@ -2,32 +2,12 @@
 
   (provide html head title body link/css div/class div/id a/href
            b br p h dl dt dd
-           mailto
+           mailto signature
            std-skeleton std-body std-page std-nav-links
            man-option man-options man-section)
 
-  (define (j . strs)
-    (string-join
-      (map (lambda (s) (if (list? s)
-                           (apply j s)
-                           (if (void? s)
-                               ""
-                               s)))
-           strs)
-      ""))
+  ;;; string-joining helpers
 
-  ;;; TODO remove code duplication
-  (define (j/sp . strs)
-    (string-join
-      (map (lambda (s) (if (list? s)
-                           (apply j/sp s)
-                           (if (void? s)
-                               ""
-                               s)))
-           strs)
-      " "))
-
-  ;;; TODO remove code duplication
   (define (j/str sep . strs)
     (string-join
       (map (lambda (s) (if (list? s)
@@ -38,10 +18,19 @@
            strs)
       sep))
 
+  (define (j . strs)
+    (apply j/str (cons "" strs)))
+
+  (define (j/sp . strs)
+    (apply j/str (cons " " strs)))
+
   ;;; standard HTML stuff
 
+  (define (tag name . s)
+    (j "<" name ">" s "</" name ">"))
+
   (define (html . s)
-    (j "<!doctype html><html>" s "</html>"))
+    (j "<!doctype html>" (tag "html" s)))
 
   (define (head . s)
     (j "<head><meta charset='UTF-8'>"
@@ -50,10 +39,10 @@
        "</head>"))
 
   (define (title . s)
-    (j "<title>" s "</title>"))
+    (tag "title" s))
 
   (define (body . s)
-    (j "<body>" s "</body>"))
+    (tag "body" s))
 
   (define (link/css url)
     (j "<link rel='stylesheet' type='text/css' href='" url "'>"))
@@ -68,25 +57,25 @@
     (j "<a href='" href "'>" s "</a>"))
 
   (define (b . s)
-    (j "<b>" s "</b>"))
+    (tag "b" s))
 
   (define (br) "<br>")
 
   (define (p . s)
-    (j "<p>" s "</p>"))
+    (tag "p" s))
 
   (define (h n . s)
     (let ([n-str (number->string n)])
       (j "<h" n-str ">" s "</h" n-str ">")))
 
   (define (dl . s)
-    (j "<dl>" s "</dl>"))
+    (tag "dl" s))
 
   (define (dt . s)
-    (j "<dt>" s "</dt>"))
+    (tag "dt" s))
 
   (define (dd . s)
-    (j "<dd>" s "</dd>"))
+    (tag "dd" s))
 
   ;;; higher-level (but generic) stuff
 
@@ -94,6 +83,9 @@
     (j "&lt;" (a/href (j "mailto:" address) address) "&gt"))
 
   ;;; site-specific stuff
+
+  (define (signature name)
+    (div/class "sig" name))
 
   (define (std-skeleton page-title . page-body)
     (j (html
