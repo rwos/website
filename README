@@ -1,0 +1,18 @@
+
+These are the files I use to generate my personal website.
+It won't be of much use for you.
+
+However it may serve as a negative example of writing ugly
+hacks in a language as beautiful as Racket.
+
+
+LICENSE
+
+Written in 2012 by Richard Wossal <richard@r-wos.org>
+
+To the extent possible under law, the author has dedicated all copyright
+and related and neighboring rights to this software to the public domain
+worldwide. This software is distributed without any warranty. 
+
+See the file called COPYING for details.
+
