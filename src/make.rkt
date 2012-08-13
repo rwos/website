@@ -5,7 +5,6 @@
 ;; --> methods:
 ;;       name (includes extension)
 ;;       write (includes post-processors)
-;;       write-gzipped
 ;;
 
 (require file/gzip)
@@ -38,16 +37,6 @@
                 ":"))
             ns))))
 
-;;; actual site configuration
-
-(define complete-site
-  (dir 'index
-    (file 'web.css)
-    (file 'index.html)
-    (file 'about.html)
-    (dir 'hacks
-      (file 'index.html))))
-
 ;;; writing out the generated files
 
 (define (write-page dir name content)
@@ -71,11 +60,15 @@
              (write-page dir name content))))
        page-conf-list))
 
-(generate complete-site "../generated")
-#|
-    ;(page "about")
-    (dir "hacks"
-      (page 'voronoi-mandelbrot))))
-|#
+;;; actual site configuration
 
+(define complete-site
+  (dir 'index
+    (file 'web.css)
+    (file 'index.html)
+    (file 'about.html)
+    (dir 'hacks
+      (file 'index.html))))
+
+(generate complete-site "../generated")
 

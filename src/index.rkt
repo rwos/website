@@ -59,6 +59,10 @@
           color: #ccff66;
           text-decoration: none;
       }
+      a img {
+          display: inline-block;
+          border: none;
+      }
       a:hover {
           color:#000f00 ! important;
           background-color:#ffff00;
