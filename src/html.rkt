@@ -28,6 +28,7 @@
     (apply j/str (cons " " strs)))
 
   ;;; standard HTML stuff
+  ;;; XXX uses racket's html module
 
   (define (tag name . s)
     (j "<" name ">" s "</" name ">"))
@@ -103,12 +104,21 @@
                       nav-links)])
         (j (div/class "navigation" (j/str " - " nav))))))
 
+  (define std-footer
+    (div/id "footer"
+            "This page was written in 2011 and 2012 by Richard Wossal "
+            (mailto "richard@r-wos.org")
+            ". "
+            (a/href "http://creativecommons.org/publicdomain/zero/1.0/"
+                    "No rights reserved.")))
+
   (define (std-body nav-links header . contents)
     (j (std-navigation nav-links)
        (div/id "content"
          (div/class "block"
            (div/class "header" (h 1 header))
-             contents))))
+             contents))
+       std-footer))
 
   (define (std-page nav-links header . contents)
     (std-skeleton (j header " | r-wos.org")

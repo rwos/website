@@ -48,6 +48,15 @@
           margin-left: auto;
           margin-right: auto;
       }
+      #footer, #footer * {
+          text-align: center;
+          font-size: 10pt;
+          color: #449944;
+      }
+      #footer > a {
+        color: #449944;
+        text-decoration: underline;
+      }
       h1, h2, h3 {
           color: #66ff66;
           line-height: 1em;
