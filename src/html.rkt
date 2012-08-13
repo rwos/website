@@ -106,7 +106,7 @@
       (let ([nav (map (lambda (spec)
                         (if (string=? selected (cdr spec))
                           ;; currently selected nav-option
-                          (a/class/href "selected" (car spec) (cdr spec))
+                          (cdr spec)
                           ;; normal
                           (a/href (car spec) (cdr spec))))
                       nav-links)])

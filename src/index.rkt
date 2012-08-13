@@ -68,9 +68,6 @@
           color: #ccff66;
           text-decoration: none;
       }
-      a.selected {
-          font-weight: bold;
-      }
       a img {
           display: inline-block;
           border: none;
