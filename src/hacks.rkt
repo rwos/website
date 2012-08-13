@@ -5,7 +5,8 @@
   (provide (prefix-out hacks: (all-defined-out)))
 
   (define index.html
-    (std-page std-nav-links "Hacks"
+    (std-page (std-nav-links "hacks")
+              "Hacks"
       (dl
         (man-section "PROCESSING"
           (p "Some quick hacks written in the visualization language

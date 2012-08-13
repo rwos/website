@@ -1,7 +1,8 @@
 (module html racket
 
   (provide j
-           html head title body link/css div/class div/id a/href
+           html head title body link/css div/class div/id
+           a/href a/class/href
            b br p h dl dt dd
            mailto signature
            std-skeleton std-body std-page std-nav-links
@@ -60,6 +61,9 @@
   (define (a/href href . s)
     (j "<a href='" href "'>" s "</a>"))
 
+  (define (a/class/href class href . s)
+    (j "<a class='" class "' href='" href "'>" s "</a>"))
+
   (define (b . s)
     (tag "b" s))
 
@@ -97,10 +101,14 @@
                (title page-title)
                (body  page-body)))))
 
-  (define (std-navigation nav-links)
+  (define (std-navigation nav-links [selected ""])
     (unless (empty? nav-links)
       (let ([nav (map (lambda (spec)
-                        (a/href (car spec) (cdr spec)))
+                        (if (string=? selected (cdr spec))
+                          ;; currently selected nav-option
+                          (a/class/href "selected" (car spec) (cdr spec))
+                          ;; normal
+                          (a/href (car spec) (cdr spec))))
                       nav-links)])
         (j (div/class "navigation" (j/str " - " nav))))))
 
@@ -113,7 +121,7 @@
                     "No rights reserved.")))
 
   (define (std-body nav-links header . contents)
-    (j (std-navigation nav-links)
+    (j (apply std-navigation nav-links)
        (div/id "content"
          (div/class "block"
            (div/class "header" (h 1 header))
@@ -126,12 +134,13 @@
                         (list nav-links header)
                         contents))))
 
-  (define std-nav-links
-    `(("/" . ,(b "r-wos.org"))
-      ("http://blog.r-wos.org"  . "blog")
-      ("/hacks" . "hacks")
-      ("/about" . "about")
-      ))
+  (define (std-nav-links selected)
+    `((("/"                     . "r-wos.org")
+       ("http://blog.r-wos.org" . "blog")
+       ("/hacks"                . "hacks")
+       ("/about"                . "about"))
+      ,selected))
+      
 
   (define (man-option text href descr)
     (dd (a/href href text)

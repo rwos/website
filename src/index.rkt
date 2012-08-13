@@ -5,7 +5,7 @@
   (provide (prefix-out index: (all-defined-out)))
 
   (define index.html
-    (std-page std-nav-links
+    (std-page (std-nav-links "r-wos.org")
               "Weeks of hacking can save you hours of planning"
       (dl
         (man-section "NAME"
@@ -24,7 +24,7 @@
           "Richard Wossal " (mailto "richard@r-wos.org")))))
 
   (define about.html
-    (std-page std-nav-links
+    (std-page (std-nav-links "about")
               "About"
       (p "Hi, I'm Richard Wossal - a programmer, as you might have guessed.")
       (p "I'm currently mostly doing web development professionally and
@@ -50,7 +50,7 @@
       }
       #footer, #footer * {
           text-align: center;
-          font-size: 10pt;
+          font-size: 9pt;
           color: #449944;
       }
       #footer > a {
@@ -67,6 +67,9 @@
       a {
           color: #ccff66;
           text-decoration: none;
+      }
+      a.selected {
+          font-weight: bold;
       }
       a img {
           display: inline-block;
