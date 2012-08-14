@@ -22,7 +22,7 @@
             '("Fractal Garden" "/hacks/fractal_garden"
               "A very simple fractal viewer.")
             '("Fractal Garden 2" "/hacks/fractal_garden_2"
-              "More or less a cobination of the two above.")
+              "More or less a combination of the two above.")
             '("The Dark Side" "/hacks/dark_side"
               "An interactive version of Pink Floyd's famous Dark Side of the
                Moon album cover.")))
