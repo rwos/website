@@ -51,10 +51,10 @@
       #footer, #footer * {
           text-align: center;
           font-size: 9pt;
-          color: #449944;
+          color: #226622;
       }
       #footer > a {
-        color: #449944;
+        color: #226622;
         text-decoration: underline;
       }
       h1, h2, h3 {
@@ -83,6 +83,7 @@
       }
       .navigation {
           font-size: 10pt;
+          text-align: center;
       }
       .header {
           text-align: center;
@@ -115,8 +116,8 @@
           padding: 4em;
           padding-top: 2em;
           padding-bottom: 3em;
-          border: 1pt solid #339933;
-          box-shadow: inset 0em 0em 2em #339933;
+          border-top: 2pt solid #339933;
+          border-bottom: 2pt solid #339933;
           border-radius: 2em;
       }
       "))
