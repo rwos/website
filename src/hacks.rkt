@@ -13,7 +13,7 @@
               don't need to be portable, do they?"
           (man-options
             `("gti" "/hacks/gti"
-              ,(j "An implementation for the command I keep typing all day long.
+              ,(j "An implementation of the command I keep typing all day long.
                    The code is available "
                   (a/href "https://github.com/rwos/gti" "here")
                   ".")))))
