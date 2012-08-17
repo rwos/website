@@ -96,10 +96,10 @@
           display: inline-block;
       }
       hr {
-          border-style:none;
-          width:80%;
-          height:0pt;
-          border-top:2px dashed #55dd55;
+          border-style: none;
+          width: 50%;
+          height: 0pt;
+          border-top: 2pt solid #339933;
       }
       dt {
           padding-top: 1em;
