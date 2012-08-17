@@ -68,7 +68,8 @@
     (file 'index.html)
     (file 'about.html)
     (dir 'hacks
-      (file 'index.html))))
+      (file 'index.html)
+      (file 'gti.html))))
 
 (generate complete-site "../generated")
 
