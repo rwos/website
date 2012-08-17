@@ -3,7 +3,7 @@
   (provide j
            html head title body link/css div/class div/id
            a/href a/class/href
-           b br p h dl dt dd
+           b br hr p h dl dt dd em code
            mailto signature
            std-skeleton std-body std-page std-nav-links
            man-option man-options man-section
@@ -64,10 +64,21 @@
   (define (a/class/href class href . s)
     (j "<a class='" class "' href='" href "'>" s "</a>"))
 
+  ;;; XXX TODO: Fix this mess - there's probably a way to define them
+  ;;;           all at once.
+
   (define (b . s)
     (tag "b" s))
 
+  (define (em . s)
+    (tag "em" s))
+
+  (define (code . s)
+    (tag "code" s))
+
   (define (br) "<br>")
+
+  (define (hr) "<hr>")
 
   (define (p . s)
     (tag "p" s))
@@ -134,7 +145,7 @@
                         (list nav-links header)
                         contents))))
 
-  (define (std-nav-links selected)
+  (define (std-nav-links [selected ""])
     `((("/"                     . "r-wos.org")
        ("http://blog.r-wos.org" . "blog")
        ("/hacks"                . "hacks")

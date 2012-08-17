@@ -95,6 +95,12 @@
           margin-top: 1em;
           display: inline-block;
       }
+      hr {
+          border-style:none;
+          width:80%;
+          height:0pt;
+          border-top:2px dashed #55dd55;
+      }
       dt {
           padding-top: 1em;
           font-size: 90%;
