@@ -1,13 +1,19 @@
 (module html racket
 
   (provide j
-           html head title body link/css div/class div/id
-           a/href a/class/href
-           b br hr p h dl dt dd em code
+           a/href
+           b body br
+           code
+           dd div/class div/id dl dt
+           em
+           h head hr html
+           link/css
+           p
+           title
            mailto signature
            std-skeleton std-body std-page std-nav-links
            man-option man-options man-section
-           ;; movve to extra module
+           ;; TODO move to extra module
            css)
 
   ;;; string-joining helpers
@@ -29,74 +35,54 @@
     (apply j/str (cons " " strs)))
 
   ;;; standard HTML stuff
-  ;;; XXX uses racket's html module
 
-  (define (tag name . s)
-    (j "<" name ">" s "</" name ">"))
+  ;;; TODO: support for arguments (optional)
 
-  (define (html . s)
-    (j "<!doctype html>" (tag "html" s)))
+  (define (tag name)
+    (lambda content
+      (j "<" name ">" content "</" name ">")))
 
+  (define (short-tag name)
+    (lambda () (j "<" name ">")))
+
+  ;;; XXX TODO: Fix this mess - there's probably a way to define them
+  ;;;           all at once.
+
+  (define (a/href href . s) (j "<a href='" href "'>" s "</a>"))
+
+  (define b     (tag "b"))
+  (define body  (tag "body"))
+  (define br    (short-tag "br"))
+
+  (define code (tag "code"))
+
+  (define dd (tag "dd"))
+  (define (div/class class . s) (j "<div class='" class "'>" s "</div>"))
+  (define (div/id id . s) (j "<div id='" id "'>" s "</div>"))
+  (define dl (tag "dl"))
+  (define dt (tag "dt"))
+
+  (define em (tag "em"))
+
+  (define (h n . s)
+    (let ([n-str (number->string n)])
+      (j "<h" n-str ">" s "</h" n-str ">")))
   (define (head . s)
     (j "<head><meta charset='UTF-8'>"
        "<meta http-equiv='Content-type' content='text/html;charset=UTF-8'>"
        s
        "</head>"))
-
-  (define (title . s)
-    (tag "title" s))
-
-  (define (body . s)
-    (tag "body" s))
+  (define hr (short-tag "hr"))
+  (define (html . s) (j "<!doctype html><html>" s "</html>"))
 
   (define (link/css url)
     (j "<link rel='stylesheet' type='text/css' href='" url "'>"))
 
-  (define (div/class class . s)
-    (j "<div class='" class "'>" s "</div>"))
+  (define p (tag "p"))
 
-  (define (div/id id . s)
-    (j "<div id='" id "'>" s "</div>"))
+  (define title (tag "title"))
 
-  (define (a/href href . s)
-    (j "<a href='" href "'>" s "</a>"))
-
-  (define (a/class/href class href . s)
-    (j "<a class='" class "' href='" href "'>" s "</a>"))
-
-  ;;; XXX TODO: Fix this mess - there's probably a way to define them
-  ;;;           all at once.
-
-  (define (b . s)
-    (tag "b" s))
-
-  (define (em . s)
-    (tag "em" s))
-
-  (define (code . s)
-    (tag "code" s))
-
-  (define (br) "<br>")
-
-  (define (hr) "<hr>")
-
-  (define (p . s)
-    (tag "p" s))
-
-  (define (h n . s)
-    (let ([n-str (number->string n)])
-      (j "<h" n-str ">" s "</h" n-str ">")))
-
-  (define (dl . s)
-    (tag "dl" s))
-
-  (define (dt . s)
-    (tag "dt" s))
-
-  (define (dd . s)
-    (tag "dd" s))
-
-  ;;; higher-level (but generic) stuff
+  ;;; higher-level (but fairly generic) stuff
 
   (define (mailto address)
     (j "&lt;" (a/href (j "mailto:" address) address) "&gt"))
