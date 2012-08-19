@@ -7,6 +7,7 @@
   (define index.html
     (std-page (std-nav-links "hacks")
               "Hacks"
+      (p "Some quick hacks - not polished - hardly usable - use at own risk.")
       (dl
         (man-section "ANSI-C"
           (p "You'll need a C compiler and a POSIX system for those. Hacks
@@ -27,7 +28,11 @@
                    Mandelbrot set, using random points and Voronoi tessellation.
                    The code is available "
                   (a/href "https://github.com/rwos/voronoi-mandelbrot" "here")
-                  "."))))
+                  "."))
+            `("Render-brot" "/hacks/render-brot"
+              ,(j "A pixel-based grey-scale Mandelbrot set renderer with
+                   super-sampling. It renders in arbitrary resolutions and
+                   works pretty well for generating desktop wallpapers."))))
         (man-section "PROCESSING"
           (p "Some quick hacks written in the visualization language
               <a href='http://processing.org'>Processing</a>. These are Java
