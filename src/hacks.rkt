@@ -23,6 +23,10 @@
               element (that is, any modern browser should work). If in doubt use
               the latest Firefox or Chromium.")
           (man-options
+            `("Moore's Game" "/hacks/ld24/ld24"
+              ,(j "My entry for the 24th "
+                  (a/href "http://www.ludumdare.com/compo/" "Ludum Dare")
+                  " 48h game programming competition."))
             `("Voronoi Mandelbrot" "/hacks/voronoi-mandelbrot"
               ,(j "An interactive, zoom-able real-time rendering of the
                    Mandelbrot set, using random points and Voronoi tessellation.
@@ -77,6 +81,13 @@
          (a/href "http://svnweb.freebsd.org/ports/head/games/gti/" "FreeBSD's")
          " package systems - but I don't use either of them, so I can't really
           test it.")
+      (p "It's also available in "
+         (a/href "http://aur.archlinux.org/packages.php?ID=62059" "Arch Linux")
+         ", "
+         (a/href "http://www.sourcemage.org/projects/grimoire/repository/revisions/834ee1a87924c78ebcfeb40628faec67d7bac09d" "Source Mage GNU/Linux")
+         ", and on Mac OS via the "
+         (a/href "http://braumeister.org/formula/gti" "homebrew")
+         " package system.")
       (p "If you're going to include it in $YOUR_DISTRO's package system please
           consider sending me a short note " (mailto "richard@r-wos.org")
          ". It's not a requirement, of course - I'm just curious!")
