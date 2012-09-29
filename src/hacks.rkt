@@ -85,6 +85,8 @@
          (a/href "http://aur.archlinux.org/packages.php?ID=62059" "Arch Linux")
          ", "
          (a/href "http://www.sourcemage.org/projects/grimoire/repository/revisions/834ee1a87924c78ebcfeb40628faec67d7bac09d" "Source Mage GNU/Linux")
+         ", the Debian-based "
+         (a/href "https://raymii.org/cms/p_Software_Packages" "Terrible Linux")
          ", and on Mac OS via the "
          (a/href "http://braumeister.org/formula/gti" "homebrew")
          " package system.")
