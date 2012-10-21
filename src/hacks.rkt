@@ -36,7 +36,11 @@
             `("Render-brot" "/hacks/render-brot"
               ,(j "A pixel-based grey-scale Mandelbrot set renderer with
                    super-sampling. It renders in arbitrary resolutions and
-                   works pretty well for generating desktop wallpapers."))))
+                   works pretty well for generating desktop wallpapers."))
+            `("img2ascii" "/hacks/img2ascii"
+              ,(j "A lined-based image-to-ascii converter. It doesn't work
+                   too well, but it's so simple, it's a wonder it works at
+                   all. Please use Chrome or Chromium for this one."))))
         (man-section "PROCESSING"
           (p "Some quick hacks written in the visualization language
               <a href='http://processing.org'>Processing</a>. These are Java
