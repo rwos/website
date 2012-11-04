@@ -126,6 +126,28 @@
           border-bottom: 2pt solid #339933;
           border-radius: 2em;
       }
+      input[type=text], textarea {
+          color: #33dd33;
+          background-color: #003f00;
+          border: 2pt solid #003f00;
+          border-radius: 0.25em;
+      }
+      input[type=text]:focus, textarea:focus {
+          border-top: 2pt solid #339933;
+          border-bottom: 2pt solid #339933;
+      }
+      input[type=button], input[type=submit] {
+          color: #33dd33;
+          background-color: #003f00;
+          border-radius: 0.25em;
+          border: 2pt solid #339933;
+      }
+      input[type=button]:hover, input[type=submit]:hover {
+          color:#000f00;
+          background-color:#ffff00;
+          border: 2pt solid #ffff00;
+          box-shadow: 0px 0px 5px 4px #ffff00;
+      }
       "))
 
 )

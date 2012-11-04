@@ -11,7 +11,8 @@
            p
            title
            mailto signature
-           std-skeleton std-body std-page std-nav-links
+           small
+           std-skeleton std-body std-page std-nav-links std-navigation std-footer
            man-option man-options man-section
            ;; TODO move to extra module
            css)
@@ -80,6 +81,8 @@
 
   (define p (tag "p"))
 
+  (define small (tag "small"))
+
   (define title (tag "title"))
 
   ;;; higher-level (but fairly generic) stuff
@@ -137,7 +140,6 @@
        ("/hacks"                . "hacks")
        ("/about"                . "about"))
       ,selected))
-      
 
   (define (man-option text href descr)
     (dd (a/href href text)

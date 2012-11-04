@@ -14,6 +14,7 @@
 ;; TODO: automatic requires
 (require "index.rkt")
 (require "hacks.rkt")
+(require "blog.rkt")
 
 (define (dir dir-name . content)
   (map (lambda (e)
@@ -30,6 +31,7 @@
     (list
       (symbol->string dir)
       (symbol->string name)
+      ;; content
       (eval (string->symbol
               (string-join
                 (list (symbol->string dir)
@@ -69,7 +71,10 @@
     (file 'about.html)
     (dir 'hacks
       (file 'index.html)
-      (file 'gti.html))))
+      (file 'gti.html))
+    (apply dir (append (list 'blog 
+                             (file 'index.html))
+                       (all-blog-files)))))
 
 (generate complete-site "../generated")
 
