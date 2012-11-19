@@ -61,8 +61,8 @@
   ;; exported
   (define (all-blog-files)
     (for/list ([entry (in-list blog-entries-sorted)]
-               [prev  (in-list (append (list #f) blog-entries-sorted))]
-               [next  (in-list (append (rest blog-entries-sorted) (list #f)))])
+               [prev  (in-list (append (rest blog-entries-sorted) (list #f)))]
+               [next  (in-list (append (list #f) (reverse (rest (reverse blog-entries-sorted)))))])
       (blog-file entry
                  (if prev
                      (list prev (blog-post-title prev))
@@ -82,24 +82,23 @@
          (div/class "block"
            (div/class "date" (small date))
            (div/class "header" (h 1 header))
-           contents
-           (p (small (j/str "<br>"
-             (when (list? previous)
-               (j "previous: " (a/href (first previous) (second previous))))
-             (when (list? next)
-               (j "next: " (a/href (first next)     (second next)))))))
-           ;; disqus comments
-           "<div id=\"disqus_thread\"></div><script type=\"text/javascript\">
-            var disqus_shortname = 'rwosorg';
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-            </script>
-            <noscript>Please enable JavaScript to view or post comments.</noscript>
-            <a href=\"http://disqus.com\" class=\"dsq-brlink\">comments powered by <span class=\"logo-disqus\">Disqus</span></a>"
-          )
+           contents)
+         (p (small (j/str "<br>"
+           (when (list? previous)
+             (j "previous: " (a/href (first previous) (second previous))))
+           (when (list? next)
+             (j "next: "     (a/href (first next)     (second next)))))))
+         ;; disqus comments
+         "<div id=\"disqus_thread\"></div><script type=\"text/javascript\">
+          var disqus_shortname = 'rwosorg';
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+          </script>
+          <noscript>Please enable JavaScript to view or post comments.</noscript>
+          <a href=\"http://disqus.com\" class=\"dsq-brlink\">comments powered by <span class=\"logo-disqus\">Disqus</span></a>"
        )
        std-footer))
 

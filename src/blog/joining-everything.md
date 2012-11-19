@@ -64,7 +64,7 @@ because I received an invite last month or so. I haven't really tried do
 anything real with it, but the concept seems nice. In a "that's so stupid it's
 cool again" way.
 
-<a href="https://openshift.redhat.com/>OpenShift</a> - Red Hat's free open
+<a href="https://openshift.redhat.com/">OpenShift</a> - Red Hat's free open
 source cloud thingy. I signed up because was free and then realized that
 I didn't know what to do with it. You do get a full red hat linux system,
 though, so that's nice.
