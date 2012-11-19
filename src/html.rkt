@@ -1,6 +1,6 @@
 (module html racket
 
-  (provide j
+  (provide j j/str
            a/href
            b body br
            code

@@ -73,7 +73,8 @@
       (file 'index.html)
       (file 'gti.html))
     (apply dir (append (list 'blog 
-                             (file 'index.html))
+                             (file 'index.html)
+                             (file 'archive.html))
                        (all-blog-files)))))
 
 (generate complete-site "../generated")
