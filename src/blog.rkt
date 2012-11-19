@@ -17,13 +17,13 @@
               "What a great hack.")
             `("Ludum Dare Postmortem" "ludum-dare-post-mortem"
               "Everything that dies someday comes back.")
-            `("Ludum Dare Postmortem" "ludum-dare-post-mortem"
-              "Everything that dies someday comes back.")
         ))
+        (man-section "SEE ALSO"
+          (man-options
+            `("Archive" "archive" "Everything's in chronological order.")))
         ;; TODO: per-topic sections
         (man-section "AUTHOR"
           "Richard Wossal " (mailto "richard@r-wos.org")))))
-
 
   ;;; file and html generation stuff
 
@@ -69,7 +69,7 @@
            [header (first data)]
            [content (markdown->html (last data))])
       (std-skeleton (j header " | r-wos.org")
-        (std-blog-body (std-nav-links "blog") date header content))))
+        (std-blog-body (std-nav-links) date header content))))
 
   (define blog-entries
     (map (lambda (f) (string-replace (path->string f) ".md" ""))
