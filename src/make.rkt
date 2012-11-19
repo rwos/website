@@ -73,6 +73,7 @@
       (file 'index.html)
       (file 'gti.html))
     (apply dir (append (list 'blog 
+                             (file 'rss.xml)
                              (file 'index.html)
                              (file 'archive.html))
                        (all-blog-files)))))

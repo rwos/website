@@ -4,6 +4,7 @@
 
   (provide (prefix-out blog: index.html)
            (prefix-out blog: archive.html)
+           (prefix-out blog: rss.xml)
            all-blog-files)
 
   ;;; file and html generation stuff
@@ -43,6 +44,8 @@
     (second (blog-data name)))
   (define (blog-post-size name)
     (string-length (last (blog-data name))))
+  (define (blog-post-content name)
+    (last (blog-data name)))
 
   ;;; sorting and lists of posts
 
@@ -145,6 +148,26 @@
                   (a/href name (limit 40 name))
                   "<br>"))
         blog-entries-sorted)))))
+
+  ;; quick hack, just like everything here
+  (define rss.xml
+    (j "<?xml version='1.0' encoding='utf-8'?>"
+       "<rss version='2.0' xmlns:atom='http://www.w3.org/2005/Atom'>"
+       "<channel><atom:link href='http://r-wos.org/blog/rss' rel='self' type='application/rss+xml'/>"
+       "<title>Richard's Blog</title>"
+       "<description>a programmer's view of the world</description>"
+       "<link>http://r-wos.org/blog/</link>"
+       (map (lambda (name)
+              (j "<item>"
+                 "<title>" (blog-post-title name) "</title>"
+                 "<link>http://r-wos.org/blog/" name "</link>"
+                 "<guid>http://r-wos.org/blog/" name "</guid>"
+                 "<description><![CDATA["
+                   (blog-post-content name)
+                 "]]></description>"
+                 "</item>"))
+         (take blog-entries-sorted 10))
+       "</channel></rss>"))
 
 )
 
