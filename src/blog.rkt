@@ -87,10 +87,10 @@
            (div/class "header" (h 1 header))
            contents)
          (p (small (j/str "<br>"
-           (when (list? previous)
-             (j "previous: " (a/href (first previous) (second previous))))
            (when (list? next)
-             (j "next: "     (a/href (first next)     (second next)))))))
+             (j "next: "     (a/href (first next)     (second next))))
+           (when (list? previous)
+             (j "previous: " (a/href (first previous) (second previous)))))))
          ;; disqus comments
          "<div id=\"disqus_thread\"></div><script type=\"text/javascript\">
           var disqus_shortname = 'rwosorg';
@@ -115,9 +115,9 @@
           (man-options
             `("Multimedia" "multimedia"
               "Stuff I had lying around.")
-            `("Convay's Game of Floating Point" "convays-game-of-floating-point"
+            `("Convay's Game of Floating Point" "convay-s-game-of-floating-point"
               "What a great hack.")
-            `("Ludum Dare Postmortem" "ludum-dare-post-mortem"
+            `("Ludum Dare Postmortem" "ludum-dare-postmortem"
               "Everything that dies someday comes back.")
         ))
         (man-section "SEE ALSO"

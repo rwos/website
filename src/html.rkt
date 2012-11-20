@@ -135,10 +135,10 @@
                         contents))))
 
   (define (std-nav-links [selected ""])
-    `((("/"      . "r-wos.org")
-       ("/blog"  . "blog")
-       ("/hacks" . "hacks")
-       ("/about" . "about"))
+    `((("/"       . "r-wos.org")
+       ("/blog/"  . "blog")
+       ("/hacks/" . "hacks")
+       ("/about"  . "about"))
       ,selected))
 
   (define (man-option text href descr)
