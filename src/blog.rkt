@@ -113,6 +113,10 @@
       (dl
         (man-section "LATEST"
           (man-options
+            `("Hardly Any Python, Hardly Any Cry" "hardly-any-python-hardly-any-cry"
+              "Moving the blog around for pain and misery.")
+            `("Joining Everything" "joining-everything"
+              "Register.")
             `("Multimedia" "multimedia"
               "Stuff I had lying around.")
             `("Convay's Game of Floating Point" "convay-s-game-of-floating-point"
@@ -163,7 +167,8 @@
                  "<link>http://r-wos.org/blog/" name "</link>"
                  "<guid>http://r-wos.org/blog/" name "</guid>"
                  "<description><![CDATA["
-                   (blog-post-content name)
+                 (markdown->html
+                   (blog-post-content name))
                  "]]></description>"
                  "</item>"))
          (take blog-entries-sorted 10))
