@@ -126,7 +126,7 @@
         ))
         (man-section "SEE ALSO"
           (man-options
-            `("RSS" "rss"         "For your feed reader's convinience."))
+            `("RSS" "rss"         "For your feed reader's convenience."))
           (man-options
             `("Archive" "archive" "Everything's in chronological order.")))
         ;; TODO: per-topic sections
