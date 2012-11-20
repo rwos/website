@@ -5,7 +5,7 @@ I'm doing something radically new today - I'm showing off my desktop.
 
 Yeah, it's a common theme - but at least I don't have the standard "cool special effects" and "super-cool wallpaper" desktop. My "wallpaper" is solid black. And the only special effect is a frame that is drawn around the focused window.
 
-<a href="http://blog.r-wos.org/wp-content/uploads/2011/07/screenshot_detail.png"><img class="size-full wp-image-300 " title="screenshot_detail" src="http://blog.r-wos.org/wp-content/uploads/2011/07/screenshot_detail.png" alt="screenshot - part of my desktop" width="276" height="200" /></a>
+<a href="http://r-wos.org/media/screenshot_detail.png"><img class="size-full wp-image-300 " title="screenshot_detail" src="http://r-wos.org/media/screenshot_detail.png" alt="screenshot - part of my desktop" width="276" height="200" /></a>
 
 My desktop doesn't feature panels, or - heaven forbid - a "start" menu. I don't have file icons on the desktop. I don't have widgets. I look outside my window to get the *current weather for Leipzig, SA, Germany, every 30 seconds new.*
 
@@ -25,7 +25,7 @@ In reality, this feels not as lengthy as the explanation above, but more like:
 <p style="text-align: left; padding-left: 30px;">MOD4+(4*RET) | MOD4+shift+h | MOD4+p fir RET</p>
 and you're on <del>your way</del> my desktop!
 
-<a href="http://blog.r-wos.org/wp-content/uploads/2011/07/screenshot_big.png"><img class="size-medium wp-image-312" title="screenshot_big" src="http://blog.r-wos.org/wp-content/uploads/2011/07/screenshot_big-300x187.png" alt="screenshot, showing my desktop (wmii, 4 xterms, Firefox)" width="300" height="187" /></a>
+<a href="http://r-wos.org/media/screenshot_big.png"><img class="size-medium wp-image-312" title="screenshot_big" src="http://r-wos.org/media/screenshot_big-300x187.png" alt="screenshot, showing my desktop (wmii, 4 xterms, Firefox)" width="300" height="187" /></a>
 
 PS: We do have cookies!
 

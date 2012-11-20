@@ -9,6 +9,6 @@ It features a <a href="http://en.wikipedia.org/wiki/Shakespeare_%28programming_l
 
 My favourite moment was Steele crying "more Cowbell!" with a Perl program scrolling by in the background.
 
-<a href="http://blog.r-wos.org/wp-content/uploads/2011/07/screenshot.png"><img class="aligncenter size-full wp-image-457" title="Guy Steele playing the cowbell" src="http://blog.r-wos.org/wp-content/uploads/2011/07/screenshot.png" alt="Guy Steele playing the cowbell" width="329" height="295" /></a>
+<a href="http://r-wos.org/media/screenshot.png"><img class="aligncenter size-full wp-image-457" title="Guy Steele playing the cowbell" src="http://r-wos.org/media/screenshot.png" alt="Guy Steele playing the cowbell" width="329" height="295" /></a>
 
 It's geek humour, I guess...

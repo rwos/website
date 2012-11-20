@@ -5,7 +5,7 @@ Now, that is <a href="http://www.sdtimes.com/link/35742">great news</a>: a commu
 
 Finally, <a href="http://cat-v.org/">someone</a> taking actions to bring the most modern operating system of our day back to live.
 
-<img class="size-full wp-image-388  " title="Glenda, Plan 9's mascot" src="http://blog.r-wos.org/wp-content/uploads/2011/07/plan9bunnysmblack.jpg" alt="Glenda, Plan 9's mascot" width="154" height="180" />
+<img class="size-full wp-image-388  " title="Glenda, Plan 9's mascot" src="http://r-wos.org/media/plan9bunnysmblack.jpg" alt="Glenda, Plan 9's mascot" width="154" height="180" />
 
 If you are new to Plan 9: don't let the <a href="http://cm.bell-labs.com/plan9/img/screenshot.gif">screenshots</a> fool you. They might look like any other late-80s system - but at its heart Plan 9 is much cleaner, more flexible and better thought-out than any other operating system on this earth. Including all of today's Unices.
 

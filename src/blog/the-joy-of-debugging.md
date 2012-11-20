@@ -11,7 +11,7 @@ The Joy Of Debugging
 
 <p>So, I lit a cigarette and then it came to me... <em>The ring buffer!</em></p>
 
-<p><img class="size-full wp-image-495 " title="Eureka" src="http://blog.r-wos.org/wp-content/uploads/2011/08/image_2.png" alt="Eureka" width="451" height="426" /></p>
+<p><img class="size-full wp-image-495 " title="Eureka" src="http://r-wos.org/media/image_2.png" alt="Eureka" width="451" height="426" /></p>
 
 <p>Yes, my to-be-blended surfaces came out of a ring buffer. Yes, there was the bug. It just returned the same surface over and over again - so I successfully blitted the same screens on top of each other. With 50% opacity. A graphical effect commonly known as "resource-wasting transparency-cancelling blending" (not a very catchy name, I know).</p>
 

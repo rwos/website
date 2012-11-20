@@ -19,6 +19,6 @@ Next, I plan to spend some time on the input side of things. Zooming and moving 
 
 It's moving slowly, but still: for the few hours I have to actually work on it, it's pretty neat, I think. Now, without much further ado: this Monday's screenshot:
 
-<a href="http://blog.r-wos.org/wp-content/uploads/2011/08/game_screenshot.png"><img class="size-medium wp-image-504" title="Screenshot Monday 0" src="http://blog.r-wos.org/wp-content/uploads/2011/08/game_screenshot-300x187.png" alt="Screenshot Monday 0" width="300" height="187" /></a>
+<a href="http://r-wos.org/media/game_screenshot.png"><img class="size-medium wp-image-504" title="Screenshot Monday 0" src="http://r-wos.org/media/game_screenshot-300x187.png" alt="Screenshot Monday 0" width="300" height="187" /></a>
 
 PS: Yes, the colors are #00ff00, #00ffff, and #ff0000 - programmer art, as I said... And yes, I will change that, sometime.

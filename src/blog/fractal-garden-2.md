@@ -14,7 +14,7 @@ The symbols (i.e. the living population of the Game) compose some kind of source
 That may sound pretty complicated, but is actually super-simple (check out the source!).
 
 And it's pretty nice to look at. Does anybody need some Hollywood-style AI display? :)
-<p style="text-align: center;"><a href="http://blog.r-wos.org/wp-content/uploads/2011/09/fractal_garden2.png"><img class="aligncenter size-full wp-image-620" title="Fractal Garden Version 2 screenshot" src="http://blog.r-wos.org/wp-content/uploads/2011/09/fractal_garden2.png" alt="" width="474" height="352" /></a></p>
+<p style="text-align: center;"><a href="http://r-wos.org/media/fractal_garden2.png"><img class="aligncenter size-full wp-image-620" title="Fractal Garden Version 2 screenshot" src="http://r-wos.org/media/fractal_garden2.png" alt="" width="474" height="352" /></a></p>
 PS: Processing is fun!
 
 Update: Whoops, I just found two bugs in it. The program works because these bugs are cancelling each other out:
