@@ -86,11 +86,11 @@
            (div/class "date" (small date))
            (div/class "header" (h 1 header))
            contents)
-         (p (small (j/str "<br>"
-           (when (list? next)
-             (j "next: "     (a/href (first next)     (second next))))
-           (when (list? previous)
-             (j "previous: " (a/href (first previous) (second previous)))))))
+         (when (list? previous)
+           (div/class "nav-prev" "previous: " (a/href (first previous) (second previous))))
+         (when (list? next)
+           (div/class "nav-next" "next: " (a/href (first next) (second next))))
+         "<br style='clear: both'><br>"
          ;; disqus comments
          "<div id=\"disqus_thread\"></div><script type=\"text/javascript\">
           var disqus_shortname = 'rwosorg';

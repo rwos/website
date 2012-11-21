@@ -120,8 +120,8 @@
       .block {
           margin: 1em;
           padding: 4em;
-          padding-top: 2em;
-          padding-bottom: 3em;
+          padding-top: 1.5em;
+          padding-bottom: 2em;
           border-top: 2pt solid #339933;
           border-bottom: 2pt solid #339933;
           border-radius: 2em;
@@ -147,6 +147,23 @@
           background-color:#ffff00;
           border: 2pt solid #ffff00;
           box-shadow: 0px 0px 5px 4px #ffff00;
+      }
+      .nav-prev {
+          float: left;
+          font-size: small;
+      }
+      .nav-next {
+          float: right;
+          font-size: small;
+      }
+      @media (max-width: 500px) {
+        .block {
+          padding-left: 0em;
+          padding-right: 0em;
+        }
+        .nav-prev, .nav-next {
+          float: none;
+        }
       }
       "))
 
