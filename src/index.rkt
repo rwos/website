@@ -32,6 +32,16 @@
       (p "You can contact me at " (mailto "richard@r-wos.org") ".")
       (p "Thanks for stepping by!")))
 
+  (define 404.html
+    (std-page (std-nav-links)
+              "404 Not Found"
+      (p "Sorry about that.")))
+
+  (define 500.html
+    (std-page (std-nav-links)
+              "500 Internal Server Error"
+      (p "Well, at least it's not your fault")))
+
   (define web.css
     (css "
       body {

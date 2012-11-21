@@ -36,3 +36,7 @@ AddEncoding x-gzip text.gz
 # charset in header
 AddCharset UTF-8 .html .html.gz .js .js.gz .css .css.gz
 
+# custom error documents
+ErrorDocument 404 /404.html
+ErrorDocument 500 /500.html
+

@@ -69,6 +69,8 @@
     (file 'web.css)
     (file 'index.html)
     (file 'about.html)
+    (file '404.html)
+    (file '500.html)
     (dir 'hacks
       (file 'index.html)
       (file 'gti.html))
