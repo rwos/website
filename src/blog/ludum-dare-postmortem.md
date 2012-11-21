@@ -6,6 +6,10 @@ The following is a copy of the short postmortem I wrote for the
 
 It may or may not be helpful for you if you plan to attend the next Ludum Dare - which you *must* absolutely do, it's a lot of fun!
 
+Here's the screencast of the whole thing:
+
+<iframe width="480" height="360" src="http://www.youtube.com/embed/MG53Fm-JHBU" frameborder="0" style="width: 100%" allowfullscreen></iframe>
+
 ----
 
 This was my first Ludum Dare and I made a game called
