@@ -114,6 +114,8 @@
       (dl
         (man-section "LATEST"
           (man-options
+            `("The German Programming Apprenticeship - A Review" "german-programming-apprenticeship-review"
+              "Consumer Information.")
             `("Hardly Any Python, Hardly Any Cry" "hardly-any-python-hardly-any-cry"
               "Moving the blog around for pain and misery.")
             `("Joining Everything" "joining-everything"

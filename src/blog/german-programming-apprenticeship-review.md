@@ -34,10 +34,10 @@ existing system. Programming-related professions in particular joined the club
 only very recently, in 1997.
 
 Now, let's get to the name of the profession I'm currently being educated for:
-"Fachinformatiker für Anwendungsentwicklung". That's hard to translate, because
+"Fachinformatiker f&uuml;r Anwendungsentwicklung". That's hard to translate, because
 it makes no sense whatsoever. I'll try and start at the easy parts:
 
-"für Anwendungsentwicklung" means "for application development" - fair enough.
+"f&uuml;r Anwendungsentwicklung" means "for application development" - fair enough.
 "Fachinformatiker" is harder to translate - "Informatiker" is German for
 "computer scientist". Of course, it doesn't make any sense to call
 non-academics "scientists" - so they pre-fixed it with "Fach", which means
@@ -74,7 +74,7 @@ or something like that.
 
 But it doesn't work that way for programmers, neither in theory nor in practice.
 For once, of course, you don't have to be "too stupid for a university" to
-do an apprenticeship. Academia might just not by your cup of tea. Second,
+do an apprenticeship. Academia might just not be your cup of tea. Second,
 there is a myriad of ways to get expelled from a university - maybe you were
 doing fine but cocked-up that one test and now you're out. (Well, you'd have
 to do that at least *twice* in most cases, but whatever.)
@@ -113,9 +113,9 @@ getting educated, it's mostly for the benefit of the companies
 
 For one thing, they can pay you next to nothing. I'm not legally allowed to
 talk about my salary - but I *am* allowed to talk about what the German state
-pays me. It's around 200 € a month. Now, Germany's social security system is
+pays me. It's around 200 &euro; a month. Now, Germany's social security system is
 fine, but it's not a paradise. This money is not for filling up my Bentley
-once a month - these extra 200 € are deemed absolutely necessary by the state
+once a month - these extra 200 &euro; are deemed absolutely necessary by the state
 for me to *exist*.
 
 And while it looks like the German state pays *me*, they do of course actually
