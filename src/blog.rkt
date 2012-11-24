@@ -56,7 +56,8 @@
 
   (define blog-entries-unsorted
     (map (lambda (f) (string-replace (path->string f) ".md" ""))
-      (directory-list "./blog")))
+      (filter (lambda (s) (not (char=? #\. (string-ref (path->string s) 0))))
+        (directory-list "./blog"))))
 
   (define blog-entries-sorted
     (sort blog-entries-unsorted blog-sort-by-date))
