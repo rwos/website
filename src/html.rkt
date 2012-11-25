@@ -111,20 +111,22 @@
             tag = document.getElementsByTagName('link')[0];
             if (state == 0) {
                 tag.href = tag.href.replace('web.css', 'alt-web.css');
+                document.getElementById('style-switch').innerHTML = 'too much blue';
                 state = 1;
                 document.cookie = 'state=1'+cookie_foot;
             } else if (state == 1) {
                 tag.href = tag.href.replace('alt-web.css', 'web.css');
+                document.getElementById('style-switch').innerHTML = 'too much green';
                 state = 0;
                 document.cookie = 'state=0'+cookie_foot;
             }
         }
+        document.write(' - <a id=\"style-switch\" href=\"javascript:switch_style()\">too much green</a>');
         var cookies = document.cookie.split(';');
         for (var i = 0; i < cookies.length; i++) {
             if (cookies[i].trim() == 'state=1')
                 switch_style();
         }
-        document.write(' - <a href=\"javascript:switch_style()\">switch style</a>');
      </script>")
 
   (define (std-navigation nav-links [selected ""])

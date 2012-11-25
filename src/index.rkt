@@ -67,7 +67,7 @@
         color: #226622;
         text-decoration: underline;
       }
-      h1, h2, h3 {
+      h1, h2, h3, h4 {
           color: #66ff66;
           line-height: 1em;
           text-align: center;
