@@ -101,6 +101,32 @@
                (title page-title)
                (body  page-body)))))
 
+  (define theme-switch
+    "<script type='text/javascript'>
+        var state = 0;
+        var expire = new Date();
+        expire.setTime(expire.getTime()+1000*60*60*24*365)
+        var cookie_foot = '; expires='+expire.toUTCString()+'; path=/';
+        function switch_style() {
+            tag = document.getElementsByTagName('link')[0];
+            if (state == 0) {
+                tag.href = tag.href.replace('web.css', 'alt-web.css');
+                state = 1;
+                document.cookie = 'state=1'+cookie_foot;
+            } else if (state == 1) {
+                tag.href = tag.href.replace('alt-web.css', 'web.css');
+                state = 0;
+                document.cookie = 'state=0'+cookie_foot;
+            }
+        }
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            if (cookies[i].trim() == 'state=1')
+                switch_style();
+        }
+        document.write(' - <a href=\"javascript:switch_style()\">switch style</a>');
+     </script>")
+
   (define (std-navigation nav-links [selected ""])
     (unless (empty? nav-links)
       (let ([nav (map (lambda (spec)
@@ -110,7 +136,7 @@
                           ;; normal
                           (a/href (car spec) (cdr spec))))
                       nav-links)])
-        (j (div/class "navigation" (j/str " - " nav))))))
+        (j (div/class "navigation" (j/str " - " nav) theme-switch)))))
 
   (define std-footer
     (div/id "footer"

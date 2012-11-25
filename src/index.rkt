@@ -177,5 +177,30 @@
       }
       "))
 
+  (require racket)
+
+  (define (string-replace* str . replacements)
+    (let ([out-str str])
+      (for ([r (in-list replacements)])
+        (set! out-str (string-replace out-str (first r) (second r))))
+      out-str))
+
+  (define alt-web.css
+    (string-replace* web.css
+      '("33dd33" "000007") ; fg
+      '("000f00" "fefeff") ; bg
+      '("226622" "777777") ; footer
+      '("66ff66" "000007") ; headings
+      '("66aa66" "000007") ; headings-top-border
+      '("ccff66" "4444ee") ; a
+      '("ffff00" "4444ee") ; a hover bg
+      '("border-radius:5px 5px 5px 5px;" "border-radius: none;")
+      '("box-shadow:0px 0px 5px 4px" "box-shadow: 0px 0px 0px 2px")
+      '("aaaa00" "0000aa") ; a visited
+      '("339933" "333399") ; hr, borders
+      '("003f00" "ffffff") ; input bg
+   ))
+
+
 )
 
