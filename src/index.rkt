@@ -31,8 +31,8 @@
           try to do more interesting things unprofessionally.")
       (p "You can contact me at " (mailto "richard@r-wos.org") ".")
       (p "Thanks for stepping by!")
-      "<script src='http://r-wos.org/3rd/jquery-1.8.3.min.js'></script>"
-      "<script src='http://r-wos.org/3rd/jquery.terminal-0.4.22.min.js'></script>"
+      "<script src='/3rd/jquery-1.8.3.min.js'></script>"
+      "<script src='/3rd/jquery.terminal-0.4.22.min.js'></script>"
       "<div id='term' style='display:none;'></div>"
       "<script>
         var about_txt = 'Hello!';
