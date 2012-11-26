@@ -114,6 +114,8 @@
       (dl
         (man-section "LATEST"
           (man-options
+            `("What a Language!" "what-a-language"
+              "First impressions of J. A Programming Language.")
             `("The German Programming Apprenticeship - A Review" "german-programming-apprenticeship-review"
               "Consumer Information.")
             `("Hardly Any Python, Hardly Any Cry" "hardly-any-python-hardly-any-cry"
