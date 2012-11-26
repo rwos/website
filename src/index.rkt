@@ -70,7 +70,7 @@
       h1, h2, h3, h4 {
           color: #66ff66;
           line-height: 1em;
-          text-align: center;
+          text-align: center !important;
           font-family: Georgia,serif;
           font-weight: normal;
       }
@@ -96,7 +96,7 @@
           text-align: center;
       }
       .header {
-          text-align: center;
+          text-align: center !important;
       }
       h1 {
           font-size: 16pt;
@@ -110,6 +110,9 @@
           width: 50%;
           height: 0pt;
           border-top: 2pt solid #339933;
+      }
+      dl {
+        display: inline-block;
       }
       dt {
           padding-top: 1em;
@@ -135,6 +138,10 @@
           border-top: 2pt solid #339933;
           border-bottom: 2pt solid #339933;
           border-radius: 2em;
+          text-align: center;
+      }
+      .block * {
+          text-align: left;
       }
       input[type=text], textarea {
           color: #33dd33;
