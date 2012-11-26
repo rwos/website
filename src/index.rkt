@@ -30,7 +30,33 @@
       (p "I'm currently mostly doing web development professionally and
           try to do more interesting things unprofessionally.")
       (p "You can contact me at " (mailto "richard@r-wos.org") ".")
-      (p "Thanks for stepping by!")))
+      (p "Thanks for stepping by!")
+      "<script src='http://r-wos.org/3rd/jquery-1.8.3.min.js'></script>"
+      "<script src='http://r-wos.org/3rd/jquery.terminal-0.4.22.min.js'></script>"
+      "<div id='term' style='display:none;'></div>"
+      "<script>
+        var about_txt = 'Hello!';
+        jQuery(function($, undefined) {
+          $('#term').terminal(function(command, term) {
+            if (command == '') {
+              term.echo('');
+              return;
+            }
+            argv = command.split(' ');
+            switch (argv[0]) {
+              case 'cat':
+                term.echo('hello');
+                break;
+              default:
+                term.error(argv[0] + ': command not found');
+            }
+          }, {
+            greetings: '$ cat about\\n' + about_txt,
+            name: 'js_demo',
+            height: 200,
+            prompt: '$ '});
+        });
+      </script>"))
 
   (define 404.html
     (std-page (std-nav-links)
@@ -42,147 +68,224 @@
               "500 Internal Server Error"
       (p "Well, at least it's not your fault")))
 
-  (define web.css
-    (css "
-      body {
-          font-family: Helvetica,Arial,sans-serif;
-          font-size: 11pt;
-          line-height: 1.5em;
-          padding: 0.5em;
-          margin: 0em;
-          color: #33dd33;
-          background-color: #000f00;
-      }
-      #content {
-          max-width: 50em;
-          margin-left: auto;
-          margin-right: auto;
-      }
-      #footer, #footer * {
-          text-align: center;
-          font-size: 9pt;
-          color: #226622;
-      }
-      #footer > a {
-        color: #226622;
-        text-decoration: underline;
-      }
-      h1, h2, h3, h4 {
-          color: #66ff66;
-          line-height: 1em;
-          text-align: center !important;
-          font-family: Georgia,serif;
-          font-weight: normal;
-      }
-      a {
-          color: #ccff66;
-          text-decoration: none;
-      }
-      a img {
-          display: inline-block;
-          border: none;
-      }
-      a:hover {
-          color:#000f00 ! important;
-          background-color:#ffff00;
-          border-radius: 5px 5px 5px 5px;
-          box-shadow: 0px 0px 5px 4px #ffff00;
-      }
-      a:visited {
-          color: #aaaa00;
-      }
-      .navigation {
-          font-size: 10pt;
-          text-align: center;
-      }
-      .header {
-          text-align: center !important;
-      }
-      h1 {
-          font-size: 16pt;
-          border-top: 1pt solid #66aa66;
-          padding-top:0.25em;
-          margin-top: 1em;
-          display: inline-block;
-      }
-      hr {
-          border-style: none;
-          width: 50%;
-          height: 0pt;
-          border-top: 2pt solid #339933;
-      }
-      dl {
+  (define term.css
+    ".terminal .clipboard {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        opacity: 0.01;
+        filter: alpha(opacity = 0.01);
+        filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0.01);
+        width: 2px;
+    }
+    .cmd > .clipboard {
+        position: fixed;
+    }
+    .terminal {
+        padding: 10px;
+        position: relative;
+        overflow: hidden;
+    }
+    .cmd {
+        padding: 0;
+        margin: 0;
+        height: 1.3em;
+    }
+    .terminal .terminal-output div div, .terminal .prompt {
+        display: block;
+        line-height: 9px;
+        height: 16px;
+    }
+    .terminal {
+        font-family: FreeMono, monospace;
+        color: #33dd33;
+        background-color: #000f00;
+        font-size: 14px;
+        line-height: 16px;
+    }
+    .terminal .terminal-output div span {
         display: inline-block;
-      }
-      dt {
-          padding-top: 1em;
-          font-size: 90%;
-      }
-      dt:first-letter {
-          font-size: 110%;
-      }
-      dd {
-          padding-left: 0.5em;
-      }
-      dd .descr {
-          margin: 0pt;
-          margin-left: 3em;
-          margin-bottom: 0.5em;
-          padding 0pt;
-      }
-      .block {
-          margin: 1em;
-          padding: 4em;
-          padding-top: 1.5em;
-          padding-bottom: 2em;
-          border-top: 2pt solid #339933;
-          border-bottom: 2pt solid #339933;
-          border-radius: 2em;
-          text-align: center;
-      }
-      .block * {
-          text-align: left;
-      }
-      input[type=text], textarea {
-          color: #33dd33;
-          background-color: #003f00;
-          border: 2pt solid #003f00;
-          border-radius: 0.25em;
-      }
-      input[type=text]:focus, textarea:focus {
-          border-top: 2pt solid #339933;
-          border-bottom: 2pt solid #339933;
-      }
-      input[type=button], input[type=submit] {
-          color: #33dd33;
-          background-color: #003f00;
-          border-radius: 0.25em;
-          border: 2pt solid #339933;
-      }
-      input[type=button]:hover, input[type=submit]:hover {
-          color:#000f00;
-          background-color:#ffff00;
-          border: 2pt solid #ffff00;
-          box-shadow: 0px 0px 5px 4px #ffff00;
-      }
-      .nav-prev {
-          float: left;
-          font-size: small;
-      }
-      .nav-next {
-          float: right;
-          font-size: small;
-      }
-      @media (max-width: 500px) {
+    }
+    .terminal .cmd span {
+        display: inline-block;
+    }
+    .terminal .cmd span.inverted {
+        background-color: #33dd33;
+        color: #000f00;
+    }
+    .terminal .terminal-output div div::-moz-selection, .terminal .terminal-output div span::-moz-selection {
+        background-color: #33dd33;
+        color: #000f00;
+    }
+    .terminal .terminal-output div div::selection, .terminal .terminal-output div span::selection,
+    .terminal .cmd > span::selection, .terminal .prompt span::selection {
+        background-color: #33dd33;
+        color: #000f00;
+    }
+    .terminal .terminal-output div.error, .terminal .terminal-output div.error div {
+        color: #33dd33;
+    }
+    .tilda {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1100;
+    }
+    .clear {
+        clear: both;
+    }
+    .terminal a {
+        color: #ccff66;
+    }
+    .terminal a:hover {
+        color: #ccff66;
+    }
+    ")
+
+  (define web.css
+    (j
+      (css term.css)
+      (css "
+        body {
+            font-family: Helvetica,Arial,sans-serif;
+            font-size: 11pt;
+            line-height: 1.5em;
+            padding: 0.5em;
+            margin: 0em;
+            color: #33dd33;
+            background-color: #000f00;
+        }
+        #content {
+            max-width: 50em;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #footer, #footer * {
+            text-align: center;
+            font-size: 9pt;
+            color: #226622;
+        }
+        #footer > a {
+          color: #226622;
+          text-decoration: underline;
+        }
+        h1, h2, h3, h4 {
+            color: #66ff66;
+            line-height: 1em;
+            text-align: center !important;
+            font-family: Georgia,serif;
+            font-weight: normal;
+        }
+        a {
+            color: #ccff66;
+            text-decoration: none;
+        }
+        a img {
+            display: inline-block;
+            border: none;
+        }
+        a:hover {
+            color:#000f00 ! important;
+            background-color:#ffff00;
+            border-radius: 5px 5px 5px 5px;
+            box-shadow: 0px 0px 5px 4px #ffff00;
+        }
+        a:visited {
+            color: #aaaa00;
+        }
+        .navigation {
+            font-size: 10pt;
+            text-align: center;
+        }
+        .header {
+            text-align: center !important;
+        }
+        h1 {
+            font-size: 16pt;
+            border-top: 1pt solid #66aa66;
+            padding-top:0.25em;
+            margin-top: 1em;
+            display: inline-block;
+        }
+        hr {
+            border-style: none;
+            width: 50%;
+            height: 0pt;
+            border-top: 2pt solid #339933;
+        }
+        dl {
+          display: inline-block;
+        }
+        dt {
+            padding-top: 1em;
+            font-size: 90%;
+        }
+        dt:first-letter {
+            font-size: 110%;
+        }
+        dd {
+            padding-left: 0.5em;
+        }
+        dd .descr {
+            margin: 0pt;
+            margin-left: 3em;
+            margin-bottom: 0.5em;
+            padding 0pt;
+        }
         .block {
-          padding-left: 0em;
-          padding-right: 0em;
+            margin: 1em;
+            padding: 4em;
+            padding-top: 1.5em;
+            padding-bottom: 2em;
+            border-top: 2pt solid #339933;
+            border-bottom: 2pt solid #339933;
+            border-radius: 2em;
+            text-align: center;
         }
-        .nav-prev, .nav-next {
-          float: none;
+        .block * {
+            text-align: left;
         }
-      }
-      "))
+        input[type=text], textarea {
+            color: #33dd33;
+            background-color: #003f00;
+            border: 2pt solid #003f00;
+            border-radius: 0.25em;
+        }
+        input[type=text]:focus, textarea:focus {
+            border-top: 2pt solid #339933;
+            border-bottom: 2pt solid #339933;
+        }
+        input[type=button], input[type=submit] {
+            color: #33dd33;
+            background-color: #003f00;
+            border-radius: 0.25em;
+            border: 2pt solid #339933;
+        }
+        input[type=button]:hover, input[type=submit]:hover {
+            color:#000f00;
+            background-color:#ffff00;
+            border: 2pt solid #ffff00;
+            box-shadow: 0px 0px 5px 4px #ffff00;
+        }
+        .nav-prev {
+            float: left;
+            font-size: small;
+        }
+        .nav-next {
+            float: right;
+            font-size: small;
+        }
+        @media (max-width: 500px) {
+          .block {
+            padding-left: 0em;
+            padding-right: 0em;
+          }
+          .nav-prev, .nav-next {
+            float: none;
+          }
+        }
+        ")))
 
   (require racket)
 
