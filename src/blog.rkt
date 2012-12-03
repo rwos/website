@@ -114,6 +114,8 @@
       (dl
         (man-section "LATEST"
           (man-options
+            `("Art" "art"
+              "Found in a line of BASIC.")
             `("What a Language!" "what-a-language"
               "First impressions of J. A Programming Language.")
             `("The German Programming Apprenticeship - A Review" "german-programming-apprenticeship-review"
@@ -151,14 +153,15 @@
   (define archive.html
     (std-page (std-nav-links)
               "a programmer's archive of the world"
-      (code (small
+      (p
         (map (lambda (name)
-               (j "-rw-r--r-- 1 rwos rwos "
-                  (lpad 6 (number->string (blog-post-size name))) " " " "
-                  (blog-post-date name) " "
-                  (a/href name (limit 40 name))
-                  "<br>"))
-        blog-entries-sorted)))))
+               (code (small
+                 (j "-rw-r--r-- 1 rwos rwos "
+                    (lpad 6 (number->string (blog-post-size name))) " " " "
+                    (blog-post-date name) " "
+                    (a/href name (limit 40 name))
+                    "<br>"))))
+          blog-entries-sorted))))
 
   ;; quick hack, just like everything here
   (define rss.xml
