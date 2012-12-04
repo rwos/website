@@ -8,6 +8,7 @@
            em
            h head hr html
            link/css
+           noscript
            p
            title
            mailto signature
@@ -78,6 +79,8 @@
 
   (define (link/css url)
     (j "<link rel='stylesheet' type='text/css' href='" url "'>"))
+
+  (define noscript (tag "noscript"))
 
   (define p (tag "p"))
 
