@@ -13,7 +13,7 @@ sync: final.tmp
 		open $(FTP) \
 		lcd ./; \
 		cd /; \
-		mirror --reverse --delete --use-cache --verbose --allow-chown \
+		mirror --reverse --delete --ignore-time --use-cache --verbose --allow-chown \
 			   --allow-suid --no-umask --parallel=9 \
 			   $(SYNC_EXCLUDE)"
 
@@ -35,7 +35,7 @@ final.tmp: generated/index static/*
 	cp -R generated/index/* $@
 
 # html generation
-generated/index: src/*.rkt
+generated/index: src/*.rkt src/blog/*.md
 	mkdir -p generated
 	cd src && racket make.rkt
 
