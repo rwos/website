@@ -9,8 +9,6 @@ I'm alone. Alone with one of the most legendary operating system of all times: <
 
 You really should try it. It will be easy to setup on one of your spare <a href="http://en.wikipedia.org/wiki/PDP-10" target="_blank">PDP-10</a>s. Just in case you don't have a spare PDP-10 lying around: there's an excellent historic machine simulator called <a href="http://simh.trailing-edge.com/" target="_blank">simh</a> (Free Software and runs on most unices). Setting up ITS on the simulated PDP is not exactly simple, but I found this <a href="http://web.archive.org/web/20070826152708/http://www.cosmic.com/u/mirian/its/itsbuild.html" target="_blank">step-by-step description</a> to work quite well.
 
-[caption id="" align="alignright" width="269" caption="The RMS Titanic after collision with an early PDP-10. It was a large machine."]<img class=" " title="RMS Titanic after Collision" src="http://upload.wikimedia.org/wikipedia/commons/6/6e/St%C3%B6wer_Titanic.jpg" alt="" width="269" height="184" />[/caption]
-
 It's quite a nice thing to be able to emulate a monster like the PDP-10 on a small black plastic thingy called "Travelmate". Tells you something 'bout *progress* and <a href="http://en.wikipedia.org/wiki/Moore%27s_law" target="_blank">Moore's Law</a> and stuff...
 
 Now, after booting ITS greets you with the prompt showed above - and that's it. There is no login needed.

@@ -21,15 +21,15 @@ Well, all right, now that we have the opportunity, let us just catch one of thos
 
 *C programmer (c):* Wait, what...?
 
-*me (m): *Quick - What is the size of an integer in bits?
+*me (m):* Quick - What is the size of an integer in bits?
 
-*c: *It's thirty-.. Well, it depends, really.
+*c:* It's thirty-.. Well, it depends, really.
 
 *m:* Yeah? On what does it depend?
 
 *c:* Well, it's an implementation thing. It varies across, well, machines, and compilers - I guess - and operating systems, probably... But [proud:] you can always do a sizeof() and then you have the size - and thus, range...
 
-*m: *...wait-a-minute! The range? How do you know whether you have one's or two's complement? That affects the range, doesn't it?
+*m:* ...wait-a-minute! The range? How do you know whether you have one's or two's complement? That affects the range, doesn't it?
 
 *c:* Yeah, well it *would* affect the range, because, you see, in C you just assume that you have two's complement. I mean it's true in most cases, right? But let's come back to sizeof() - at least you can surely find out the *size*. Of any type, that is - not just integers. It's really cool and easy. No need to worry - C got you covered!
 
@@ -39,11 +39,11 @@ Well, all right, now that we have the opportunity, let us just catch one of thos
 
 *m:* And a char is...
 
-*c: *...at least one byte...
+*c:* ...at least one byte...
 
 *m:* ...which is...
 
-*c: *...eh, well... 8 Bits, mostly. or 16 Bits. Or something like that. But, really, we got that thing covered. When was the last time you heard about some integer overflow (or underflow) issue? I mean, really, it just doesn't happen!
+*c:* ...eh, well... 8 Bits, mostly. or 16 Bits. Or something like that. But, really, we got that thing covered. When was the last time you heard about some integer overflow (or underflow) issue? I mean, really, it just doesn't happen!
 
 *m:* No it <a href="http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=integer+overflow" target="_blank">really doesn't happen</a>.
 
