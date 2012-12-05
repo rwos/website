@@ -22,6 +22,7 @@
     (with-output-to-string (lambda () (system* "md2html" src))))
 
   (define (std-blog-page name prev next)
+    (displayln (string-append "fetching blog page " name))
     (let* ([data (blog-data name)]
            [date (second data)]
            [header (first data)]

@@ -42,6 +42,7 @@
 ;;; writing out the generated files
 
 (define (write-page dir name content)
+  (displayln (string-append "writing " name))
   (unless (directory-exists? dir)
     (make-directory dir))
   (let ([path (string-join (list dir "/" name) "")])
