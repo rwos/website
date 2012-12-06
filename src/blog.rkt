@@ -115,6 +115,8 @@
       (dl
         (man-section "LATEST"
           (man-options
+            `("And Now For Something Completely Different" "and-now-for-something-completely-different"
+              "...fun!")
             `("Art" "art"
               "Found in a line of BASIC.")
             `("What a Language!" "what-a-language"

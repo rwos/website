@@ -1,40 +1,57 @@
 And Now for Something Completely Different
-2011-09-28
+2012-12-06
 
-As I mentioned before, I've been playing around with Python lately. And what is the first thing to write, when learning a new language?
+The next [Ludum Dare](http://ludumdare.com) is very very soon. That means it's
+time to think about games, again.
 
-Right - a brainfuck interpreter.
+First: the platform of choice: I've actually been pretty happy with what I
+chose last time - JavaScript and the usual 2D-Canvas stuff. It was fast to program
+in, performed well enough and worked on every platform. So, I'm absolutely sure
+I'll be using JavaScript again - though maybe I won't directly write in it,
+this time around.
 
-<a href="https://github.com/rwos/my_brain_hurts/blob/master/my_brain_hurts.py">So I did</a>. It was already pretty small - 294 bytes - but <a href="http://redd.it/ksawz">reddit user fas2</a> managed to cut it down quite a bit more. The final version is only 230 bytes in size:
-<pre>from os import*
-r='s=[0]*8**5'
-p=0
-for c in read(0,9**9):o=ord(c);r+='\n'+' '*p+{22:
-'p+=1',20:'p-=1',3:'s[p]+=1',5:'s[p]-=1',6:
-'write(1,chr(s[p]))',4:'s[p]=ord(read(0,1))',51:
-'while s[p]:'}.get(o-40,'');p+=c in'[]'and 92-o
-exec r</pre>
-<small>(some line breaks added for nicer rendering)</small>
+One possibility would be to use [Whalesong](http://hashcollision.org/whalesong/),
+a Racket-to-JavaScript compiler thing. I don't have any illusions - writing the
+whole thing in Racket won't make me code any faster, or the game any better.
+But it would be a nice challenge, I think. Could be fun.
 
-My core idea remained, however. This interpreter is quite unlike others. It's less an interpreter and more a JIT compiler - it translates the brainfuck code into Python and executes the result. It works pretty well (there are edge cases, especially regarding user input - but it's more "conforming" than most other tiny interpreters).
+The other idea that came to me just yesterday was to use some
+JavaScript implementation of a machine or something. Like, writing the whole
+thing in C64-BASIC and letting it run on a JavaScript C64 emulator.  Or in C
+and letting it run on a JavaScript Linux VM.  That would be even cooler than
+writing it in Racket - but it does introduce quite a lot of problems. The
+biggest of which will probably be the really, really bad performance of the
+whole thing. Well, we'll see.
 
-There's just one problem with this approach: It's not going to shrink much more. (And remember: The Ultimate Goal is to make a twittable interpreter, i.e. 140 bytes maximum).
+For the game's engine, I'm currently playing around with various software
+rendering stuff - I have a ...well, a thing ...one could call it a stochastic
+ray-caster. It produces very nice low-tech, pseudo-retro kind of
+effects.
 
-But there's also one upside: I learned more about Python than I would have if I was writing normal boring programs, or following tutorials.
+<img src="http://r-wos.org/media/rand-raycast.png" style="max-width:100%">
 
-Code-Golfing brings you pretty quickly to the heart of the language - the idioms, the literal forms and other specialities.
+I really do like software renderers. I'm not very good at writing them (too bad
+at math), but I do like just how much crazy stuff you can do with a software
+renderer that would be hard or impossible to do with the usual
+hardware-accelerated 3D-APIs.
 
-And Python has a lot of special features. It feels a bit like a Lisp with syntax, like Perl without the garbage, like PHP without - well, no, actually it doesn't feel like PHP at all. Python is elegant and thought-out and obviously made by people with taste.
+For the game's content - well, let's wait for the official theme announcement,
+shall we?
 
-It's a great language. And I have barely touched the surface of the magic. Python is so full of cool and useful stuff - and, perhaps most surprisingly, everything is pretty readable.
+This Ludum Dare, I won't have the whole weekend for coding. But if my last
+attendance is any indication, time won't be too big of a problem.
 
-Python is probably the best language I've seen so far.
+...well, no actually, I got that wrong. Time will be *the* biggest problem
+of them all.
 
- 
+In other news: work is currently *exceptionally* boring. I really enjoy
+programming, like *really* - but the things I'm currently forced to
+do at work, and the context I'm doing them in, are killing all the fun.
 
-PS: I hereby introduce *Richard's law of programming language judgement*:
-If a language has a literal form for arbitrary-length integers, it will be great all around.
+So, by way of variety, I've done something completely pointless: I've
+integrated a Scheme interpreter into [my about page](http://r-wos.org/about).
+It really works! If you don't know Scheme try `(+ 40 2)` or
+`((lambda (x) (* x x)) 12)` for a start.
 
-PPS: No, Java-Guys, just no. Bignum does *not* count.
+It's the little things in life... :-)
 
-`Bignum result = Bignum.add(Bignum.ONE, new Bignum("2")); // WTF?!`
