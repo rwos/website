@@ -15,6 +15,7 @@
 (require "index.rkt")
 (require "hacks.rkt")
 (require "blog.rkt")
+(require "code-museum.rkt")
 
 (define (dir dir-name . content)
   (map (lambda (e)
@@ -76,6 +77,9 @@
     (dir 'hacks
       (file 'index.html)
       (file 'gti.html))
+    (dir 'code-museum
+      (file 'web.css)
+      (file 'hello-world.html))
     (apply dir (append (list 'blog 
                              (file 'rss.xml)
                              (file 'index.html)

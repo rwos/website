@@ -9,7 +9,7 @@
            h head hr html
            link/css
            noscript
-           p
+           p pre
            title
            mailto signature
            small
@@ -83,6 +83,8 @@
   (define noscript (tag "noscript"))
 
   (define p (tag "p"))
+
+  (define pre (tag "pre"))
 
   (define small (tag "small"))
 
