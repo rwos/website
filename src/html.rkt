@@ -168,10 +168,11 @@
                         contents))))
 
   (define (std-nav-links [selected ""])
-    `((("/"       . "r-wos.org")
-       ("/blog/"  . "blog")
-       ("/hacks/" . "hacks")
-       ("/about"  . "about"))
+    `((("/"          . "r-wos.org")
+       ("/blog/"     . "blog")
+       ("/blog/rss"  . "rss")
+       ("/hacks/"    . "hacks")
+       ("/about"     . "about"))
       ,selected))
 
   (define (man-option text href descr)
@@ -188,6 +189,7 @@
 
   (define (css . s)
     (let ([src (j s)])
+      ;;; XXX does (curry regexp-replace ..) help here?
       (regexp-replace* #rx" *([{};:,]) *"
         (regexp-replace* #rx"[\n\t ]+" src " ")
         "\\1")
