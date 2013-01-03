@@ -41,6 +41,9 @@ generated/index: src/*.rkt src/blog/*.md
 
 .PHONY: clean
 clean:
-	rm -rf ./generated
 	rm -rf ./final.tmp
+
+.PHONY: nuke
+nuke: clean
+	rm -rf ./generated
 
