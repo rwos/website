@@ -89,6 +89,8 @@
            prompt: '-> '});
          term.exec('(about \"Richard Wossal\")');
        });
+       document.write('<small>(Interpreter (<a href=\"http://www.biwascheme.org\">BiwaScheme</a>'
+                      + ' (Copyright (C) 2007-2010 Yutaka HARA and the BiwaScheme team)))');
        </script>"
        ;; TODO: eliminate duplication
        (noscript
