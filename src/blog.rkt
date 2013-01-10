@@ -115,6 +115,8 @@
       (dl
         (man-section "LATEST"
           (man-options
+            `("This doesn't seem safe to me" "doesnt-seem-safe"
+              "Reflections on trust. No need for clever tricks, Ken.")
             `("And Now For Something Completely Different" "and-now-for-something-completely-different"
               "...fun!")
             `("Art" "art"
