@@ -70,12 +70,12 @@
     (let ([n-str (number->string n)])
       (j "<h" n-str ">" s "</h" n-str ">")))
   (define (head . s)
-    (j "<head><meta charset='UTF-8'>"
+    (j "<head>"
        "<meta http-equiv='Content-type' content='text/html;charset=UTF-8'>"
        s
        "</head>"))
   (define hr (short-tag "hr"))
-  (define (html . s) (j "<!doctype html><html>" s "</html>"))
+  (define (html . s) (j "<!doctype html><html lang='en'>" s "</html>"))
 
   (define (link/css url)
     (j "<link rel='stylesheet' type='text/css' href='" url "'>"))
@@ -93,7 +93,7 @@
   ;;; higher-level (but fairly generic) stuff
 
   (define (mailto address)
-    (j "&lt;" (a/href (j "mailto:" address) address) "&gt"))
+    (j "&lt;" (a/href (j "mailto:" address) address) "&gt;"))
 
   ;;; site-specific stuff
 
@@ -103,14 +103,14 @@
   (define (std-skeleton page-title . page-body)
     (j (html
          (head (link/css "http://r-wos.org/web.css")
-               (title page-title)
-               (body  page-body)))))
+               (title page-title))
+               (body  page-body))))
 
   (define theme-switch
     "<script type='text/javascript'>
         var state = 0;
         var expire = new Date();
-        expire.setTime(expire.getTime()+1000*60*60*24*365)
+        expire.setTime(expire.getTime()+1000*60*60*24*365);
         var cookie_foot = '; expires='+expire.toUTCString()+'; path=/';
         function switch_style() {
             tag = document.getElementsByTagName('link')[0];
