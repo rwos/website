@@ -115,6 +115,8 @@
       (dl
         (man-section "LATEST"
           (man-options
+            `("The most latest \"new year\" type post of the year" "happy-new-year"
+              "GOTO 2013")
             `("This doesn't seem safe to me" "doesnt-seem-safe"
               "Reflections on trust. No need for clever tricks, Ken.")
             `("And Now For Something Completely Different" "and-now-for-something-completely-different"
