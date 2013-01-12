@@ -115,6 +115,8 @@
       (dl
         (man-section "LATEST"
           (man-options
+            `("Tacit Programming in Racket" "tacit-racket"
+              "Pointless exercises.")
             `("The most latest \"new year\" type post of the year" "happy-new-year"
               "GOTO 2013")
             `("This doesn't seem safe to me" "doesnt-seem-safe"
