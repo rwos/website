@@ -1,5 +1,5 @@
 Tacit Programming in Racket
-2011-01-12
+2013-01-12
 
 Just a quick technical note: tacit (aka point-free aka - hahaha - pointless)
 programming works just fine in Racket.
