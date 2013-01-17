@@ -115,6 +115,8 @@
       (man-page
         (man-section "LATEST"
           (man-options
+            `("&lt;font color=\"green\"&gt;" "semantics"
+              "Semantics.")
             `("Tacit Programming in Racket" "tacit-racket"
               "Pointless exercises.")
             `("The most latest \"new year\" type post of the year" "happy-new-year"
