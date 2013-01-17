@@ -14,7 +14,7 @@
            mailto signature
            small
            std-skeleton std-body std-page std-nav-links std-navigation std-footer
-           man-option man-options man-section
+           man-page man-option man-options man-section
            ;; TODO move to extra module
            css)
 
@@ -147,11 +147,11 @@
 
   (define std-footer
     (div/id "footer"
-            "This page was written in 2011 and 2012 by Richard Wossal "
+            "written by Richard Wossal "
             (mailto "richard@r-wos.org")
-            ". "
+            " - "
             (a/href "http://creativecommons.org/publicdomain/zero/1.0/"
-                    "No rights reserved.")))
+                    "no rights reserved")))
 
   (define (std-body nav-links header . contents)
     (j (apply std-navigation nav-links)
@@ -175,17 +175,21 @@
        ("/about"     . "about"))
       ,selected))
 
+  (define (man-page . content)
+    (div/class "man-page" content))
+
   (define (man-option text href descr)
-    (dd (a/href href text)
-        (div/class "descr" descr)))
+    (div/class "man-option"
+               (a/href href text)
+               (div/class "descr" descr)))
 
   (define (man-options . options)
     (j (map (lambda (opt) (apply man-option opt))
             options)))
 
   (define (man-section heading . content)
-    (j (dt heading)
-       (dd content)))
+    (j (div/class "man-heading" heading)
+       (div/class "man-content" content)))
 
   (define (css . s)
     (let ([src (j s)])

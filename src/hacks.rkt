@@ -8,16 +8,16 @@
     (std-page (std-nav-links "hacks")
               "Hacks"
       (p "Some quick hacks - not polished - hardly usable - use at own risk.")
-      (dl
+      (man-page
         (man-section "ANSI-C"
           (p "You'll need a C compiler and a POSIX system for those. Hacks
-              don't need to be portable, do they?"
+              don't need to be portable, do they?")
           (man-options
             `("gti" "/hacks/gti"
               ,(j "An implementation of the command I keep typing all day long.
                    The code is available "
                   (a/href "https://github.com/rwos/gti" "here")
-                  ".")))))
+                  "."))))
         (man-section "JAVASCRIPT"
           (p "You'll generally need a browser with support for the &lt;canvas&gt;
               element (that is, any modern browser should work). If in doubt use

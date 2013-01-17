@@ -7,7 +7,7 @@
   (define index.html
     (std-page (std-nav-links "r-wos.org")
               "Weeks of hacking can save you hours of planning"
-      (dl
+      (man-page
         (man-section "NAME"
           "r-wos.org - because everybody needs a website")
         (man-section "CONTENT"
@@ -19,9 +19,7 @@
             '("-s, --github" "http://github.com/rwos"
               "source code repository")
             '("-a, --about" "/about"
-              "about the author")))
-        (man-section "AUTHOR"
-          "Richard Wossal " (mailto "richard@r-wos.org")))))
+              "about the author"))))))
 
   (define about.html
     (std-page (std-nav-links "about")
@@ -256,20 +254,20 @@
             height: 0pt;
             border-top: 2pt solid #339933;
         }
-        dl {
-          display: inline-block;
+        .man-page {
+            display: inline-block;
         }
-        dt {
+        .man-heading {
             padding-top: 1em;
             font-size: 90%;
         }
-        dt:first-letter {
+        .man-heading:first-letter {
             font-size: 110%;
         }
-        dd {
-            padding-left: 0.5em;
+        .man-content {
+            padding-left: 2em;
         }
-        dd .descr {
+        .man-content .descr {
             margin: 0pt;
             margin-left: 3em;
             margin-bottom: 0.5em;

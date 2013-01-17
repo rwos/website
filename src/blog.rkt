@@ -112,7 +112,7 @@
   (define index.html
     (std-page (std-nav-links "blog")
               "a programmer's view of the world"
-      (dl
+      (man-page
         (man-section "LATEST"
           (man-options
             `("Tacit Programming in Racket" "tacit-racket"
