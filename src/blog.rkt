@@ -115,6 +115,8 @@
       (man-page
         (man-section "LATEST"
           (man-options
+            `("Electric Dead Trees" "electric-dead-trees"
+              "Source code on eInk.")
             `("&lt;font color=\"green\"&gt;" "semantics"
               "Semantics.")
             `("Tacit Programming in Racket" "tacit-racket"
