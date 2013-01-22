@@ -188,7 +188,7 @@
       (css term.css)
       (css "
         body {
-            font-family: Helvetica,Arial,sans-serif;
+            font-family: \"open sans\",sans-serif;
             font-size: 11pt;
             line-height: 1.5em;
             padding: 0.5em;
