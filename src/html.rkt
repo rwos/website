@@ -36,6 +36,9 @@
   (define (j/sp . strs)
     (apply j/str (cons " " strs)))
 
+  (define (string->id str)
+    (regexp-replace* #rx" " (string-downcase str) "-"))
+
   ;;; standard HTML stuff
 
   ;;; TODO: support for arguments (optional)
@@ -60,6 +63,7 @@
 
   (define dd (tag "dd"))
   (define (div/class class . s) (j "<div class='" class "'>" s "</div>"))
+  (define (div/class+id class id . s) (j "<div class='" class "' id='" id "'>" s "</div>"))
   (define (div/id id . s) (j "<div id='" id "'>" s "</div>"))
   (define dl (tag "dl"))
   (define dt (tag "dt"))
@@ -188,7 +192,7 @@
             options)))
 
   (define (man-section heading . content)
-    (j (div/class "man-heading" heading)
+    (j (div/class+id "man-heading" (string->id heading) heading)
        (div/class "man-content" content)))
 
   (define (css . s)
