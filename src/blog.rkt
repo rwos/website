@@ -115,6 +115,8 @@
       (man-page
         (man-section "LATEST"
           (man-options
+            `("True Color" "true-color"
+              "Has nothing to do with Cindy Lauper.")
             `("Electric Dead Trees" "electric-dead-trees"
               "Source code on eInk.")
             `("&lt;font color=\"green\"&gt;" "semantics"
