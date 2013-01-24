@@ -149,9 +149,7 @@
             `("RSS" "rss"         "For your feed reader's convenience."))
           (man-options
             `("Archive" "archive" "Everything's in chronological order.")))
-        ;; TODO: per-topic sections
-        (man-section "AUTHOR"
-          "Richard Wossal " (mailto "richard@r-wos.org")))))
+        )))
 
   ;; TODO rm helpers and use racket's format stuff or move somewhere else
   (define (lpad n str [padstr "&nbsp;"])
