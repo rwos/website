@@ -140,6 +140,7 @@
         font-family: FreeMono, monospace;
         color: #33dd33;
         background-color: #000f00;
+        border-radius: 0.5em;
         font-size: 14px;
         line-height: 16px;
     }
@@ -187,6 +188,7 @@
     (j
       (css term.css)
       (css "
+        html,body {min-height: 100%;}
         body {
             font-family: \"open sans\",sans-serif;
             font-size: 11pt;
@@ -195,6 +197,12 @@
             margin: 0em;
             color: #33dd33;
             background-color: #000f00;
+            background-image: -o-linear-gradient(     top, #000f00, #021a02 6em, #000f00 1000px);
+            background-image: -moz-linear-gradient(   top, #000f00, #021a02 6em, #000f00 1000px);
+            background-image: -webkit-linear-gradient(top, #000f00, #021a02 6em, #000f00 1000px);
+            background-image: -ms-linear-gradient(    top, #000f00, #021a02 6em, #000f00 1000px);
+            background-image: linear-gradient(        top, #000f00, #021a02 6em, #000f00 1000px);
+
         }
         #content {
             max-width: 50em;
@@ -339,6 +347,7 @@
     (string-replace* web.css
       '("33dd33" "000007") ; fg
       '("000f00" "fefeff") ; bg
+      '("021a02" "fdfdfe") ; bg-image
       '("226622" "777777") ; footer
       '("66ff66" "000007") ; headings
       '("66aa66" "000007") ; headings-top-border
