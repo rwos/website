@@ -7,17 +7,17 @@
   (define index.html
     (std-page (std-nav-links "hacks")
               "Hacks"
-      (p "Some quick hacks - not polished - hardly usable - use at own risk.")
+      (p "Some quick hacks - not polished - hardly usable - use at own risk. "
+         "The source code is available on "
+         (a/href "http://github.com/rwos" "my github page") " "
+         (small "(mostly public domain, but some are under an MIT-like license)."))
       (man-page
         (man-section "ANSI-C"
           (p "You'll need a C compiler and a POSIX system for those. Hacks
               don't need to be portable, do they?")
           (man-options
             `("gti" "/hacks/gti"
-              ,(j "An implementation of the command I keep typing all day long.
-                   The code is available "
-                  (a/href "https://github.com/rwos/gti" "here")
-                  "."))))
+              "An implementation of the command I keep typing all day long.")))
         (man-section "JAVASCRIPT"
           (p "You'll generally need a browser with support for the &lt;canvas&gt;
               element (that is, any modern browser should work). If in doubt use
@@ -28,11 +28,8 @@
                   (a/href "http://www.ludumdare.com/compo/" "Ludum Dare")
                   " 48h game programming competition."))
             `("Voronoi Mandelbrot" "/hacks/voronoi-mandelbrot"
-              ,(j "An interactive, zoom-able real-time rendering of the
-                   Mandelbrot set, using random points and Voronoi tessellation.
-                   The code is available "
-                  (a/href "https://github.com/rwos/voronoi-mandelbrot" "here")
-                  "."))
+              "An interactive, zoom-able real-time rendering of the
+               Mandelbrot set, using random points and Voronoi tessellation.")
             `("Render-brot" "/hacks/render-brot"
               ,(j "A pixel-based grey-scale Mandelbrot set renderer with
                    super-sampling. It renders in arbitrary resolutions and
@@ -47,8 +44,6 @@
               applets, so you'll have to have a JRE installed on your machine.
               (Sadly, you'll even need the Sun^H^H^HOracle JRE, others won't
               work.)")
-          (p "The source code for all of these is available "
-             (a/href "https://github.com/rwos/processing_hacks" "here") ".")
           (man-options
             '("Canvas Game of Life" "/hacks/canvas_game_of_life"
               "A living canvas.")
