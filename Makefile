@@ -37,7 +37,7 @@ final.tmp: generated/index static/*
 # html generation
 generated/index: src/*.rkt src/blog/*.md
 	mkdir -p generated
-	cd src && racket make.rkt
+	cd src && racket generate.rkt
 
 .PHONY: clean
 clean:
