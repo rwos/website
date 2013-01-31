@@ -184,7 +184,9 @@
     }
     ")
 
-  (define web.css
+  (define (css-template colors)
+    (define (c name)
+      (j "#" (hash-ref colors name)))
     (j
       (css term.css)
       (css "
@@ -195,14 +197,13 @@
             line-height: 1.5em;
             padding: 0.5em;
             margin: 0em;
-            color: #33dd33;
-            background-color: #000f00;
-            background-image: -o-linear-gradient(     top, #000f00, #021a02 6em, #000f00 1000px);
-            background-image: -moz-linear-gradient(   top, #000f00, #021a02 6em, #000f00 1000px);
-            background-image: -webkit-linear-gradient(top, #000f00, #021a02 6em, #000f00 1000px);
-            background-image: -ms-linear-gradient(    top, #000f00, #021a02 6em, #000f00 1000px);
-            background-image: linear-gradient(        top, #000f00, #021a02 6em, #000f00 1000px);
-
+            color: " (c 'fg) ";
+            background-color: " (c 'bg) ";
+            background-image: -o-linear-gradient(     top, " (c 'bg) ", " (c 'bg-image) " 6em, " (c 'bg) " 1000px);
+            background-image: -moz-linear-gradient(   top, " (c 'bg) ", " (c 'bg-image) " 6em, " (c 'bg) " 1000px);
+            background-image: -webkit-linear-gradient(top, " (c 'bg) ", " (c 'bg-image) " 6em, " (c 'bg) " 1000px);
+            background-image: -ms-linear-gradient(    top, " (c 'bg) ", " (c 'bg-image) " 6em, " (c 'bg) " 1000px);
+            background-image: linear-gradient(        top, " (c 'bg) ", " (c 'bg-image) " 6em, " (c 'bg) " 1000px);
         }
         #content {
             max-width: 50em;
@@ -212,21 +213,21 @@
         #footer, #footer * {
             text-align: center;
             font-size: 9pt;
-            color: #226622;
+            color: " (c 'footer) ";
         }
         #footer > a {
-          color: #226622;
+          color: " (c 'footer) ";
           text-decoration: underline;
         }
         h1, h2, h3, h4 {
-            color: #66ff66;
+            color: " (c 'headings) ";
             line-height: 1em;
             text-align: center !important;
             font-family: Georgia,serif;
             font-weight: normal;
         }
         a {
-            color: #ccff66;
+            color: " (c 'a) ";
             text-decoration: none;
         }
         a img {
@@ -234,13 +235,13 @@
             border: none;
         }
         a:hover {
-            color:#000f00 ! important;
-            background-color:#ffff00;
+            color: " (c 'bg) " ! important;
+            background-color: " (c 'a-hover-bg) ";
             border-radius: 5px 5px 5px 5px;
-            box-shadow: 0px 0px 5px 4px #ffff00;
+            box-shadow: 0px 0px 5px 4px " (c 'a-hover-bg) ";
         }
         a:visited {
-            color: #aaaa00;
+            color: " (c 'a-visited) ";
         }
         .navigation {
             font-size: 10pt;
@@ -251,7 +252,7 @@
         }
         h1 {
             font-size: 16pt;
-            border-top: 1pt solid #66aa66;
+            border-top: 1pt solid " (c 'headings-border) ";
             padding-top:0.25em;
             margin-top: 1em;
             display: inline-block;
@@ -260,7 +261,7 @@
             border-style: none;
             width: 50%;
             height: 0pt;
-            border-top: 2pt solid #339933;
+            border-top: 2pt solid " (c 'borders) ";
         }
         .man-page {
             display: inline-block;
@@ -286,35 +287,29 @@
             padding: 4em;
             padding-top: 1.5em;
             padding-bottom: 2em;
-            border-top: 2pt solid #339933;
-            border-bottom: 2pt solid #339933;
+            border-top: 2pt solid " (c 'borders) ";
+            border-bottom: 2pt solid " (c 'borders) ";
             border-radius: 2em;
             text-align: center;
         }
         .block * {
             text-align: left;
         }
-        input[type=text], textarea {
-            color: #33dd33;
-            background-color: #003f00;
-            border: 2pt solid #003f00;
+        input[type=text], textarea, input[type=button], input[type=submit] {
+            color: " (c 'fg) ";
+            background-color: " (c 'input-bg) ";
+            border: 2pt solid " (c 'borders) ";
             border-radius: 0.25em;
         }
         input[type=text]:focus, textarea:focus {
-            border-top: 2pt solid #339933;
-            border-bottom: 2pt solid #339933;
-        }
-        input[type=button], input[type=submit] {
-            color: #33dd33;
-            background-color: #003f00;
-            border-radius: 0.25em;
-            border: 2pt solid #339933;
+            border-top: 2pt solid " (c 'borders) ";
+            border-bottom: 2pt solid " (c 'borders) ";
         }
         input[type=button]:hover, input[type=submit]:hover {
-            color:#000f00;
-            background-color:#ffff00;
-            border: 2pt solid #ffff00;
-            box-shadow: 0px 0px 5px 4px #ffff00;
+            color: " (c 'bg) ";
+            background-color: " (c 'a-hover-bg) ";
+            border: 2pt solid " (c 'a-hover-bg) ";
+            box-shadow: 0px 0px 5px 4px "(c 'a-hover-bg) ";
         }
         .nav-prev {
             float: left;
@@ -335,31 +330,45 @@
         }
         ")))
 
-  (require racket)
 
-  (define (string-replace* str . replacements)
+  (define web.css
+    (let ([colors (hash 'fg              "33dd33"
+                        'bg              "000f00"
+                        'bg-image        "021a02"
+                        'footer          "226622"
+                        'headings        "66ff66"
+                        'headings-border "66aa66"
+                        'a               "ccff66"
+                        'a-hover-bg      "ffff00"
+                        'a-visited       "aaaa00"
+                        'borders         "339933"
+                        'input-bg        "003f00")])
+      (css-template colors)))
+      
+  (require racket) ;;; XXX what's that thing doing here?
+
+  (define (string-replace* str . replacements) ;;; TODO: should  be in utils
     (let ([out-str str])
       (for ([r (in-list replacements)])
         (set! out-str (string-replace out-str (first r) (second r))))
       out-str))
 
   (define alt-web.css
-    (string-replace* web.css
-      '("33dd33" "000007") ; fg
-      '("000f00" "fefeff") ; bg
-      '("021a02" "fdfdfe") ; bg-image
-      '("226622" "777777") ; footer
-      '("66ff66" "000007") ; headings
-      '("66aa66" "000007") ; headings-top-border
-      '("ccff66" "4444ee") ; a
-      '("ffff00" "4444ee") ; a hover bg
-      '("border-radius:5px 5px 5px 5px;" "border-radius: none;")
-      '("box-shadow:0px 0px 5px 4px" "box-shadow: 0px 0px 0px 2px")
-      '("aaaa00" "0000aa") ; a visited
-      '("339933" "333399") ; hr, borders
-      '("003f00" "ffffff") ; input bg
-   ))
-
+    (let ([colors (hash 'fg              "000007"
+                        'bg              "fefeff"
+                        'bg-image        "fdfdfe"
+                        'footer          "777777"
+                        'headings        "000007"
+                        'headings-border "000007"
+                        'a               "4444ee"
+                        'a-hover-bg      "4444ee"
+                        'a-visited       "0000aa"
+                        'borders         "333399"
+                        'input-bg        "ffffff")])
+      ;;; TODO: that's pretty hacky
+      (string-replace* (css-template colors)
+        '("border-radius:5px 5px 5px 5px;" "border-radius: none;")
+        '("box-shadow:0px 0px 5px 4px" "box-shadow: 0px 0px 0px 2px"))))
 
 )
 
