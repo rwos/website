@@ -115,6 +115,8 @@
       (man-page
         (man-section "LATEST"
           (man-options
+            `("The BASIC Magic in Vim" "vim-loop"
+              "Infinite joy.")
             `("True Color" "true-color"
               "Has nothing to do with Cindy Lauper.")
             `("Electric Dead Trees" "electric-dead-trees"
