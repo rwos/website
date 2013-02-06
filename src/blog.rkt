@@ -115,6 +115,10 @@
       (man-page
         (man-section "LATEST"
           (man-options
+            `("Multiple Dispatch in Racket" "racket-multiple-dispatch"
+              "Should actually be called: I discovered pattern matching.")
+            `("Enterprise PHP" "enterprise-php"
+              "The horror.")
             `("The BASIC Magic in Vim" "vim-loop"
               "Infinite joy.")
             `("True Color" "true-color"
