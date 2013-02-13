@@ -19,4 +19,3 @@ The Joy Of Debugging
 
 <p>Uh... or something like that, anyway.</p>
 
-<p> </p>

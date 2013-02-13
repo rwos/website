@@ -31,7 +31,7 @@ including a font selector and stuff but ...well, I didn't.
 Maybe sometime later. It's not on github yet but it will be soon.
 Here's a demo output:
 
-<pre style="font-size: 10px">
+<pre style="font-size: 10px; line-height: 100%;">
                     _  _                          _                                        
         _   _    _      '       _   _1Gvz#APH~ *:::c      ^  ? ' !*   ? 0  '  "'^t    +
                     ,   (    - zyFKWNWMUKD#BBMNMFW#O_ .    _             __        _   

@@ -23,6 +23,5 @@ At this rapid pace, it's going to overtake GNU/Linux in... Well, about 10 or 20 
 
 So, jump on the train *now*, before it's becoming a boring mainstream OS! ;-)
 
- 
-
 PS: I know, I'm a bit late on this - which is a shame, because I just recently (and before the news) added a "Plan 9 From Bell Labs" *Spark* (as they call it) on my Google+ profile. I thought that would add new findings about Plan 9 to my stream (like a Google Alert or something). But it seems that I *have to navigate to the Sparks page* to actually see the news. Which kind of defeats the purpose of adding something as a Spark. I would've seen it, I guess, if someone "shared" it with me, but you know the old joke: two Plan 9 users meet. End-of-joke.
+
