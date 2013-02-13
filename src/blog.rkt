@@ -115,6 +115,8 @@
       (man-page
         (man-section "LATEST"
           (man-options
+            `("You've picked the wrong repository" "wrong-repo"
+              "Spam and eggs and Spam. Spam and Spam and eggs and Spam.")
             `("Multiple Dispatch in Racket" "racket-multiple-dispatch"
               "Should actually be called: I discovered pattern matching.")
             `("Enterprise PHP" "enterprise-php"
