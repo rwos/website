@@ -115,6 +115,8 @@
       (man-page
         (man-section "LATEST"
           (man-options
+            `("A Graphical Forever Project" "forever-gui"
+              "Programmer's speed of light.")
             `("You've picked the wrong repository" "wrong-repo"
               "Spam and eggs and Spam. Spam and Spam and eggs and Spam.")
             `("Multiple Dispatch in Racket" "racket-multiple-dispatch"
