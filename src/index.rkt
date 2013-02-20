@@ -192,7 +192,7 @@
       (css "
         html,body {min-height: 100%;}
         body {
-            font-family: \"open sans\",sans-serif;
+            font-family: \"Open Sans\",Verdana,sans-serif;
             font-size: 11pt;
             line-height: 1.5em;
             padding: 0.5em;
@@ -294,6 +294,11 @@
         }
         .block * {
             text-align: left;
+        }
+        .block pre {
+          border-left: 2pt solid " (c 'borders) ";
+          border-radius: 0.5em;
+          padding-left: 0.5em;
         }
         input[type=text], textarea, input[type=button], input[type=submit] {
             color: " (c 'fg) ";
