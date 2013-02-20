@@ -12,7 +12,7 @@ but more importantly it's just one elegant line of BASIC:
 
 or [a line of bash](http://stackoverflow.com/questions/13611501/bash-version-of-c64-code-art-10-print-chr205-5rnd1-goto-10/13612327#13612327)
 
-<code>yes 'c=(&#9585; &#9586;);printf ${c[RANDOM%2]}' | bash</code>
+<pre>yes 'c=(&#9585; &#9586;);printf ${c[RANDOM%2]}' | bash</pre>
 
 Beautiful, isn't it? On a somewhat related note, I now own the domain
 code-museum.org - but I now that I have it, I realized that I don't really know
