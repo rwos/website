@@ -19,10 +19,12 @@
             `("gti" "/hacks/gti"
               "An implementation of the command I keep typing all day long.")))
         (man-section "JAVASCRIPT"
-          (p "You'll generally need a browser with support for the &lt;canvas&gt;
+          (p "For most of those, you'll need a browser with support for the &lt;canvas&gt;
               element (that is, any modern browser should work). If in doubt use
               the latest Firefox or Chromium.")
           (man-options
+            `("Minslide" "/hacks/minslide"
+              "A self-contained single-file minimalistic HTML5 slide-deck.             ")
             `("Moore's Game" "/hacks/ld24/ld24"
               ,(j "My entry for the 24th "
                   (a/href "http://www.ludumdare.com/compo/" "Ludum Dare")
