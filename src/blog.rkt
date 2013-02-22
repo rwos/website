@@ -115,6 +115,8 @@
       (man-page
         (man-section "LATEST"
           (man-options
+            `("todo: do" "tododo"
+              "Slacker.")
             `("Make FRP Mainstream!" "make-frp-mainstream"
               "Why am I just now learning about this?")
             `("A Graphical Forever Project, Part 2" "forever-gui-2"
