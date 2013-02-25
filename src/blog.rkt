@@ -115,6 +115,8 @@
       (man-page
         (man-section "LATEST"
           (man-options
+            `("Ping Turtle" "ping-turtle"
+              "A not very useful graph")
             `("todo: do" "tododo"
               "Slacker.")
             `("Make FRP Mainstream!" "make-frp-mainstream"
