@@ -115,6 +115,8 @@
       (man-page
         (man-section "LATEST"
           (man-options
+            `("Syntax Parameters: Usage" "syntax-parameters"
+              "Just a short mental note.")
             `("Ping Turtle" "ping-turtle"
               "A not very useful graph")
             `("todo: do" "tododo"
