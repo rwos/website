@@ -234,7 +234,7 @@
             display: inline-block;
             border: none;
         }
-        a:hover, a img:hover {
+        a:hover, a img:hover, #style-switch {
             color: " (c 'bg) " ! important;
             background-color: " (c 'a-hover-bg) ";
             border-radius: 5px 5px 5px 5px;
