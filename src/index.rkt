@@ -335,7 +335,7 @@
           color: " (c 'highlight1) ";
         }
         .nb, .k {
-          font-weight: bold;
+          color: " (c 'highlight2) ";
         }
         "
         ;.m { color: #009999 } /* Literal.Number */
@@ -399,6 +399,7 @@
                         'a-visited       "aaaa00"
                         'borders         "339933"
                         'highlight1      "339933"
+                        'highlight2      "77aa33"
                         'input-bg        "003f00")])
       (css-template colors)))
       
@@ -422,6 +423,7 @@
                         'a-visited       "0000aa"
                         'borders         "333399"
                         'highlight1      "777777"
+                        'highlight2      "333333"
                         'input-bg        "ffffff")])
       ;;; TODO: that's pretty hacky
       (string-replace* (css-template colors)
