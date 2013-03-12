@@ -324,6 +324,57 @@
             float: right;
             font-size: small;
         }
+        .hll { background-color: #ffffcc }
+        .c, .cm, .cp, .c1, .cs {
+          font-style: italic
+        }
+        .k, .o, .kc, .kd, .kn, .kp, .kr, .kt {
+          ;
+        }
+        .p, .gp {
+          color: " (c 'highlight1) ";
+        }
+        .nb, .k {
+          font-weight: bold;
+        }
+        "
+        ;.m { color: #009999 } /* Literal.Number */
+        ;.s { color: #d01040 } /* Literal.String */
+        ;.na { color: #008080 } /* Name.Attribute */
+        ;.nb { color: #0086B3 } /* Name.Builtin */
+        ;.nc { color: #445588; font-weight: bold } /* Name.Class */
+        ;.no { color: #008080 } /* Name.Constant */
+        ;.nd { color: #3c5d5d; font-weight: bold } /* Name.Decorator */
+        ;.ni { color: #800080 } /* Name.Entity */
+        ;.ne { color: #990000; font-weight: bold } /* Name.Exception */
+        ;.nf { color: #990000; font-weight: bold } /* Name.Function */
+        ;.nl { color: #990000; font-weight: bold } /* Name.Label */
+        ;.nn { color: #555555 } /* Name.Namespace */
+        ;.nt { color: #000080 } /* Name.Tag */
+        ;.nv { color: #008080 } /* Name.Variable */
+        ;.ow { color: #000000; font-weight: bold } /* Operator.Word */
+        ;.w { color: #bbbbbb } /* Text.Whitespace */
+        ;.mf { color: #009999 } /* Literal.Number.Float */
+        ;.mh { color: #009999 } /* Literal.Number.Hex */
+        ;.mi { color: #009999 } /* Literal.Number.Integer */
+        ;.mo { color: #009999 } /* Literal.Number.Oct */
+        ;.sb { color: #d01040 } /* Literal.String.Backtick */
+        ;.sc { color: #d01040 } /* Literal.String.Char */
+        ;.sd { color: #d01040 } /* Literal.String.Doc */
+        ;.s2 { color: #d01040 } /* Literal.String.Double */
+        ;.se { color: #d01040 } /* Literal.String.Escape */
+        ;.sh { color: #d01040 } /* Literal.String.Heredoc */
+        ;.si { color: #d01040 } /* Literal.String.Interpol */
+        ;.sx { color: #d01040 } /* Literal.String.Other */
+        ;.sr { color: #009926 } /* Literal.String.Regex */
+        ;.s1 { color: #d01040 } /* Literal.String.Single */
+        ;.ss { color: #990073 } /* Literal.String.Symbol */
+        ;.bp { color: #999999 } /* Name.Builtin.Pseudo */
+        ;.vc { color: #008080 } /* Name.Variable.Class */
+        ;.vg { color: #008080 } /* Name.Variable.Global */
+        ;.vi { color: #008080 } /* Name.Variable.Instance */
+        ;.il { color: #009999 } /* Literal.Number.Integer.Long */
+        "
         @media (max-width: 500px) {
           .block {
             padding-left: 0em;
@@ -347,6 +398,7 @@
                         'a-hover-bg      "ffff00"
                         'a-visited       "aaaa00"
                         'borders         "339933"
+                        'highlight1      "339933"
                         'input-bg        "003f00")])
       (css-template colors)))
       
@@ -369,6 +421,7 @@
                         'a-hover-bg      "4444ee"
                         'a-visited       "0000aa"
                         'borders         "333399"
+                        'highlight1      "777777"
                         'input-bg        "ffffff")])
       ;;; TODO: that's pretty hacky
       (string-replace* (css-template colors)

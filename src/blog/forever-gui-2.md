@@ -42,6 +42,7 @@ and shows the result. If we were to
 run that program on the command line, we'd expect a plain-text answer. If
 we were to run it as a desktop application, we'd expect a little formatting.
 
+    :::sh
     #!/bin/sh
     word-input = text-input -name word
     gui-output = html-render

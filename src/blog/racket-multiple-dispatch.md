@@ -19,6 +19,7 @@ to others but it wasn't obvious to me until very recently.)
 To take the example from the wikipedia page - in Common Lisp one
 could do:
 
+    :::cl
     (defmethod collide-with ((x asteroid) (y asteroid))
       ;; deal with asteroid hitting asteroid
       )
@@ -35,6 +36,7 @@ could do:
 While in Racket one could use [pattern matching](http://docs.racket-lang.org/reference/match.html)
 to get the same effect:
 
+    :::racket
     (define/match (collide-with x y)
       ((asteroid asteroid)
         #| deal with asteroid hitting asteroid |#)

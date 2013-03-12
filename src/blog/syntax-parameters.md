@@ -14,14 +14,17 @@ from most other languages.
 
 First, the `require`:
 
+    :::racket
     (require racket/stxparam)
 
 Then, we have to define `return` as a syntax-parameter:
 
+    :::racket
     (define-syntax-parameter return (syntax-rules ()))
 
 And we can go on writing our macro:
 
+    :::racket
     (define-syntax define/return
       (syntax-rules ()
         [(define/return (name args ...) body ...)
@@ -32,12 +35,14 @@ Here's the interesting bit: we now have to use `syntax-parameterize`
 in order to make `ret` available under the name `return` for the function
 body:
 
+    :::racket
              (syntax-parameterize
                  ([return (syntax-rules () [(_ v) (ret v)])])
                (begin body ...)))))]))
 
 So, the macro is done - here's a (silly) usage example:
 
+    ::: racket
     -> (define/return (foo x) (+ 1 (return x)))
     -> (foo 42)
     42
