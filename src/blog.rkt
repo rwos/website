@@ -115,6 +115,8 @@
       (man-page
         (man-section "LATEST"
           (man-options
+            `("Review - PLT Games February 2013" "review-plt-games-february-2013"
+              "Gamification.")
             `("Syntax Parameters: Usage" "syntax-parameters"
               "Just a short mental note.")
             `("Ping Turtle" "ping-turtle"
