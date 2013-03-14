@@ -115,6 +115,8 @@
       (man-page
         (man-section "LATEST"
           (man-options
+            `("Tacit Programming in Racket, Part 2" "tacit-racket-2"
+              "The clarity of APL, the performance of Scheme.")
             `("Review - PLT Games February 2013" "review-plt-games-february-2013"
               "Gamification.")
             `("Syntax Parameters: Usage" "syntax-parameters"

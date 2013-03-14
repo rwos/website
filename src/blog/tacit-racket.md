@@ -106,3 +106,5 @@ question of taste. It's certainly very compact and powerful, but it also can be
 very confusing at times. Just have a look at APL, J, or Forth for an example of what it
 looks like if one just takes tacit programming and runs with it.
 
+([part 2](http://r-wos.org/blog/tacit-racket-2))
+
