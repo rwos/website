@@ -145,7 +145,7 @@ implementation that takes an arbitrary number of functions. And
 > <br><small>Phil Karlton</small>
 
 I think part of the reason why these functions (especially the "hooks") are so
-obscure is that the don't have a good name. The operation of `fold` (also
+obscure is that they don't have a good name. The operation of `fold` (also
 called `reduce` sometimes) isn't too straight-forward either. But it's clear,
 since you can say "it's a fold". If the thing has a name you only have to
 understand it once.
