@@ -115,6 +115,8 @@
       (man-page
         (man-section "LATEST"
           (man-options
+            `("Links" "links"
+              "Just some links.")
             `("Playing with Typography" "typography"
               "While knowing nothing about it.")
             `("Tacit Programming in Racket, Part 2" "tacit-racket-2"
