@@ -115,6 +115,8 @@
       (man-page
         (man-section "LATEST"
           (man-options
+            `("Playing with Typography" "typography"
+              "While knowing nothing about it.")
             `("Tacit Programming in Racket, Part 2" "tacit-racket-2"
               "The clarity of APL, the performance of Scheme.")
             `("Review - PLT Games February 2013" "review-plt-games-february-2013"
@@ -192,7 +194,7 @@
               "a programmer's archive of the world"
       (p
         (map (lambda (name)
-               (code (small
+               (pre (small
                  (j "-rw-r--r-- 1 rwos rwos "
                     (lpad 6 (number->string (blog-post-size name))) " " " "
                     (blog-post-date name) " "
