@@ -56,6 +56,14 @@
             '("The Dark Side" "/hacks/dark_side"
               "An interactive version of Pink Floyd's famous Dark Side of the
                Moon album cover.")))
+        (man-section "SCRIPTS"
+          (p "The quickest hacks of them all. And the most useless. You'll need a POSIX system.")
+          (man-options
+            `("mod-time graph" "https://gist.github.com/rwos/5300154"
+              "Plots a graph of the modification times of all the files in ~/src.")
+            `("ping-turtle" "https://gist.github.com/rwos/5031023"
+              "Plots a graph of the ping responses of the hosts with a two-character DNS name.")
+            ))
         (man-section "AUTHOR"
           "Richard Wossal " (mailto "richard@r-wos.org")))))
 
