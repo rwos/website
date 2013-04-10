@@ -115,6 +115,8 @@
       (man-page
         (man-section "LATEST"
           (man-options
+            `("Playing with Cray-1 Disks" "cray-1-disks"
+              "Just some disks.")
             `("Links" "links"
               "Just some links.")
             `("Playing with Typography" "typography"
