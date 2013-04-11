@@ -115,6 +115,8 @@
       (man-page
         (man-section "LATEST"
           (man-options
+            `("Continued" "cray-1-disks-3"
+              "Further stuff I learned about the Cray.")
             `("Playing with Cray-1 Disks, Part 2" "cray-1-disks-2"
               "This is M-M-Max MP.")
             `("Playing with Cray-1 Disks" "cray-1-disks"
