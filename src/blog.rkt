@@ -115,6 +115,8 @@
       (man-page
         (man-section "LATEST"
           (man-options
+            `("Certainly Not Mainstream" "r-listing"
+              "Reading source code before it was cool.")
             `("Continued" "cray-1-disks-3"
               "Further stuff I learned about the Cray.")
             `("Playing with Cray-1 Disks, Part 2" "cray-1-disks-2"
