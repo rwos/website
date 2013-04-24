@@ -62,7 +62,7 @@ The Cray-1 manual, on the other hand, says that
 > storage.
 
 Is the Data General Eclipse the MCU? Probably - but probably only for the
-Cray-1. What's the MCU-like thing for the Cray-X MP? Is there one?
+Cray-1. What's the MCU-like thing for the Cray X-MP? Is there one?
 
 To sum up, I can't really say that I understand the whole auxiliary
 stuff around the mainframe.
