@@ -239,7 +239,7 @@
             border-top: 2pt solid " (c 'borders) ";
             text-align: left;/*this will align it for IE*/
             margin: 0 auto 0 0; /*this will align it left for Mozilla*/
-            margin-left: -40pt;
+            margin-left: -42pt;
             margin-top: " (pt (* line-height 1)) ";
             margin-bottom: " (pt (* line-height 1)) ";
         }

@@ -12,10 +12,12 @@
 ;; TODO: move non-page stuff into lib-directory
 
 ;; TODO: automatic requires
+(require "css.rkt")
 (require "index.rkt")
 (require "hacks.rkt")
 (require "blog.rkt")
 (require "code-museum.rkt")
+(require "projects.rkt")
 
 (define (dir dir-name . content)
   (map (lambda (e)
@@ -78,13 +80,20 @@
       (file 'index.html)
       (file 'gti.html))
     (dir 'code-museum
+      (file 'exec.js)
       (file 'web.css)
       (file 'hello-world.html))
+    (dir 'projects
+      (file 'index.html))
+   ; #|
     (apply dir (append (list 'blog 
                              (file 'rss.xml)
                              (file 'index.html)
                              (file 'archive.html))
-                       (all-blog-files)))))
+                       (all-blog-files)))
+  ;|#
+  )
+  )
 
 (generate complete-site "../generated")
 

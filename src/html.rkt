@@ -3,13 +3,14 @@
   (provide j j/str
            a/href
            b body br
-           code
+           code code/id
            dd div/class div/id dl dt
            em
            h head hr html
            link/css
            noscript
            p pre
+           script script/src
            title
            mailto signature
            small
@@ -60,6 +61,7 @@
   (define br    (short-tag "br"))
 
   (define code (tag "code"))
+  (define (code/id id . stuff) (j "<code id='" id "'>" stuff "</code>"))
 
   (define dd (tag "dd"))
   (define (div/class class . s) (j "<div class='" class "'>" s "</div>"))
@@ -90,6 +92,9 @@
 
   (define pre (tag "pre"))
 
+  (define script (tag "script"))
+  (define (script/src src [c ""]) (j "<script src='" src "'>" c "</script>"))
+
   (define small (tag "small"))
 
   (define title (tag "title"))
@@ -107,8 +112,9 @@
   (define (std-skeleton page-title . page-body)
     (j (html
          (head (link/css "http://r-wos.org/web.css")
+               "<link href='http://fonts.googleapis.com/css?family=Josefin+Sans:600' rel='stylesheet' type='text/css'>"
                (title page-title))
-               (body  page-body))))
+         (body  page-body))))
 
   (define theme-switch
     "<script type='text/javascript'>
@@ -120,17 +126,17 @@
             tag = document.getElementsByTagName('link')[0];
             if (state == 0) {
                 tag.href = tag.href.replace('web.css', 'alt-web.css');
-                document.getElementById('style-switch').innerHTML = 'too much blue';
+                document.getElementById('style-switch').innerHTML = 'green';
                 state = 1;
                 document.cookie = 'state=1'+cookie_foot;
             } else if (state == 1) {
                 tag.href = tag.href.replace('alt-web.css', 'web.css');
-                document.getElementById('style-switch').innerHTML = 'too much green';
+                document.getElementById('style-switch').innerHTML = 'blue';
                 state = 0;
                 document.cookie = 'state=0'+cookie_foot;
             }
         }
-        document.write(' - <a id=\"style-switch\" href=\"javascript:switch_style()\">too much green</a>');
+        document.write(' <a id=\"style-switch\" href=\"javascript:switch_style()\">blue</a>');
         var cookies = document.cookie.split(';');
         for (var i = 0; i < cookies.length; i++) {
             if (cookies[i].trim() == 'state=1')
@@ -143,11 +149,11 @@
       (let ([nav (map (lambda (spec)
                         (if (string=? selected (cdr spec))
                           ;; currently selected nav-option
-                          (cdr spec)
+                          (j "<span>" (cdr spec) "</span>")
                           ;; normal
                           (a/href (car spec) (cdr spec))))
                       nav-links)])
-        (j (div/class "navigation" (j/str " - " nav) theme-switch)))))
+        (j (div/class "navigation" (j/str " " nav) theme-switch)))))
 
   (define std-footer
     (div/id "footer"
