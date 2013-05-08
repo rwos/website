@@ -115,6 +115,12 @@
       (man-page
         (man-section "LATEST"
           (man-options
+            `("Overwriting Dynamically Linked Stuff" "dynamic-linking"
+              "Again, just a short mental note.")
+            `("Javahaha" "javahaha"
+              "Write once. Exception in thread \"main\".")
+            `("Ludum Dare 26 - Timelapse" "ludum-dare-26-timelapse"
+              "Minimalism.")
             `("Certainly Not Mainstream" "r-listing"
               "Reading source code before it was cool.")
             `("Continued" "cray-1-disks-3"
