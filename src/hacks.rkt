@@ -23,6 +23,10 @@
               element (that is, any modern browser should work). If in doubt use
               the latest Firefox or Chromium.")
           (man-options
+            `("::.::::::." "/hacks/ld26/"
+              ,(j "My entry for the 26th "
+                  (a/href "http://www.ludumdare.com/compo/" "Ludum Dare")
+                  " 48h game programming competition."))
             `("Minslide" "/hacks/minslide"
               "A self-contained single-file minimalistic HTML5 slide-deck.             ")
             `("Moore's Game" "/hacks/ld24/ld24"
