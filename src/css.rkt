@@ -209,8 +209,11 @@
         .block .date {
             margin-left: -40pt;
         }
-        em, strong {
+        em {
           font-style: italic;
+        }
+        strong {
+          font-weight: bold;
         }
         h1, h2, h3, h4 {
             font-family: 'Josefin Sans', sans-serif;

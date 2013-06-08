@@ -115,6 +115,10 @@
       (man-page
         (man-section "LATEST"
           (man-options
+            `("Colored Text in wmii's status bar" "wmii-color-status"
+              "What it says on the tin.")
+            `("Ludum Dare 26 - Postmortem" "ludum-dare-26-postmortem"
+              "Things that worked, things that didn't.")
             `("Overwriting Dynamically Linked Stuff" "dynamic-linking"
               "Again, just a short mental note.")
             `("Javahaha" "javahaha"

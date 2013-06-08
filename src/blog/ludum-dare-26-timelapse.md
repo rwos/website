@@ -18,4 +18,5 @@ rate the little over 1000 games the others wrote.
 
 Excuse me for a moment - I have work to do.  :-)
 
+(**Update**: The postmortem is [here](http://r-wos.org/blog/ludum-dare-26-postmortem))
 
