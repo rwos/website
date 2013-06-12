@@ -115,6 +115,8 @@
       (man-page
         (man-section "LATEST"
           (man-options
+            `("Coffeescript - First Impressions" "first-coffeescript"
+              "Better than JS - but how could it be worse?")
             `("Colored Text in wmii's status bar" "wmii-color-status"
               "What it says on the tin.")
             `("Ludum Dare 26 - Postmortem" "ludum-dare-26-postmortem"

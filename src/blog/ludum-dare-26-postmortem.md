@@ -205,7 +205,7 @@ machine-gun like noise, which fits well to the jitter but doesn't fit to the
 wanted it to have more like of a continuous "laser weapon" kind of sound, but
 everything I tried sounded weak and not-at-all dangerous.
 
-The players weren't *that* pleased with the sound effect, though - place 221 is
+The players weren't *that* pleased with the sound effects, though - place 221 is
 pretty bad, considering how well the game did in the other categories.
 But it was my first game with sound, so that is only more motivation to
 do better next time.

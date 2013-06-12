@@ -150,6 +150,7 @@
             padding-bottom: " (pt (/ line-height 2)) ";
             padding-left: 1em;
             padding-right: 1em;
+            margin: auto;
             background-color: " (c 'bg) ";
             background-image: -o-linear-gradient(     top, " (c 'bg) ", " (c 'bg-image) " 6em, " (c 'bg) " 1000px);
             background-image: -moz-linear-gradient(   top, " (c 'bg) ", " (c 'bg-image) " 6em, " (c 'bg) " 1000px);

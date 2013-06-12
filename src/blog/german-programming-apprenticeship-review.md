@@ -65,7 +65,7 @@ A school *only* for programming and electronics might seem like a lot of fun,
 but - spoiler alert - it isn't. The problem is self-inflicted.
 
 You see, the "skilled craftsman" kind of education is, of course, lower than the
-academic spectrum. To be frank, it's for people that are to stupid to go to
+academic spectrum. To be frank, it's for people that are too stupid to go to
 a university. Germany has a three-tier school system, and the courses target
 those coming form the middle and lower tier. That's fine, of course. As a
 society, it makes no sense to deny a highly talented guitar maker the chance
