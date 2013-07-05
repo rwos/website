@@ -1,4 +1,4 @@
-Coffeescript - First Impressions
+CoffeeScript - First Impressions
 2013-06-10
 
 Just some short notes about [CoffeeScript](http://coffeescript.org/), after
@@ -111,8 +111,10 @@ CoffeeScript also has that whole Perl-like reverse-if stuff:
 
     x = "foo" if y == "bar"
 
-Python has that too - and Python also loves code that reads like simplified
-English sentences. But CoffeeScript is in a whole other league here:
+<strike>Python has that too</strike> <small>(Whoops, no, I was misremembering
+here: Python only has the "`x = can_fail() or default_value`" idiom)</small> -
+and Python also loves code that reads like simplified English sentences. But
+CoffeeScript is in a whole other league:
 
     while player isnt dead
         if key is space then jump quickly upwards unless status is jumping

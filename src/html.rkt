@@ -78,6 +78,7 @@
   (define (head . s)
     (j "<head>"
        "<meta http-equiv='Content-type' content='text/html;charset=UTF-8'>"
+       "<meta name='Viewport' content='width=device-width, initial-scale=1, maximum-scale=1.0'>"
        s
        "</head>"))
   (define hr (short-tag "hr"))

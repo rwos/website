@@ -62,7 +62,18 @@
          });
          puts = function(string) {term.echo(string);};
          var code_to_evaluate = '';
+         $.terminal.encode = function(str) {
+            return str.replace(/&(?!#[0-9]+;|[a-zA-Z]+;)/g, '&amp;')
+                      .replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                      .replace(/\\n/g, '<br/>')
+                      .replace(/  /g, '&nbsp;&nbsp;')
+                      .replace(/   /g, '&nbsp;&nbsp;&nbsp;')
+                      .replace(/\\t/g, '&nbsp;&nbsp;');
+         };
          var term = $('#term').terminal(function(command, term) {
+           term.resize = function(w, h) {
+             return term;
+           };
            code_to_evaluate += ' ' + command;
            if (!unbalanced_parentheses(code_to_evaluate)) {
                try {
@@ -74,17 +85,17 @@
                } catch(e) {
                    term.error(e.message);
                }
-               term.set_prompt('-> ');
+               term.set_prompt('->&nbsp;');
                code_to_evaluate = '';
            } else {
-               term.set_prompt('  ');
+               term.set_prompt('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
            }
          }, {
            greetings: '',
            height: 300,
            name: 'biwa',
            exit: false,
-           prompt: '-> '});
+           prompt: '->&nbsp;'});
          term.exec('(about \"Richard Wossal\")');
        });
        document.write('<small>(<a href=\"http://www.biwascheme.org\">BiwaScheme</a>'

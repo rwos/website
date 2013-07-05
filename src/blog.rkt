@@ -115,7 +115,9 @@
       (man-page
         (man-section "LATEST"
           (man-options
-            `("Coffeescript - First Impressions" "first-coffeescript"
+            `("CoffeeScript - Second Impressions" "second-coffeescript"
+              "Still better than JS, but certainly not perfect.")
+            `("CoffeeScript - First Impressions" "first-coffeescript"
               "Better than JS - but how could it be worse?")
             `("Colored Text in wmii's status bar" "wmii-color-status"
               "What it says on the tin.")

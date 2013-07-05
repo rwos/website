@@ -17,7 +17,6 @@
 (require "hacks.rkt")
 (require "blog.rkt")
 (require "code-museum.rkt")
-(require "projects.rkt")
 
 (define (dir dir-name . content)
   (map (lambda (e)

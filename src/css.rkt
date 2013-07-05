@@ -4,82 +4,86 @@
 
 (provide (prefix-out index: (all-defined-out)))
 
-  (define term.css
-    ".terminal .clipboard {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        opacity: 0.01;
-        filter: alpha(opacity = 0.01);
-        filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0.01);
-        width: 2px;
-    }
-    .cmd > .clipboard {
-        position: fixed;
-    }
-    .terminal {
-        padding: 10px;
-        position: relative;
-        overflow: hidden;
-        width: 40em;
-    }
-    .cmd {
-        padding: 0;
-        margin: 0;
-        height: 1.3em;
-    }
-    .terminal .terminal-output div div, .terminal .prompt {
-        display: block;
-        line-height: 14px;
-        height: 16px;
-    }
-    .terminal {
-        font-family: \"DejaVu Sans Mono\", \"Droid Sans Mono\", monospace;
-        color: #33dd33;
-        background-color: #000f00;
-        border-radius: 0.5em;
-        font-size: 14px;
-        line-height: 16px;
-    }
-    .terminal .terminal-output div span {
-        display: inline-block;
-    }
-    .terminal .cmd span {
-        display: inline-block;
-    }
-    .terminal .cmd span.inverted {
-        background-color: #33dd33;
-        color: #000f00;
-    }
-    .terminal .terminal-output div div::-moz-selection, .terminal .terminal-output div span::-moz-selection {
-        background-color: #33dd33;
-        color: #000f00;
-    }
-    .terminal .terminal-output div div::selection, .terminal .terminal-output div span::selection,
-    .terminal .cmd > span::selection, .terminal .prompt span::selection {
-        background-color: #33dd33;
-        color: #000f00;
-    }
-    .terminal .terminal-output div.error, .terminal .terminal-output div.error div {
-        color: #33dd33;
-    }
-    .tilda {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 1100;
-    }
-    .clear {
-        clear: both;
-    }
-    .terminal a {
-        color: #ccff66;
-    }
-    .terminal a:hover {
-        color: #ccff66;
-    }
-    ")
+  (define (term.css colors)
+    (define (c name)
+      (j "#" (hash-ref colors name)))
+    (j
+      ".terminal .clipboard {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          opacity: 0.01;
+          filter: alpha(opacity = 0.01);
+          filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0.01);
+          width: 2px;
+      }
+      .cmd > .clipboard {
+          position: fixed;
+      }
+      .terminal {
+          padding: 10px;
+          position: relative;
+          overflow: hidden;
+          max-width: 40em;
+      }
+      .cmd {
+          padding: 0;
+          margin: 0;
+          height: 1.3em;
+      }
+      .terminal .terminal-output div div, .terminal .prompt {
+          display: block;
+          line-height: 14px;
+          height: 16px;
+      }
+      .terminal {
+          font-family: \"DejaVu Sans Mono\", \"Droid Sans Mono\", monospace;
+          color: #33dd33;
+          background-color: #000f00;
+          border-radius: 0.5em;
+          border: 2pt solid " (c 'borders) ";
+          font-size: 14px;
+          line-height: 16px;
+      }
+      .terminal .terminal-output div span {
+          display: inline-block;
+      }
+      .terminal .cmd span {
+          display: inline-block;
+      }
+      .terminal .cmd span.inverted {
+          background-color: #33dd33;
+          color: #000f00;
+      }
+      .terminal .terminal-output div div::-moz-selection, .terminal .terminal-output div span::-moz-selection {
+          background-color: #33dd33;
+          color: #000f00;
+      }
+      .terminal .terminal-output div div::selection, .terminal .terminal-output div span::selection,
+      .terminal .cmd > span::selection, .terminal .prompt span::selection {
+          background-color: #33dd33;
+          color: #000f00;
+      }
+      .terminal .terminal-output div.error, .terminal .terminal-output div.error div {
+          color: #33dd33;
+      }
+      .tilda {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          z-index: 1100;
+      }
+      .clear {
+          clear: both;
+      }
+      .terminal a {
+          color: #ccff66;
+      }
+      .terminal a:hover {
+          color: #ccff66;
+      }
+      "))
 
   (define reset.css
     "
@@ -135,11 +139,12 @@
     (define (pt n) (format "~apt" (round n)))
     (j
       (css reset.css)
-      (css term.css)
+      (css (term.css colors))
       (css "
         small {
           font-size: 90%;
         }
+        html {width: 100%; margin: 0; padding: 0;}
         html,body {min-height: 100%;}
         body {
             font-family: \"Open Sans\",\"Droid Sans\",Verdana,sans-serif;
@@ -352,6 +357,12 @@
           .block {
             padding-left: 0em;
             padding-right: 0em;
+          }
+          code, pre {
+            max-width: 100%;
+            overflow: hidden;
+            -ms-overflow-x: auto;
+            overflow-x: auto;
           }
           h1, h2, h3, h4, .man-heading, .block .date {
             margin-left: 0;
