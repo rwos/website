@@ -1,0 +1,62 @@
+wtf.js
+2013-07-09
+
+Playing with node.js currently, and I don't grok it. I'm passable (not "good",
+just passable) in JavaScript but I don't get why anyone would ever want
+to program in the style node.js dictates.
+
+It's async, yeah. *Only* async. And async without language-level promises, or
+channels, or a `select`. Or multi-processing. Or anything really. They basically write in
+continuation passing style. In one thread. By hand. And it wouldn't completely
+surprise me if they chiseled it in stone and OCR'd it back.
+
+If you are going backwards, you might as well go all the way.
+
+Let's make two HTTP requests, shall we?
+
+    var result_1, result 2;
+    http.get("http://one.com",
+      function(response) {
+        response.on('data',
+          function(data) {
+            result_1 = data;
+            http.get("http://two.com",
+              function(response) {
+                response.on('data',
+                  function(data) {
+                    result_2 = data;
+                    // do stuff with the results
+                  }
+                );
+              }
+            );
+          }
+        );
+      }
+    );
+
+The fuck? Now, there are libraries that transform that pyramid of
+callbacks into a single one - but that's just a cosmetic change. It's
+still a series of callbacks. And - as far as I understand - there is
+no `force(promise)` - in other words, no way to sync.
+
+Why don't they just do it synchronously? Why is there no blocking
+API? I don't get it.
+
+Note that this doesn't have anything to do with performance.
+If I want the two requests to succeed before going on, I'll have to
+wait for them - in both async and synchronous style.
+
+The only thing that that async fuck-up buys me is that I now have
+a bunch of needlessly nested scopes.
+
+Did I mention that I don't get it?
+
+Sure, *sometimes* it's quite nice to do stuff asynchronously.
+Maybe it's even a good idea to make non-blocking the default.
+But *only* non-blocking APIs?
+
+Did I mention that...
+
+Oh, yeah, I think I did.
+

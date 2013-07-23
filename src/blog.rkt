@@ -115,6 +115,10 @@
       (man-page
         (man-section "LATEST"
           (man-options
+            `("Racket Appreciation Day" "racket-appreciation-day"
+              "So that's what \"pragmatic\" means.")
+            `("wtf.js" "wtf-js"
+              "I just don't undestand.")
             `("CoffeeScript - Second Impressions" "second-coffeescript"
               "Still better than JS, but certainly not perfect.")
             `("CoffeeScript - First Impressions" "first-coffeescript"
