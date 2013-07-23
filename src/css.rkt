@@ -364,6 +364,9 @@
             -ms-overflow-x: auto;
             overflow-x: auto;
           }
+          .block pre {
+            padding-left: 0em;
+          }
           h1, h2, h3, h4, .man-heading, .block .date {
             margin-left: 0;
           }
