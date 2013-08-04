@@ -39,9 +39,6 @@
       .terminal {
           font-family: \"DejaVu Sans Mono\", \"Droid Sans Mono\", monospace;
           color: #33dd33;
-          background-color: #000f00;
-          border-radius: 0.5em;
-          border: 2pt solid " (c 'borders) ";
           font-size: 14px;
           line-height: 16px;
       }
