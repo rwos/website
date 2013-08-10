@@ -4,7 +4,7 @@
            a/href
            b body br
            code code/id
-           dd div/class div/id dl dt
+           dd div/class div/id dl dt ul li
            em
            h head hr html
            link/css
@@ -72,6 +72,9 @@
 
   (define em (tag "em"))
 
+  (define ul (tag "ul"))
+  (define li (tag "li"))
+
   (define (h n . s)
     (let ([n-str (number->string n)])
       (j "<h" n-str ">" s "</h" n-str ">")))
@@ -112,7 +115,7 @@
 
   (define (std-skeleton page-title . page-body)
     (j (html
-         (head (link/css "http://r-wos.org/web.css")
+         (head (link/css "/web.css")
                "<link href='http://fonts.googleapis.com/css?family=Josefin+Sans:600' rel='stylesheet' type='text/css'>"
                (title page-title))
          (body  page-body))))
