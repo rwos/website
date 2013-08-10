@@ -68,8 +68,6 @@
 
 (define complete-site
   (dir 'index
-    (file 'web.css)
-    (file 'alt-web.css)
     (file 'index.html)
     (file 'about.html)
     (file '404.html)

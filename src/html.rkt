@@ -1,5 +1,7 @@
 (module html racket
 
+  (require "css.rkt")
+
   (provide j j/str
            a/href
            b body br
@@ -7,7 +9,7 @@
            dd div/class div/id dl dt ul li
            em
            h head hr html
-           link/css
+           link/css style
            noscript
            p pre
            script script/src
@@ -15,9 +17,7 @@
            mailto signature
            small
            std-skeleton std-body std-page std-nav-links std-navigation std-footer
-           man-page man-option man-options man-section
-           ;; TODO move to extra module
-           css)
+           man-page man-option man-options man-section)
 
   ;;; string-joining helpers
 
@@ -65,7 +65,7 @@
 
   (define dd (tag "dd"))
   (define (div/class class . s) (j "<div class='" class "'>" s "</div>"))
-  (define (div/class+id class id . s) (j "<div class='" class "' id='" id "'>" s "</div>"))
+  (define (div/class+id class id . s) (j "<div class='" class "'id='" id "'>" s "</div>"))
   (define (div/id id . s) (j "<div id='" id "'>" s "</div>"))
   (define dl (tag "dl"))
   (define dt (tag "dt"))
@@ -80,8 +80,8 @@
       (j "<h" n-str ">" s "</h" n-str ">")))
   (define (head . s)
     (j "<head>"
-       "<meta http-equiv='Content-type' content='text/html;charset=UTF-8'>"
-       "<meta name='Viewport' content='width=device-width, initial-scale=1, maximum-scale=1.0'>"
+       "<meta http-equiv='Content-type'content='text/html;charset=UTF-8'>"
+       "<meta name='Viewport'content='width=device-width,initial-scale=1,maximum-scale=1.0'>"
        s
        "</head>"))
   (define hr (short-tag "hr"))
@@ -89,6 +89,8 @@
 
   (define (link/css url)
     (j "<link rel='stylesheet' type='text/css' href='" url "'>"))
+
+  (define style (tag "style"))
 
   (define noscript (tag "noscript"))
 
@@ -115,37 +117,10 @@
 
   (define (std-skeleton page-title . page-body)
     (j (html
-         (head (link/css "/web.css")
-               (title page-title))
+         (head (title page-title)
+               (style index:web.css)
+               )
          (body  page-body))))
-
-  (define theme-switch
-    "<script type='text/javascript'>
-        var state = 0;
-        var expire = new Date();
-        expire.setTime(expire.getTime()+1000*60*60*24*365);
-        var cookie_foot = '; expires='+expire.toUTCString()+'; path=/';
-        function switch_style() {
-            tag = document.getElementsByTagName('link')[0];
-            if (state == 0) {
-                tag.href = tag.href.replace('web.css', 'alt-web.css');
-                document.getElementById('style-switch').innerHTML = 'green';
-                state = 1;
-                document.cookie = 'state=1'+cookie_foot;
-            } else if (state == 1) {
-                tag.href = tag.href.replace('alt-web.css', 'web.css');
-                document.getElementById('style-switch').innerHTML = 'blue';
-                state = 0;
-                document.cookie = 'state=0'+cookie_foot;
-            }
-        }
-        document.write(' <a id=\"style-switch\" href=\"javascript:switch_style()\">blue</a>');
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            if (cookies[i].trim() == 'state=1')
-                switch_style();
-        }
-     </script>")
 
   (define (std-navigation nav-links [selected ""])
     (unless (empty? nav-links)
@@ -156,7 +131,7 @@
                           ;; normal
                           (a/href (car spec) (cdr spec))))
                       nav-links)])
-        (j (div/class "navigation" (j/str " " nav) theme-switch)))))
+        (div/class "navigation" (j/str " " nav) ))))
 
   (define std-footer
     (div/id "footer"
@@ -204,13 +179,5 @@
     (j (div/class+id "man-heading" (string->id heading) heading)
        (div/class "man-content" content)))
 
-  (define (css . s)
-    (let ([src (j s)])
-      ;;; XXX does (curry regexp-replace ..) help here?
-      (regexp-replace* #rx" *([{};:,]) *"
-        (regexp-replace* #rx"[\n\t ]+" src " ")
-        "\\1")
-      ))
-      
 )
 
