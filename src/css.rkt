@@ -222,8 +222,7 @@
           font-weight: bold;
         }
         h1, h2, h3, h4 {
-            font-family: 'Josefin Sans', sans-serif;
-            font-weight: 600;
+            font-family: \"Open Sans\",\"Droid Sans\",Verdana,sans-serif;
             color: " (c 'headings) ";
             text-align: left;
             margin-left: -40pt;
@@ -273,8 +272,7 @@
         .man-heading {
             margin-top: " (pt (* line-height 0.5)) ";
             font-size: " (pt (* line-height 0.8)) ";
-            font-family: 'Josefin Sans', sans-serif;
-            font-weight: 600;
+            font-family: \"Open Sans\",\"Droid Sans\",Verdana,sans-serif;
             margin-left: -40pt;
         }
         .descr {

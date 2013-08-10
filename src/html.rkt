@@ -116,7 +116,6 @@
   (define (std-skeleton page-title . page-body)
     (j (html
          (head (link/css "/web.css")
-               "<link href='http://fonts.googleapis.com/css?family=Josefin+Sans:600' rel='stylesheet' type='text/css'>"
                (title page-title))
          (body  page-body))))
 
