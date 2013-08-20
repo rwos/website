@@ -176,6 +176,7 @@
             max-width: 60em;
         }
         .navigation {
+          margin-left: 20pt;
           font-size: 10pt;
         }
         .navigation * {
@@ -194,6 +195,7 @@
             padding-left: 60pt;
             padding-top: " (pt (* 2 line-height)) ";
             padding-bottom: " (pt (* 1 line-height)) ";
+            border-radius: 20pt 0 20pt 0;
             border-top: 2pt solid " (c 'borders) ";
             border-bottom: 2pt solid " (c 'borders) ";
         }
