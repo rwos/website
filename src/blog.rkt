@@ -115,6 +115,10 @@
       (man-page
         (man-section "LATEST"
           (man-options
+            `("Given When Then" "gherkin"
+              "Gherkin is a hack.")
+            `("ownCloud" "owncloud"
+              "Nice to look at, but not what I wanted.")
             `("Racket Appreciation Day" "racket-appreciation-day"
               "So that's what \"pragmatic\" means.")
             `("wtf.js" "wtf-js"
