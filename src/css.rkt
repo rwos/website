@@ -73,6 +73,12 @@
         small {
           font-size: 90%;
         }
+        em {
+          font-style: italic;
+        }
+        strong {
+          font-weight: bold;
+        }
         html {width: 100%; margin: 0; padding: 0;}
         html,body {min-height: 100%;}
         body {
@@ -89,7 +95,6 @@
             max-width: 60em;
         }
         .navigation {
-          margin-left: 20pt;
           font-size: 10pt;
         }
         .navigation * {
@@ -136,6 +141,8 @@
         .block p, .block pre {
           margin-top: " (pt (/ line-height 2)) ";
           margin-bottom: " (pt (/ line-height 2)) ";
+        }
+        .block p {
           -webkit-hyphens: auto;
           -moz-hyphens: auto;
           -ms-hyphens: auto;
@@ -145,35 +152,26 @@
         .block .date {
             margin-left: -40pt;
         }
-        em {
-          font-style: italic;
-        }
-        strong {
-          font-weight: bold;
-        }
         h1, h2, h3, h4 {
             font-family: Georgia, serif;
             color: " (c 'headings) ";
             text-align: left;
         }
-        h2, h3, h4 {
-            float: left;
-            padding-right: 0.5em;
-            margin-right: 0.5em;
-            border-right: 2pt solid " (c 'borders) ";
+        h2, h3 {
+            color: " (c 'inline-headings) ";
+            float: right;
+            margin-left: 1em;
+            height: " (pt (* line-height 2)) ";
+            font-size: " (pt (* line-height 1.25)) ";
+            line-height: " (pt (* line-height 1.75)) ";
+        }
+        h4 {
+            color: " (c 'inline-headings) ";
         }
         h1 {
             font-size: " (pt (* line-height 1.5)) ";
             line-height: " (pt (* line-height 1.5)) ";
           margin-bottom: " (pt (* line-height 2)) ";
-        }
-        h2 {
-            font-size: " (pt (* line-height 1.25)) ";
-            line-height: " (pt (* line-height 1.25)) ";
-        }
-        h3 {
-            font-size: " (pt (* line-height 1)) ";
-            line-height: " (pt (* line-height 1)) ";
         }
         hr {
             width: 40pt;
@@ -229,10 +227,7 @@
             border: 2pt solid " (c 'a-hover-bg) ";
             box-shadow: 0px 0px 5px 4px "(c 'a-hover-bg) ";
         }
-        .nav-prev {
-            font-size: small;
-        }
-        .nav-next {
+        .nav-prev, .nav-next {
             font-size: small;
         }
         .hll { background-color: #ffffcc }
@@ -240,7 +235,7 @@
           font-style: italic
         }
         .k, .o, .kc, .kd, .kn, .kp, .kr, .kt {
-          ;
+          font-style: bold;
         }
         .p, .gp {
           color: " (c 'highlight1) ";
@@ -312,7 +307,8 @@
                         'bg              "fff"
                         'footer          "444"
                         'headings        "222"
-                        'headings-border "222"
+                        'inline-headings "777"
+                        'headings-border "888"
                         'a               "0000ff"
                         'a-hover-bg      "0000ff"
                         'a-visited       "aa00aa"
