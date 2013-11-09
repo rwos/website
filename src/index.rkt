@@ -7,19 +7,15 @@
   (define index.html
     (std-page (std-nav-links "r-wos.org")
               "Weeks of hacking can save you hours of planning"
-      (man-page
-        (man-section "NAME"
-          "r-wos.org - because everybody needs a website")
-        (man-section "CONTENT"
-          (man-options
-            '("-v, --blog" "/blog/"
-              "a programmer's view of the world")
-            '("-h, --hacks" "/hacks/"
-              "small random hacks")
-            '("-s, --github" "https://github.com/rwos"
-              "source code repository")
-            '("-a, --about" "/about"
-              "about the author"))))))
+      (man-options
+        '("-v, --blog" "/blog/"
+          "a programmer's view of the world")
+        '("-h, --hacks" "/hacks/"
+          "small random hacks")
+        '("-s, --github" "https://github.com/rwos"
+          "source code repository")
+        '("-a, --about" "/about"
+          "about the author"))))
 
   (define about.html
     (std-page (std-nav-links "about")
