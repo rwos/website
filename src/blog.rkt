@@ -109,108 +109,6 @@
 
   ;;; semi-static pages
 
-  (define index.html
-    (std-page (std-nav-links "blog")
-              "a programmer's view of the world"
-      (man-page
-        (man-section "LATEST"
-          (man-options
-            `("Given When Then" "gherkin"
-              "Gherkin is a hack.")
-            `("ownCloud" "owncloud"
-              "Nice to look at, but not what I wanted.")
-            `("Racket Appreciation Day" "racket-appreciation-day"
-              "So that's what \"pragmatic\" means.")
-            `("wtf.js" "wtf-js"
-              "I just don't undestand.")
-            `("CoffeeScript - Second Impressions" "second-coffeescript"
-              "Still better than JS, but certainly not perfect.")
-            `("CoffeeScript - First Impressions" "first-coffeescript"
-              "Better than JS - but how could it be worse?")
-            `("Colored Text in wmii's status bar" "wmii-color-status"
-              "What it says on the tin.")
-            `("Ludum Dare 26 - Postmortem" "ludum-dare-26-postmortem"
-              "Things that worked, things that didn't.")
-            `("Overwriting Dynamically Linked Stuff" "dynamic-linking"
-              "Again, just a short mental note.")
-            `("Javahaha" "javahaha"
-              "Write once. Exception in thread \"main\".")
-            `("Ludum Dare 26 - Timelapse" "ludum-dare-26-timelapse"
-              "Minimalism.")
-            `("Certainly Not Mainstream" "r-listing"
-              "Reading source code before it was cool.")
-            `("Continued" "cray-1-disks-3"
-              "Further stuff I learned about the Cray.")
-            `("Playing with Cray-1 Disks, Part 2" "cray-1-disks-2"
-              "This is M-M-Max MP.")
-            `("Playing with Cray-1 Disks" "cray-1-disks"
-              "Just some disks.")
-            `("Links" "links"
-              "Just some links.")
-            `("Playing with Typography" "typography"
-              "While knowing nothing about it.")
-            `("Tacit Programming in Racket, Part 2" "tacit-racket-2"
-              "The clarity of APL, the performance of Scheme.")
-            `("Review - PLT Games February 2013" "review-plt-games-february-2013"
-              "Gamification.")
-            `("Syntax Parameters: Usage" "syntax-parameters"
-              "Just a short mental note.")
-            `("Ping Turtle" "ping-turtle"
-              "A not very useful graph")
-            `("todo: do" "tododo"
-              "Slacker.")
-            `("Make FRP Mainstream!" "make-frp-mainstream"
-              "Why am I just now learning about this?")
-            `("A Graphical Forever Project, Part 2" "forever-gui-2"
-              "Continued.")
-            `("A Graphical Forever Project" "forever-gui"
-              "Programmer's speed of light.")
-            `("You've picked the wrong repository" "wrong-repo"
-              "Spam and eggs and Spam. Spam and Spam and eggs and Spam.")
-            `("Multiple Dispatch in Racket" "racket-multiple-dispatch"
-              "Should actually be called: I discovered pattern matching.")
-            `("Enterprise PHP" "enterprise-php"
-              "The horror.")
-            `("The BASIC Magic in Vim" "vim-loop"
-              "Infinite joy.")
-            `("True Color" "true-color"
-              "Has nothing to do with Cindy Lauper.")
-            `("Electric Dead Trees" "electric-dead-trees"
-              "Source code on eInk.")
-            `("&lt;font color=\"green\"&gt;" "semantics"
-              "Semantics.")
-            `("Tacit Programming in Racket" "tacit-racket"
-              "Pointless exercises.")
-            `("The most latest \"new year\" type post of the year" "happy-new-year"
-              "GOTO 2013")
-            `("This doesn't seem safe to me" "doesnt-seem-safe"
-              "Reflections on trust. No need for clever tricks, Ken.")
-            `("And Now For Something Completely Different" "and-now-for-something-completely-different"
-              "...fun!")
-            `("Art" "art"
-              "Found in a line of BASIC.")
-            `("What a Language!" "what-a-language"
-              "First impressions of J. A Programming Language.")
-            `("The German Programming Apprenticeship - A Review" "german-programming-apprenticeship-review"
-              "Consumer Information.")
-            `("Hardly Any Python, Hardly Any Cry" "hardly-any-python-hardly-any-cry"
-              "Moving the blog around for pain and misery.")
-            `("Joining Everything" "joining-everything"
-              "Register.")
-            `("Multimedia" "multimedia"
-              "Stuff I had lying around.")
-            `("Convay's Game of Floating Point" "convay-s-game-of-floating-point"
-              "What a great hack.")
-            `("Ludum Dare Postmortem" "ludum-dare-postmortem"
-              "Everything that dies someday comes back.")
-        ))
-        (man-section "SEE ALSO"
-          (man-options
-            `("RSS" "rss"         "For your feed reader's convenience."))
-          (man-options
-            `("Archive" "archive" "Everything's in chronological order.")))
-        )))
-
   ;; TODO rm helpers and use racket's format stuff or move somewhere else
   (define (lpad n str [padstr "&nbsp;"])
     (j (for/list ([i (in-range (- n (string-length str)))])
@@ -220,6 +118,115 @@
     (if (> (string-length str) (- n 3))
       (j (substring str 0 (- n 3)) "...")
       str))
+
+  (define index.html
+    (std-page (std-nav-links "blog")
+              "a programmer's view of the world"
+      (man-options
+        `("Given When Then" "gherkin"
+          "Gherkin is a hack.")
+        `("ownCloud" "owncloud"
+          "Nice to look at, but not what I wanted.")
+        `("Racket Appreciation Day" "racket-appreciation-day"
+          "So that's what \"pragmatic\" means.")
+        `("wtf.js" "wtf-js"
+          "I just don't undestand.")
+        `("CoffeeScript - Second Impressions" "second-coffeescript"
+          "Still better than JS, but certainly not perfect.")
+        `("CoffeeScript - First Impressions" "first-coffeescript"
+          "Better than JS - but how could it be worse?")
+        `("Colored Text in wmii's status bar" "wmii-color-status"
+          "What it says on the tin.")
+        `("Ludum Dare 26 - Postmortem" "ludum-dare-26-postmortem"
+          "Things that worked, things that didn't.")
+        `("Overwriting Dynamically Linked Stuff" "dynamic-linking"
+          "Again, just a short mental note.")
+        `("Javahaha" "javahaha"
+          "Write once. Exception in thread \"main\".")
+        `("Ludum Dare 26 - Timelapse" "ludum-dare-26-timelapse"
+          "Minimalism.")
+        `("Certainly Not Mainstream" "r-listing"
+          "Reading source code before it was cool.")
+        `("Continued" "cray-1-disks-3"
+          "Further stuff I learned about the Cray.")
+        `("Playing with Cray-1 Disks, Part 2" "cray-1-disks-2"
+          "This is M-M-Max MP.")
+        `("Playing with Cray-1 Disks" "cray-1-disks"
+          "Just some disks.")
+        `("Links" "links"
+          "Just some links.")
+        `("Playing with Typography" "typography"
+          "While knowing nothing about it.")
+        `("Tacit Programming in Racket, Part 2" "tacit-racket-2"
+          "The clarity of APL, the performance of Scheme.")
+        `("Review - PLT Games February 2013" "review-plt-games-february-2013"
+          "Gamification.")
+        `("Syntax Parameters: Usage" "syntax-parameters"
+          "Just a short mental note.")
+        `("Ping Turtle" "ping-turtle"
+          "A not very useful graph")
+        `("todo: do" "tododo"
+          "Slacker.")
+        `("Make FRP Mainstream!" "make-frp-mainstream"
+          "Why am I just now learning about this?")
+        `("A Graphical Forever Project, Part 2" "forever-gui-2"
+          "Continued.")
+        `("A Graphical Forever Project" "forever-gui"
+          "Programmer's speed of light.")
+        `("You've picked the wrong repository" "wrong-repo"
+          "Spam and eggs and Spam. Spam and Spam and eggs and Spam.")
+        `("Multiple Dispatch in Racket" "racket-multiple-dispatch"
+          "Should actually be called: I discovered pattern matching.")
+        `("Enterprise PHP" "enterprise-php"
+          "The horror.")
+        `("The BASIC Magic in Vim" "vim-loop"
+          "Infinite joy.")
+        `("True Color" "true-color"
+          "Has nothing to do with Cindy Lauper.")
+        `("Electric Dead Trees" "electric-dead-trees"
+          "Source code on eInk.")
+        `("&lt;font color=\"green\"&gt;" "semantics"
+          "Semantics.")
+        `("Tacit Programming in Racket" "tacit-racket"
+          "Pointless exercises.")
+        `("The most latest \"new year\" type post of the year" "happy-new-year"
+          "GOTO 2013")
+        `("This doesn't seem safe to me" "doesnt-seem-safe"
+          "Reflections on trust. No need for clever tricks, Ken.")
+        `("And Now For Something Completely Different" "and-now-for-something-completely-different"
+          "...fun!")
+        `("Art" "art"
+          "Found in a line of BASIC.")
+        `("What a Language!" "what-a-language"
+          "First impressions of J. A Programming Language.")
+        `("The German Programming Apprenticeship - A Review" "german-programming-apprenticeship-review"
+          "Consumer Information.")
+        `("Hardly Any Python, Hardly Any Cry" "hardly-any-python-hardly-any-cry"
+          "Moving the blog around for pain and misery.")
+        `("Joining Everything" "joining-everything"
+          "Register.")
+        `("Multimedia" "multimedia"
+          "Stuff I had lying around.")
+        `("Convay's Game of Floating Point" "convay-s-game-of-floating-point"
+          "What a great hack.")
+        `("Ludum Dare Postmortem" "ludum-dare-postmortem"
+          "Everything that dies someday comes back.")
+        )
+        (p "...and the old stuff...")
+        (map (lambda (entry)
+               (define (title->url t)
+                 (set! t (string-downcase t))
+                 (set! t (regexp-replace* #rx"[^a-zA-Z0-9]" t "-"))
+                 (set! t (regexp-replace* #rx"--*" t "-"))
+                 (set! t (regexp-replace* #rx"^-*" t ""))
+                 (set! t (regexp-replace* #rx"-*$" t ""))
+                 t)
+               (define title (blog-post-title entry))
+               (j (a/href (title->url title) title)
+                  (br)))
+          (take-right blog-entries-sorted 63))
+        ))
+
 
   (define archive.html
     (std-page (std-nav-links)
