@@ -238,15 +238,15 @@
   (define rss.xml
     (j "<?xml version='1.0' encoding='utf-8'?>"
        "<rss version='2.0' xmlns:atom='http://www.w3.org/2005/Atom'>"
-       "<channel><atom:link href='http://r-wos.org/blog/rss' rel='self' type='application/rss+xml'/>"
+       "<channel><atom:link href='//r-wos.org/blog/rss' rel='self' type='application/rss+xml'/>"
        "<title>Richard's Blog</title>"
        "<description>a programmer's view of the world</description>"
-       "<link>http://r-wos.org/blog/</link>"
+       "<link>//r-wos.org/blog/</link>"
        (map (lambda (name)
               (j "<item>"
                  "<title>" (blog-post-title name) "</title>"
-                 "<link>http://r-wos.org/blog/" name "</link>"
-                 "<guid>http://r-wos.org/blog/" name "</guid>"
+                 "<link>//r-wos.org/blog/" name "</link>"
+                 "<guid>//r-wos.org/blog/" name "</guid>"
                  "<description><![CDATA["
                  (markdown->html
                    (blog-post-content name))

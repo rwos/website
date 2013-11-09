@@ -1,8 +1,27 @@
 #lang racket/base
 
-(require "html.rkt")
-
 (provide (prefix-out index: (all-defined-out)))
+
+  (define (css . s)
+    (let ([src (j s)])
+      ;;; XXX does (curry regexp-replace ..) help here?
+      (regexp-replace* #rx" *([(){};:.,=]) *"
+        (regexp-replace* #rx"[\n\t ]+" src " ")
+        "\\1")
+      ))
+      
+  (define (j/str sep . strs)
+    (string-join
+      (map (lambda (s) (if (list? s)
+                           (apply j/str sep s)
+                           (if (void? s)
+                               ""
+                               s)))
+           strs)
+      sep))
+
+  (define (j . strs)
+    (apply j/str (cons "" strs)))
 
   (define (term.css colors)
     (define (c name)
@@ -94,7 +113,6 @@
       fieldset, form, label, legend,
       table, caption, tbody, tfoot, thead, tr, th, td,
       article, aside, canvas, details, embed, 
-      figure, figcaption, footer, header, hgroup, 
       menu, nav, output, ruby, section, summary,
       time, mark, audio, video {
         margin: 0;
@@ -108,9 +126,6 @@
       footer, header, hgroup, menu, nav, section {
         display: block;
       }
-      body {
-        line-height: 1;
-      }
       ol, ul {
         list-style: none;
       }
@@ -121,10 +136,6 @@
       q:before, q:after {
         content: '';
         content: none;
-      }
-      table {
-        border-collapse: collapse;
-        border-spacing: 0;
       }")
 
 
@@ -162,6 +173,7 @@
             max-width: 60em;
         }
         .navigation {
+          margin-left: 20pt;
           font-size: 10pt;
         }
         .navigation * {
@@ -180,6 +192,7 @@
             padding-left: 60pt;
             padding-top: " (pt (* 2 line-height)) ";
             padding-bottom: " (pt (* 1 line-height)) ";
+            border-radius: 20pt 0 20pt 0;
             border-top: 2pt solid " (c 'borders) ";
             border-bottom: 2pt solid " (c 'borders) ";
         }
@@ -219,8 +232,7 @@
           font-weight: bold;
         }
         h1, h2, h3, h4 {
-            font-family: 'Josefin Sans', sans-serif;
-            font-weight: 600;
+            font-family: \"Open Sans\",\"Droid Sans\",Verdana,sans-serif;
             color: " (c 'headings) ";
             text-align: left;
             margin-left: -40pt;
@@ -243,8 +255,8 @@
             height: 0pt;
             border-style: none;
             border-top: 2pt solid " (c 'borders) ";
-            text-align: left;/*this will align it for IE*/
-            margin: 0 auto 0 0; /*this will align it left for Mozilla*/
+            text-align: left;
+            margin: 0 auto 0 0;
             margin-left: -42pt;
             margin-top: " (pt (* line-height 1)) ";
             margin-bottom: " (pt (* line-height 1)) ";
@@ -270,8 +282,7 @@
         .man-heading {
             margin-top: " (pt (* line-height 0.5)) ";
             font-size: " (pt (* line-height 0.8)) ";
-            font-family: 'Josefin Sans', sans-serif;
-            font-weight: 600;
+            font-family: \"Open Sans\",\"Droid Sans\",Verdana,sans-serif;
             margin-left: -40pt;
         }
         .descr {
@@ -395,21 +406,3 @@
         (set! out-str (string-replace out-str (first r) (second r))))
       out-str))
 
-  (define alt-web.css
-    (let ([colors (hash 'fg              "000007"
-                        'bg              "fefeff"
-                        'bg-image        "fdfdfe"
-                        'footer          "777777"
-                        'headings        "000007"
-                        'headings-border "000007"
-                        'a               "4444ee"
-                        'a-hover-bg      "4444ee"
-                        'a-visited       "0000aa"
-                        'borders         "333399"
-                        'highlight1      "777777"
-                        'highlight2      "333333"
-                        'input-bg        "ffffff")])
-      ;;; TODO: that's pretty hacky
-      (string-replace* (css-template colors)
-        '("border-radius:5px 5px 5px 5px;" "border-radius: none;")
-        '("box-shadow:0px 0px 5px 4px" "box-shadow: 0px 0px 0px 2px"))))

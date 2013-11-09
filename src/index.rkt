@@ -12,11 +12,11 @@
           "r-wos.org - because everybody needs a website")
         (man-section "CONTENT"
           (man-options
-            '("-v, --blog" "http://blog.r-wos.org"
+            '("-v, --blog" "/blog/"
               "a programmer's view of the world")
             '("-h, --hacks" "/hacks/"
               "small random hacks")
-            '("-s, --github" "http://github.com/rwos"
+            '("-s, --github" "https://github.com/rwos"
               "source code repository")
             '("-a, --about" "/about"
               "about the author"))))))

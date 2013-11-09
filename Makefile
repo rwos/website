@@ -28,6 +28,9 @@ down:
 		mirror --use-cache --verbose --allow-chown \
 			   --allow-suid --no-umask --parallel=9"
 
+up: final.tmp
+	sudo cp -vuRf final.tmp/. /var/www/website/
+
 # merging generated html with static stuff
 final.tmp: generated/index static/*
 	mkdir -p final.tmp

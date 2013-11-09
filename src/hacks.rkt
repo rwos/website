@@ -9,7 +9,7 @@
               "Hacks"
       (p "Some quick hacks - not polished - hardly usable - use at own risk. "
          "The source code is available on "
-         (a/href "http://github.com/rwos" "my github page") " "
+         (a/href "https://github.com/rwos" "my github page") " "
          (small "(mostly public domain, but some are under an MIT-like license)."))
       (man-page
         (man-section "ANSI-C"
@@ -76,7 +76,7 @@
               "gti"
       (p "I've finally implemented the command I keep typing all day: "
          (code (b "gti")) ".")
-      "<img src='http://r-wos.org/media/gti-animation' style='max-width:100%'>"
+      "<img src='/media/gti-animation.gif' style='max-width:100%'>"
       (p "It's a program that displays a badly made ASCII-art animation
           to punish you for your typing error - and after that magically
           launches the command " (em "you meant to launch") ".")
