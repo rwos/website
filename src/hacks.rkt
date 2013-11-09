@@ -84,26 +84,23 @@
          (a/href "https://github.com/rwos/gti" "on github")
          " - though of course anybody can write his or her own version"
          " in a couple of minutes.")
-      (p "This whole thing is heavily inspired by " (code "sl") ", which
+      (p "This whole thing is heavily inspired by " (a/href "https://github.com/mtoyoda/sl" (code "sl")) ", which
           displays a steam locomotive. However, " (code "gti") " is actually
           nicer than " (code "sl") " as it at least executes git after the
           animation. :-)")
       (hr)
-      (p "I think " (code "gti") " is now available in both "
-         (a/href "http://packages.gentoo.org/package/dev-vcs/gti" "Gentoo's") " and "
-         (a/href "http://svnweb.freebsd.org/ports/head/games/gti/" "FreeBSD's")
-         " package systems - but I don't use either of them, so I can't really
-          test it.")
-      (p "It's also available in "
-         (a/href "http://aur.archlinux.org/packages.php?ID=62059" "Arch Linux")
-         ", "
-         (a/href "http://www.sourcemage.org/projects/grimoire/repository/revisions/834ee1a87924c78ebcfeb40628faec67d7bac09d" "Source Mage GNU/Linux")
-         ", the Debian-based "
-         (a/href "https://raymii.org/cms/p_Software_Packages" "Terrible Linux")
-         ", and on Mac OS via the "
-         (a/href "http://braumeister.org/formula/gti" "homebrew")
-         " package system.")
-      (p "If you're going to include it in $YOUR_DISTRO's package system please
+      (p (code "gti") " is available as a package in "
+         (ul
+           (li (a/href "http://aur.archlinux.org/packages.php?ID=62059" "Arch Linux"))
+           (li (a/href "http://packages.gentoo.org/package/dev-vcs/gti" "Gentoo"))
+           (li (a/href "http://svnweb.freebsd.org/ports/head/games/gti/" "FreeBSD"))
+           (li (a/href "http://openports.se/games/gti" "OpenBSD"))
+           (li "the Debian-based "
+               (a/href "https://raymii.org/cms/p_Software_Packages" "Terrible Linux"))
+           (li (a/href "http://www.sourcemage.org/projects/grimoire/repository/revisions/834ee1a87924c78ebcfeb40628faec67d7bac09d" "Source Mage GNU/Linux"))
+           (li "Mac OS X via the " (a/href "http://braumeister.org/formula/gti" "homebrew") " package system.")))
+      (p "Thanks to " (a/href "https://github.com/kusma" "kusma") " it should now also compile and run on Windows.")
+      (p "If you're going to include " (code "gti") " in $YOUR_DISTRO's package system please
           consider sending me a short note " (mailto "richard@r-wos.org")
          ". It's not a requirement, of course - I'm just curious!")
       ))
