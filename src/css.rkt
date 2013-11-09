@@ -23,84 +23,6 @@
   (define (j . strs)
     (apply j/str (cons "" strs)))
 
-  (define (term.css colors)
-    (define (c name)
-      (j "#" (hash-ref colors name)))
-    (j
-      ".terminal .clipboard {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          opacity: 0.01;
-          filter: alpha(opacity = 0.01);
-          filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0.01);
-          width: 2px;
-      }
-      .cmd > .clipboard {
-          position: fixed;
-      }
-      .terminal {
-          padding: 10px;
-          position: relative;
-          overflow: hidden;
-          max-width: 40em;
-      }
-      .cmd {
-          padding: 0;
-          margin: 0;
-          height: 1.3em;
-      }
-      .terminal .terminal-output div div, .terminal .prompt {
-          display: block;
-          line-height: 14px;
-          height: 16px;
-      }
-      .terminal {
-          font-family: \"DejaVu Sans Mono\", \"Droid Sans Mono\", monospace;
-          color: #33dd33;
-          font-size: 14px;
-          line-height: 16px;
-      }
-      .terminal .terminal-output div span {
-          display: inline-block;
-      }
-      .terminal .cmd span {
-          display: inline-block;
-      }
-      .terminal .cmd span.inverted {
-          background-color: #33dd33;
-          color: #000f00;
-      }
-      .terminal .terminal-output div div::-moz-selection, .terminal .terminal-output div span::-moz-selection {
-          background-color: #33dd33;
-          color: #000f00;
-      }
-      .terminal .terminal-output div div::selection, .terminal .terminal-output div span::selection,
-      .terminal .cmd > span::selection, .terminal .prompt span::selection {
-          background-color: #33dd33;
-          color: #000f00;
-      }
-      .terminal .terminal-output div.error, .terminal .terminal-output div.error div {
-          color: #33dd33;
-      }
-      .tilda {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          z-index: 1100;
-      }
-      .clear {
-          clear: both;
-      }
-      .terminal a {
-          color: #ccff66;
-      }
-      .terminal a:hover {
-          color: #ccff66;
-      }
-      "))
-
   (define reset.css
     "
       html, body, div, span, applet, object, iframe,
@@ -147,7 +69,6 @@
     (define (pt n) (format "~apt" (round n)))
     (j
       (css reset.css)
-      (css (term.css colors))
       (css "
         small {
           font-size: 90%;
@@ -155,7 +76,7 @@
         html {width: 100%; margin: 0; padding: 0;}
         html,body {min-height: 100%;}
         body {
-            font-family: \"Open Sans\",\"Droid Sans\",Verdana,sans-serif;
+            font-family: Georgia, sans-serif;
             font-size: " (pt body-size) ";
             line-height: " (pt line-height) ";
             color: " (c 'fg) ";
@@ -165,11 +86,6 @@
             padding-right: 1em;
             margin: auto;
             background-color: " (c 'bg) ";
-            background-image: -o-linear-gradient(     top, " (c 'bg) ", " (c 'bg-image) " 6em, " (c 'bg) " 1000px);
-            background-image: -moz-linear-gradient(   top, " (c 'bg) ", " (c 'bg-image) " 6em, " (c 'bg) " 1000px);
-            background-image: -webkit-linear-gradient(top, " (c 'bg) ", " (c 'bg-image) " 6em, " (c 'bg) " 1000px);
-            background-image: -ms-linear-gradient(    top, " (c 'bg) ", " (c 'bg-image) " 6em, " (c 'bg) " 1000px);
-            background-image: linear-gradient(        top, " (c 'bg) ", " (c 'bg-image) " 6em, " (c 'bg) " 1000px);
             max-width: 60em;
         }
         .navigation {
@@ -192,7 +108,6 @@
             padding-left: 60pt;
             padding-top: " (pt (* 2 line-height)) ";
             padding-bottom: " (pt (* 1 line-height)) ";
-            border-radius: 20pt 0 20pt 0;
             border-top: 2pt solid " (c 'borders) ";
             border-bottom: 2pt solid " (c 'borders) ";
         }
@@ -221,6 +136,11 @@
         .block p, .block pre {
           margin-top: " (pt (/ line-height 2)) ";
           margin-bottom: " (pt (/ line-height 2)) ";
+          -webkit-hyphens: auto;
+          -moz-hyphens: auto;
+          -ms-hyphens: auto;
+          hyphens: auto;
+          text-align: justify;
         }
         .block .date {
             margin-left: -40pt;
@@ -232,10 +152,15 @@
           font-weight: bold;
         }
         h1, h2, h3, h4 {
-            font-family: \"Open Sans\",\"Droid Sans\",Verdana,sans-serif;
+            font-family: Georgia, serif;
             color: " (c 'headings) ";
             text-align: left;
-            margin-left: -40pt;
+        }
+        h2, h3, h4 {
+            float: left;
+            padding-right: 0.5em;
+            margin-right: 0.5em;
+            border-right: 2pt solid " (c 'borders) ";
         }
         h1 {
             font-size: " (pt (* line-height 1.5)) ";
@@ -383,19 +308,18 @@
 
 
   (define web.css
-    (let ([colors (hash 'fg              "33dd33"
-                        'bg              "000f00"
-                        'bg-image        "021a02"
-                        'footer          "226622"
-                        'headings        "66ff66"
-                        'headings-border "66aa66"
-                        'a               "ccff66"
-                        'a-hover-bg      "ffff00"
-                        'a-visited       "aaaa00"
-                        'borders         "227722"
-                        'highlight1      "339933"
-                        'highlight2      "77aa33"
-                        'input-bg        "003f00")])
+    (let ([colors (hash 'fg              "111"
+                        'bg              "fff"
+                        'footer          "444"
+                        'headings        "222"
+                        'headings-border "222"
+                        'a               "0000ff"
+                        'a-hover-bg      "0000ff"
+                        'a-visited       "aa00aa"
+                        'borders         "111"
+                        'highlight1      "550"
+                        'highlight2      "000"
+                        'input-bg        "eee")])
       (css-template colors)))
       
   (require racket) ;;; XXX what's that thing doing here?
