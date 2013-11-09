@@ -8,13 +8,9 @@
     (std-page (std-nav-links "hacks")
               "Hacks"
       (p "Some quick hacks - not polished - hardly usable - use at own risk. "
-         "The source code is available on "
-         (a/href "https://github.com/rwos" "my github page") " "
-         (small "(mostly public domain, but some are under an MIT-like license)."))
+         "The " (a/href "https://github.com/rwos" "source code") " is available, too.")
       (man-page
         (man-section "ANSI-C"
-          (p "You'll need a C compiler and a POSIX system for those. Hacks
-              don't need to be portable, do they?")
           (man-options
             `("gti" "/hacks/gti"
               "An implementation of the command I keep typing all day long.")))
@@ -27,12 +23,12 @@
               ,(j "My entry for the 26th "
                   (a/href "http://www.ludumdare.com/compo/" "Ludum Dare")
                   " 48h game programming competition."))
-            `("Minslide" "/hacks/minslide"
-              "A self-contained single-file minimalistic HTML5 slide-deck.             ")
             `("Moore's Game" "/hacks/ld24/ld24"
               ,(j "My entry for the 24th "
                   (a/href "http://www.ludumdare.com/compo/" "Ludum Dare")
                   " 48h game programming competition."))
+            `("Minslide" "/hacks/minslide"
+              "A self-contained single-file minimalistic HTML5 slide-deck.")
             `("Voronoi Mandelbrot" "/hacks/voronoi-mandelbrot"
               "An interactive, zoom-able real-time rendering of the
                Mandelbrot set, using random points and Voronoi tessellation.")
@@ -68,8 +64,7 @@
             `("ping-turtle" "https://gist.github.com/rwos/5031023"
               "Plots a graph of the ping responses of the hosts with a two-character DNS name.")
             ))
-        (man-section "AUTHOR"
-          "Richard Wossal " (mailto "richard@r-wos.org")))))
+        )))
 
   (define gti.html
     (std-page (std-nav-links)
