@@ -11,7 +11,7 @@
            h head hr html
            link/css style
            noscript
-           p pre ul li
+           p pre
            script script/src
            title
            mailto signature
@@ -97,9 +97,6 @@
   (define p (tag "p"))
 
   (define pre (tag "pre"))
-
-  (define ul (tag "ul"))
-  (define li (tag "li"))
 
   (define script (tag "script"))
   (define (script/src src [c ""]) (j "<script src='" src "'>" c "</script>"))
