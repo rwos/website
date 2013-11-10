@@ -8,6 +8,12 @@
 
 - look into HTML5-support in IE --> change everything to html 5
 
+BUGS:
+    infinte loop in file below
+    infinte lopp in file c-values-add1 ...
+    doesn't recognize code blocks (tacit-racket-2.md)
+
+
 
 PS: Here it is - in case you like playing with failed ideas...
 
