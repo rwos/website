@@ -130,11 +130,12 @@ the same argument:
 And there is the "dyadic" hook, the one that applies the arguments
 in order:
 
-    
-    foo x1   ⇑       ⇑      ⇑
-            bar x2   ⇑      ⇑
-                    baz x3  ⇑
-                           qux x4
+```
+foo x1   ⇑       ⇑      ⇑
+        bar x2   ⇑      ⇑
+                baz x3  ⇑
+                       qux x4
+```
                     
 Of course, both "monadic" and "dyadic" are the wrong words for an
 implementation that takes an arbitrary number of functions. And
