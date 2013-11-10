@@ -50,3 +50,7 @@ clean:
 nuke: clean
 	rm -rf ./generated
 
+.PHONY: install
+install:
+	raco pkg install markdown
+

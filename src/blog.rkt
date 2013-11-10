@@ -1,6 +1,8 @@
 (module blog racket
 
-  (require "html.rkt")
+  (require "html.rkt"
+           markdown
+           xml)
 
   (provide (prefix-out blog: index.html)
            (prefix-out blog: archive.html)
@@ -26,7 +28,10 @@
       (list title date text comment-text)))
 
   (define (markdown->html src)
-    (with-output-to-string (lambda () (system* "md2html" src))))
+    (define parsed (parse-markdown src))
+    (if (empty? parsed)
+      ""
+      (apply string-append (map xexpr->string parsed))))
 
   (define (std-blog-page name prev next)
     (displayln (string-append "fetching blog page " name))

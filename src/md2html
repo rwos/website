@@ -1,4 +1,0 @@
-#!/usr/bin/python
-import markdown, sys
-print(markdown.markdown(sys.argv[1].decode("utf-8"), extras=["code-color"]).encode("utf-8"))
-
