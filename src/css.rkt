@@ -177,10 +177,9 @@
             width: 40pt;
             height: 0pt;
             border-style: none;
-            border-top: 2pt solid " (c 'borders) ";
+            border-top: 2pt solid " (c 'inline-headings) ";
             text-align: left;
             margin: 0 auto 0 0;
-            margin-left: -42pt;
             margin-top: " (pt (* line-height 1)) ";
             margin-bottom: " (pt (* line-height 1)) ";
         }
@@ -297,6 +296,9 @@
           }
           h1, h2, h3, h4, .man-heading, .block .date {
             margin-left: 0;
+            margin-right: 0;
+            display: block;
+            float: none;
           }
         }
         ")))

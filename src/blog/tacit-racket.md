@@ -1,6 +1,8 @@
 Tacit Programming in Racket
 2013-01-12
 
+<small>(There's also a [second part](http://r-wos.org/blog/tacit-racket-2))</small>
+
 Just a quick technical note: tacit (aka point-free aka - hahaha - pointless)
 programming works just fine in Racket.
 
