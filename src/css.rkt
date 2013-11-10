@@ -79,8 +79,6 @@
         strong {
           font-weight: bold;
         }
-        html {width: 100%; margin: 0; padding: 0;}
-        html,body {min-height: 100%;}
         body {
             font-family: Georgia, sans-serif;
             font-size: " (pt body-size) ";
@@ -209,22 +207,6 @@
         }
         .descr {
           margin-left: 2em;
-        }
-        input[type=text], textarea, input[type=button], input[type=submit] {
-            color: " (c 'fg) ";
-            background-color: " (c 'input-bg) ";
-            border: 2pt solid " (c 'borders) ";
-            border-radius: 0.25em;
-        }
-        input[type=text]:focus, textarea:focus {
-            border-top: 2pt solid " (c 'borders) ";
-            border-bottom: 2pt solid " (c 'borders) ";
-        }
-        input[type=button]:hover, input[type=submit]:hover {
-            color: " (c 'bg) ";
-            background-color: " (c 'a-hover-bg) ";
-            border: 2pt solid " (c 'a-hover-bg) ";
-            box-shadow: 0px 0px 5px 4px "(c 'a-hover-bg) ";
         }
         .nav-prev, .nav-next {
             font-size: small;
