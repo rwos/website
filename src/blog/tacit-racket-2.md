@@ -1,4 +1,4 @@
-Tacit Programming in Racket, Part 2
+Tacit Programming in Racket, Part&nbsp;2
 2013-03-14
 
 I've learned a bit more about tacit programming since
