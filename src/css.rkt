@@ -92,6 +92,15 @@
             background-color: " (c 'bg) ";
             max-width: 60em;
         }
+        textarea, input[type=text] {
+            font-family: Georgia, sans-serif;
+            font-size: " (pt body-size) ";
+            line-height: " (pt line-height) ";
+            color: " (c 'fg) ";
+            clear: both;
+            display: block;
+            width: 100%;
+        }
         .navigation {
           font-size: 10pt;
         }
@@ -125,7 +134,7 @@
           margin-top: " (pt (/ line-height 2)) ";
           margin-bottom: " (pt (/ line-height 2)) ";
         }
-        .block p {
+        .block p, textarea {
           -webkit-hyphens: auto;
           -moz-hyphens: auto;
           -ms-hyphens: auto;

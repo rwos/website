@@ -16,7 +16,14 @@
            [date  (read-line file)]
            [text  (port->string file)]
            [X (close-input-port file)]) ; XXX - well...
-      (list title date text)))
+      ;; append comment markdown, if any
+      (define comment-text "")
+      (define comment-file-name (string-append "blog/" name ".comments.md"))
+      (when (file-exists? comment-file-name)
+        (define comment-file (open-input-file comment-file-name))
+        (set! comment-text (port->string comment-file))
+        (close-input-port comment-file))
+      (list title date text comment-text)))
 
   (define (markdown->html src)
     (with-output-to-string (lambda () (system* "md2html" src))))
@@ -26,9 +33,10 @@
     (let* ([data (blog-data name)]
            [date (second data)]
            [header (first data)]
-           [content (markdown->html (last data))])
+           [content  (markdown->html (third data))]
+           [comments (markdown->html (fourth data))])
       (std-skeleton (j header " | r-wos.org")
-        (std-blog-body (std-nav-links) date header prev next content))))
+        (std-blog-body (std-nav-links) date header prev next content comments))))
 
   (define (blog-file name prev next)
     (lambda (dir)
@@ -78,33 +86,28 @@
 
   ;;; templates
 
-  (define (signed date)
-    (p (small (j "posted " date))))
+  (define comment-form
+    (j "<form>"
+       "<textarea name='comment' placeholder='Comment'></textarea>"
+       "<input type='submit' value='Submit'>"
+       "</form>"))
 
-  (define (std-blog-body nav-links date header previous next . contents)
+  (define (std-blog-body nav-links date header previous next content comments)
     (j (apply std-navigation nav-links)
        (div/id "content"
          (div/class "block"
            (div/class "date" (small date))
            (div/class "header" (h 1 header))
-           contents)
+           content)
          (when (list? previous)
            (div/class "nav-prev" "previous: " (a/href (first previous) (second previous))))
          (when (list? next)
            (div/class "nav-next" "next: " (a/href (first next) (second next))))
-         "<br style='clear: both'><br>"
-         ;; disqus comments
-         "<div id=\"disqus_thread\"></div><script type=\"text/javascript\">
-          var disqus_shortname = 'rwosorg';
-          (function() {
-              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-          })();
-          </script>
-          <noscript>Please enable JavaScript to view or post comments.</noscript>
-          <a href=\"http://disqus.com\" class=\"dsq-brlink\">comments powered by <span class=\"logo-disqus\">Disqus</span></a>"
-       )
+         (div/class "block"
+           "<h2>comments</h2>"
+           comments
+           comment-form
+           "<br style='clear: both'><br>"))
        std-footer))
 
   ;;; semi-static pages
