@@ -3,6 +3,7 @@
 
 "You are missing some linker flag somewhere" translates to C++ as follows:
 
+```
     undefined reference to
     `OIS::InputManager::createInputSystem(std::multimap<std::basic_string<char,
     std::char_traits<char>, std::allocator<char> >, std::basic_string<char,
@@ -11,6 +12,7 @@
     std::allocator<std::pair<std::basic_string<char, std::char_traits<char>,
     std::allocator<char> > const, std::basic_string<char, std::char_traits<char>,
     std::allocator<char> > > > >&)'
+```
 
 There is no place in this world for a language like that.
 We have enough problems already.
