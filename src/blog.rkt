@@ -220,6 +220,11 @@
                  (set! t (regexp-replace* #rx"--*" t "-"))
                  (set! t (regexp-replace* #rx"^-*" t ""))
                  (set! t (regexp-replace* #rx"-*$" t ""))
+                 ;; fixing old links
+                 (when (string=? t "more-cowbell")
+                   (set! t "more-cowbell-"))
+                 (when (string=? t "where-s-my-xor")
+                   (set! t "where-s-my-xor-"))
                  t)
                (define title (blog-post-title entry))
                (j (a/href (title->url title) title)
