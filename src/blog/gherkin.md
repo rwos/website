@@ -174,7 +174,7 @@ It's just a small hack.
 
 Here's an implementation of the core of Gherkin in ~30 lines of Racket:
 
-    :::racket
+    
     #lang racket
 
     (define *steps* '())
@@ -210,7 +210,7 @@ Here's an implementation of the core of Gherkin in ~30 lines of Racket:
 
 Step implementations would look like this:
 
-    :::racket
+    
 
     ;;; utilities
     (require net/url)

@@ -17,7 +17,7 @@ How do we get the original `open(2)`? The trick is to use `dlsym(3)` with the
 special `RTLD_NEXT` handle. This will find the next occurrence of the specified
 function after the current library (that is, after our `LD_PRELOAD`ed hook).
 
-    :::c
+    
     #define _GNU_SOURCE /* RTLD_NEXT is a GNU extension */
     #include <dlfcn.h>
     #include <stdio.h>
@@ -28,7 +28,7 @@ function after the current library (that is, after our `LD_PRELOAD`ed hook).
 Now we need to obtain a function pointer to the original
 `open`:
 
-    :::c
+    
         static int (*sys_open)(const char *, int) = NULL;
         if (sys_open == NULL) {
             sys_open = dlsym(RTLD_NEXT, "open");
@@ -36,7 +36,7 @@ Now we need to obtain a function pointer to the original
 
 And then we can use it:
 
-    :::c
+    
         printf("%s\n", pathname);
         return sys_open(pathname, flags);
     }

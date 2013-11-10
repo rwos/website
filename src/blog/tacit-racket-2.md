@@ -12,13 +12,13 @@ Monadic Forks
 
 Last time, I defined a function I called `-<`:
 
-    :::racket
+    
     (define (-< head . fns)
       (lambda (x) (apply head (map (lambda (fn) (fn x)) fns))))
 
 What it does is best explained by an example:
 
-    :::racket
+    
     (-< / sum length)
     ; is equivalent to
     (lambda args
@@ -39,7 +39,7 @@ supply an arbitrary number of "child" functions.
 
 But still, "fork" seems to be a better name than "-<":
 
-    :::racket
+    
     (define fork -<)
 
 Monadic Hooks
@@ -49,7 +49,7 @@ A monadic hook in J is basically the same as a fork, just without the forking.
 ...which is not a good explaination, I admit. It's probably best explained by
 an example:
 
-    :::racket
+    
     (hook foo bar)
     ; is equivalent to
     (lambda (arg)
@@ -60,17 +60,17 @@ finding out if a number is equal to its floor - i.e. if it is an integer.
 Racket has that function already built-in, under the name `integer?` - but
 let's suppose it did not. The non-tacit version is:
 
-    :::racket
+    
     (define (integer? x) (= x (floor x)))
 
 The tacit version would be:
 
-    :::racket
+    
     (define integer? (hook = floor))
 
 With that in mind, we can implement `hook` in Racket:
 
-    :::racket
+    
     (define (hook f1 f2)
       (lambda args
         (apply f1 (cons (apply f2 args)
@@ -89,7 +89,7 @@ our implementation above, with all arguments). Dyadic
 ("2-ary" or "binary") hooks give every argument to only one single function.
 Example:
     
-    :::racket
+    
     (hook/dyadic foo bar)
     ; is equivalent to
     (lambda (arg1 arg2)
@@ -99,7 +99,7 @@ This is useful for combining functions with different parameters. Again,
 I'll take the example from the J manual: Say, we want a function `hr`
 that converts hours and minutes into a decimal fraction of an hour.
 
-    :::racket
+    
     ;;; (This looks much better with infix notation: 3 hr 15)
     -> (hr 3 15)
     3.25
@@ -108,12 +108,12 @@ that converts hours and minutes into a decimal fraction of an hour.
 
 The non-tacit version of `hr` is:
 
-    :::racket
+    
     (define (hr h m) (+ h (/ m 60)))
 
 The tacit version would be:
 
-    :::racket
+    
     (define hr (hook/dyadic + (curryr / 60)))
 
 Which, as you might have noticed, is longer. And harder to understand.
@@ -158,7 +158,7 @@ the same arguments) are basically a special case of forks. They are forks
 with the identity function (`identity` in Racket) on one side. Taking our
 `integer?` example from above:
 
-    :::racket
+    
     (hook = floor)
     ; is the same as
     (lambda (x) (= x (floor x)))

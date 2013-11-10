@@ -30,7 +30,7 @@ perl script that parses github user profiles:
 
 Here are the entire contents of the repo that they have problems to understand:
 
-    :::python
+    
     from os import*
     r='s=[0]*8**5'
     p=0

@@ -26,7 +26,7 @@ or has syntax errors.
 
 So, let's see how it works:
 
-    :::console
+    
     $ ./grinder stats
     Your grinder stats:
     Gold: 0
@@ -35,7 +35,7 @@ So, let's see how it works:
 Hm, we seem to start without any gold or unlocked modules. "hello world" it is,
 then:
 
-    :::console
+    
     $ cat > hello.py
     print "hello, world"
     ^D
@@ -44,7 +44,7 @@ then:
 
 How much did we earn?
 
-    :::console
+    
     $ ./grinder stats
     Your grinder stats:
     Gold: 21
@@ -53,20 +53,20 @@ How much did we earn?
 21 pieces of gold - that isn't a lot, the README says we need 500 to unlock a
 module. Though, I do have an idea where the number comes from...
 
-    :::console
+    
     $ wc -c hello.py
     21 hello.py
 
 Well, that was simple - let's farm us some gold, shall we?
 
-    :::console
+    
     $ for i in `seq 100`; do echo "# foo" >> hello.py; done
     $ wc -c hello.py
     621 hello.py
 
 That should do.
 
-    :::console
+    
     $ ./grinder stats
     Your grinder stats:
     Gold: 42
@@ -74,7 +74,7 @@ That should do.
 
 Okay, it's cleverer than that. Let's see if it catches this:
 
-    :::console
+    
     $ for i in `seq 100`; do ./grinder hello.py; done
     $ ./grinder stats
     Your grinder stats:
@@ -85,7 +85,7 @@ Nope - and there we have it: the first problem of gamification are cheaters
 like me. That got boring rather quickly... Still, let's just visit the shop to
 see what it looks like:
 
-    :::console
+    
     $ ./grinder shop
     Welcome to the Grinder shop!
     Your grinder stats:
@@ -105,7 +105,7 @@ Okay, let's buy the `os` module:
 
 And try it:
         
-    :::console
+    
     $ cat > os.py
     import os
     print os.name
@@ -115,7 +115,7 @@ And try it:
 
 Okay, let's try a module we don't have yet:
 
-    :::console
+    
     $ cat > sys.py
     import sys
     print sys.argv
@@ -125,14 +125,14 @@ Okay, let's try a module we don't have yet:
 
 Fair enough - let's see if we can sneak our way past that restriction:
 
-    :::console
+    
     $ cat > backimport.py
     import sys 
     ^D
 
 And now, after buying only `backimport` (but not `sys`):
 
-    :::console
+    
     $ cat > sys-backdoor.py
     from backimport import * 
     print sys.argv

@@ -14,7 +14,7 @@ This is easily done by writing a new file into `/rbar` in `wmii`'s
 virtual file system. I suppose you already have your own `status` function
 in your `wmiirc_local` - just add something like the following:
 
-    :::bash
+    
     status() {
         # [...]
         echo -n "colors #ff0000 #000000 #000000\n" \
