@@ -92,7 +92,7 @@
             background-color: " (c 'bg) ";
             max-width: 60em;
         }
-        textarea, input[type=text] {
+        textarea {
             font-family: Georgia, sans-serif;
             font-size: " (pt body-size) ";
             line-height: " (pt line-height) ";
@@ -189,6 +189,17 @@
             margin: 0 auto 0 0;
             margin-top: " (pt (* line-height 1)) ";
             margin-bottom: " (pt (* line-height 1)) ";
+        }
+        .comments {
+          counter-reset: comment-id;
+        }
+        .comments hr:before, .comments h2+p:before {
+          counter-increment: comment-id;
+          content: counter(comment-id);
+          font-size: small;
+          color: " (c 'inline-headings) ";
+          display: block;
+          margin-left: -40pt;
         }
         a {
             color: " (c 'a) ";

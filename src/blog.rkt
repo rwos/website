@@ -103,7 +103,7 @@
            (div/class "nav-prev" "previous: " (a/href (first previous) (second previous))))
          (when (list? next)
            (div/class "nav-next" "next: " (a/href (first next) (second next))))
-         (div/class "block"
+         (div/class "block comments"
            "<h2>comments</h2>"
            comments
            comment-form
