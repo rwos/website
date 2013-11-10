@@ -92,7 +92,7 @@
   ;;; templates
 
   (define comment-form
-    (j "<form>"
+    (j "<form method='POST' action='/bin/comment.php'>"
        "<textarea name='comment' placeholder='Comment'></textarea>"
        "<input type='submit' value='Submit'>"
        "</form>"))
@@ -108,11 +108,11 @@
            (div/class "nav-prev" "previous: " (a/href (first previous) (second previous))))
          (when (list? next)
            (div/class "nav-next" "next: " (a/href (first next) (second next))))
-         (div/class "block comments"
+         #;(div/class "block comments"
            "<h2>comments</h2>"
            comments
-           comment-form
-           "<br style='clear: both'><br>"))
+           comment-form)
+         "<br style='clear: both'><br>")
        std-footer))
 
   ;;; semi-static pages

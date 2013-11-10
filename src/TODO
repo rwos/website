@@ -14,6 +14,7 @@ BUGS:
     doesn't recognize code block (tacit-racket-2.md)
     doesn't recognize inline-html (second-coffeescript.md)
 
+    change HTML in never-mind.md
 
 
 PS: Here it is - in case you like playing with failed ideas...

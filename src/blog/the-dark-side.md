@@ -4,7 +4,6 @@ The Dark Side
 ...and the world finally has an interactive version of Pink Floyd's famous Dark Side Of The Moon album cover:
 
 <a href="http://r-wos.org/processing/dark_side/">
-The Dark Side<br>
 <img src="http://r-wos.org/media/the_dark_side.png">
 </a>
 
