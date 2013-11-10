@@ -1,0 +1,9 @@
+#!/bin/bash
+BASEURL="http://r-wos.org"
+echo "checking $BASEURL"
+LANG=C
+wget -e robots=off \
+    --spider --no-directories --delete-after \
+    --recursive --level=100 \
+    --page-requisites \
+    "$BASEURL"
