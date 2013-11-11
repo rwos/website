@@ -35,13 +35,17 @@
 
   (define (std-blog-page name prev next)
     (displayln (string-append "fetching blog page " name))
-    (let* ([data (blog-data name)]
-           [date (second data)]
-           [header (first data)]
-           [content  (markdown->html (third data))]
-           [comments (markdown->html (fourth data))])
-      (std-skeleton (j header " | r-wos.org")
-        (std-blog-body (std-nav-links) date header prev next content comments))))
+    (define start (current-inexact-milliseconds))
+    (define data (blog-data name))
+    (printf "\traw-data: ~a\n" (- (current-inexact-milliseconds) start))
+    (define date (second data))
+    (define header (first data))
+    (define content  (markdown->html (third data)))
+    (printf "\tcontent:  ~a\n" (- (current-inexact-milliseconds) start))
+    (define comments (markdown->html (fourth data)))
+    (printf "\tcomments: ~a\n" (- (current-inexact-milliseconds) start))
+    (std-skeleton (j header " | r-wos.org")
+      (std-blog-body (std-nav-links) date header prev next content comments)))
 
   (define (blog-file name prev next)
     (lambda (dir)
@@ -50,7 +54,6 @@
         (string-append name ".html")
         ;; content
         (std-blog-page name prev next))))
-
 
   (define (blog-post-title name)
     (first (blog-data name)))
@@ -108,6 +111,18 @@
            (div/class "nav-prev" "previous: " (a/href (first previous) (second previous))))
          (when (list? next)
            (div/class "nav-next" "next: " (a/href (first next) (second next))))
+         "<br style='clear: both'><br>"
+         ;; disqus comments
+         "<div id=\"disqus_thread\"></div><script type=\"text/javascript\">
+          var disqus_shortname = 'rwosorg';
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+          </script>
+          <noscript>Please enable JavaScript to view or post comments.</noscript>
+          <a href=\"http://disqus.com\" class=\"dsq-brlink\">comments powered by <span class=\"logo-disqus\">Disqus</span></a>"
          #;(div/class "block comments"
            "<h2>comments</h2>"
            comments
