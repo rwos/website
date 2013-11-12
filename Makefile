@@ -32,7 +32,7 @@ up: final.tmp
 	sudo cp -vuRf final.tmp/. /var/www/website/
 
 # merging generated html with static stuff
-final.tmp: generated/index static/*
+final.tmp: generated/index static/* sundown/sundown
 	mkdir -p final.tmp
 	cp --archive static/* static/.h* $@
 	cp -R generated/index/* $@
@@ -41,6 +41,10 @@ final.tmp: generated/index static/*
 generated/index: src/*.rkt src/blog/*.md
 	mkdir -p generated
 	cd src && racket generate.rkt
+
+sundown/sundown:
+	git submodule update
+	cd sundown && make
 
 .PHONY: clean
 clean:
