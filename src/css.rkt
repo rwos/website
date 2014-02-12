@@ -257,7 +257,7 @@
 
   (define web.css
     (let ([colors (hash 'fg              "111"
-                        'bg              "fff"
+                        'bg              "f2f0f0"
                         'footer          "444"
                         'headings        "222"
                         'inline-headings "777"
