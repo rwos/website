@@ -134,6 +134,7 @@
           margin-top: " (pt (/ line-height 2)) ";
           margin-bottom: " (pt (/ line-height 2)) ";
         }
+        /* ==================================
         .block p, textarea {
           -webkit-hyphens: auto;
           -moz-hyphens: auto;
@@ -141,6 +142,8 @@
           hyphens: auto;
           text-align: justify;
         }
+        =====================================
+        */
         blockquote {
           padding-left: 2em;
           line-height: 1.2em;
