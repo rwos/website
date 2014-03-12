@@ -37,7 +37,7 @@ unit-testable class is probably better than *the same class* with a design that
 prohibits unit-testing. But it's only exactly that.
 
 * The class might be completely unnecessary. This is a particularly common
-sight. The functionality might already exist elsewhere. Or the class might just
+oversight. The functionality might already exist elsewhere. Or the class might just
 not *do anything* worthwhile at all. TDD doesn't help here. In fact, it even
 hurts. With the writing of a unit test for that useless class it cements it
 into the system. You wouldn't throw that well-tested class away, now
@@ -104,9 +104,9 @@ can actually be more dangerous than not having any tests at all. If there are
 no tests then it's clear that your brain is the thing that will have to make it
 work. So you have to *think* about what you're doing, and how it affects the
 system. If, however, you *believe* that the tests catch you, you're probably
-going to be a little more sloppy. It's like a guard-rail that's not bolted on
+going to be a little more sloppy. It's like a handrail that's not bolted on
 properly. If people lean on it, that can easily be more dangerous than not
-having a guard-rail at all.
+having a handrail at all.
 
 But TDD proponents being ignorant is one thing. What *really* bugs me about
 this is that the "100% coverage" story is what programming is all about.
