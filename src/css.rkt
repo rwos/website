@@ -107,6 +107,62 @@
         .navigation * {
           margin-right: 1em;
         }
+        .navigation span {
+          animation-duration: 0.5s;
+          animation-name: blink;
+          animation-iteration-count: infinite;
+          animation-direction: alternate;
+          animation-timing-function: ease-in;
+          -webkit-animation-duration: 0.5s;
+          -webkit-animation-name: blink;
+          -webkit-animation-iteration-count: infinite;
+          -webkit-animation-direction: alternate;
+          -webkit-animation-timing-function: ease-in;
+          -moz-animation-duration: 0.5s;
+          -moz-animation-name: blink;
+          -moz-animation-iteration-count: infinite;
+          -moz-animation-direction: alternate;
+          -moz-animation-timing-function: ease-in;
+        }
+        @keyframes blink {
+          from {
+            background: " ( c 'fg ) ";
+            border-radius: 2px;
+            box-shadow: 0 0 5px 5px " (c 'fg) ";
+            color: " ( c 'bg ) ";
+          }
+          to {
+            background: " ( c 'bg ) ";
+            border-radius: 2px;
+            color: " ( c 'fg ) ";
+          }
+        }
+        @-webkit-keyframes blink {
+          from {
+            background: " ( c 'fg ) ";
+            border-radius: 2px;
+            box-shadow: 0 0 5px 5px " (c 'fg) ";
+            color: " ( c 'bg ) ";
+          }
+          to {
+            background: " ( c 'bg ) ";
+            border-radius: 2px;
+            color: " ( c 'fg ) ";
+          }
+        }
+        @-moz-keyframes blink {
+          from {
+            background: " ( c 'fg ) ";
+            border-radius: 2px;
+            box-shadow: 0 0 5px 5px " (c 'fg) ";
+            color: " ( c 'bg ) ";
+          }
+          to {
+            background: " ( c 'bg ) ";
+            border-radius: 2px;
+            color: " ( c 'fg ) ";
+          }
+        }
         #footer, #footer * {
             font-size: 9pt;
             color: " (c 'footer) ";
@@ -171,7 +227,12 @@
         h1 {
             font-size: " (pt (* line-height 1.5)) ";
             line-height: " (pt (* line-height 1.5)) ";
-          margin-bottom: " (pt (* line-height 2)) ";
+            margin-bottom: " (pt (* line-height 2)) ";
+        }
+        h1 {
+            -moz-transform: rotate(-2deg);
+            -webkit-transform: rotate(-2deg);
+            transform: rotate(-2deg);
         }
         hr {
             width: 40pt;
@@ -205,9 +266,24 @@
         a:hover, a img:hover {
             color: " (c 'bg) " ! important;
             background-color: " (c 'a-hover-bg) ";
+            border-radius: 2px;
+            box-shadow: 0 0 5px 5px " (c 'a-hover-bg) ";
+            transition: all 0.1s ease-in-out;
         }
         a:visited {
             color: " (c 'a-visited) ";
+        }
+        *::selection {
+            color: " (c 'bg) ";
+            background-color: " (c 'fg) ";
+        }
+        *::-moz-selection {
+            color: " (c 'bg) ";
+            background-color: " (c 'fg) ";
+        }
+        *::-webkit-selection {
+            color: " (c 'bg) ";
+            background-color: " (c 'fg) ";
         }
         .man-page {
             display: inline-block;
@@ -249,19 +325,21 @@
 
 
   (define web.css
-    (let ([colors (hash 'fg              "111"
-                        'bg              "f2f0f0"
-                        'footer          "444"
-                        'headings        "222"
-                        'inline-headings "777"
-                        'headings-border "888"
-                        'a               "0000ff"
-                        'a-hover-bg      "0000ff"
-                        'a-visited       "aa00aa"
-                        'borders         "111"
-                        'highlight1      "550"
-                        'highlight2      "000"
-                        'input-bg        "eee")])
+    (let ([colors (hash 'fg              "33dd33"
+                        'bg              "000f00"
+                        'bg-image        "021a02"
+                        'footer          "226622"
+                        'inline-headings "66ff66"
+                        'headings        "66ff66"
+                        'headings-border "66aa66"
+                        'a               "ccff66"
+                        'a-hover-bg      "ffff00"
+                        'a-visited       "cccc44"
+                        'borders         "227722"
+                        'highlight1      "339933"
+                        'highlight2      "77aa33"
+                        'input-bg        "003f00")])
+
       (css-template colors)))
       
   (require racket) ;;; XXX what's that thing doing here?
