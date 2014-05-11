@@ -1,4 +1,4 @@
-<canvas id="canvas" width="640" height="480" style="width:100%;top:0;left:0;position:absolute;z-index:-9999"></canvas>
+<canvas id="canvas" width="800" height="600" style="width:100%;top:0;left:0;position:absolute;z-index:-9999"></canvas>
 
 <script>
 var C = el("canvas")
@@ -8,12 +8,14 @@ var W = C.width;
 
 
 var MAX_ITERATIONS = 255;
-var SUPER_SAMPLE = 1;
-var STEP_SIZE = 5;
-var POINTS_PER_RUN = H*W;
+var SUPER_SAMPLE = 2;
+var STEP_SIZE = 4;
+var POINTS_PER_RUN = 1;
+var RENDER_TIME_LIMIT = 35;
+var POINTS_LIMIT = ((W*H)/(STEP_SIZE*STEP_SIZE))/10;
 
 var ZOOM = 1;
-var X_OFF = 0.74364386269;
+var X_OFF = 0.74364386260;
 var Y_OFF = 0.13182590271;
 
 var RUNNING;
@@ -47,6 +49,7 @@ function scale_y(y) {
 
 var LAST_X = 0;
 var LAST_Y = 0;
+var POINTS_VISITED = 0;
 function next_point() {
     // point
     var y_supersample = SUPER_SAMPLE;
@@ -65,13 +68,13 @@ function next_point() {
     // next point
     var x = LAST_X;
     var y = LAST_Y;
-    LAST_X += STEP_SIZE;
-    if (LAST_X > W) {
-        LAST_X = 0;
-        LAST_Y += STEP_SIZE;
-        if (LAST_Y > H)
-            return false;
+    POINTS_VISITED += 1;
+    if (POINTS_VISITED > POINTS_LIMIT) {
+        POINTS_VISITED = 0;
+        return false;
     }
+    LAST_X = rand(0, W);
+    LAST_Y = rand(0, H);
     return [x, y, (accu/sub_colors.length)];
 }
 
@@ -106,10 +109,20 @@ function run() {
         } else {
             // done rendering
             clearTimeout(RUNNING);
+            setTimeout(re_run, 10);
             return;
         }
     }
     var stop = (new Date).getTime();
+    if (stop-start > RENDER_TIME_LIMIT) {
+        POINTS_PER_RUN *= 0.5;
+        if (POINTS_PER_RUN < 1) {
+            POINTS_PER_RUN = 1;
+        }
+    } else {
+        POINTS_PER_RUN *= 1.1;
+    }
+    POINTS_PER_RUN = Math.ceil(POINTS_PER_RUN);
     RUNNING = setTimeout(run, 1);
 }
 
@@ -119,7 +132,6 @@ function re_run() {
     ZOOM *= 0.99;
     clearTimeout(RUNNING);
     RUNNING = setTimeout(run, 1);
-    setTimeout(re_run, 10);
 }
 re_run();
 
