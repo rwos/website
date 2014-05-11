@@ -38,7 +38,7 @@ final.tmp: generated/index static/* sundown/sundown
 	cp -R generated/index/* $@
 
 # html generation
-generated/index: src/*.rkt src/blog/*.md
+generated/index: src/*.rkt src/blog/*.md src/about.js
 	mkdir -p generated
 	cd src && racket generate.rkt
 

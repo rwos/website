@@ -1,6 +1,6 @@
 (module index racket/base
 
-  (require "html.rkt")
+  (require "html.rkt" racket/file)
 
   (provide (prefix-out index: (all-defined-out)))
 
@@ -20,6 +20,7 @@
   (define about.html
     (std-page (std-nav-links "about")
               "About"
+      (file->string "about.js")
       (p "Hi, I'm Richard Wossal - a programmer, as you might have guessed.")
       (p "I'm currently mostly doing web development professionally and
           try to do more interesting things unprofessionally.")
