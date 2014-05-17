@@ -46,7 +46,7 @@
                (map (lambda (proj)
                       ;; project
                       (li
-                        (a/href "#TODO" (code (symbol->string proj))) " - "
+                        (a/href (symbol->string proj) (code (symbol->string proj))) " - "
                         (project-description proj)
                         (br)
                         (small
