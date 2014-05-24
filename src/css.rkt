@@ -64,8 +64,8 @@
   (define (css-template colors)
     (define (c name)
       (j "#" (hash-ref colors name)))
-    (define body-size 11)
-    (define line-height 16)
+    (define body-size 12)
+    (define line-height 19)
     (define (pt n) (format "~apt" (round n)))
     (j
       (css reset.css)
@@ -102,7 +102,7 @@
             width: 100%;
         }
         .navigation {
-          font-size: 10pt;
+          font-size: 90%;
         }
         .navigation * {
           margin-right: 1em;
@@ -164,7 +164,7 @@
           }
         }
         #footer, #footer * {
-            font-size: 9pt;
+            font-size: small;
             color: " (c 'footer) ";
         }
         #footer > a {
@@ -294,11 +294,14 @@
             font-family: \"Open Sans\",\"Droid Sans\",Verdana,sans-serif;
             margin-left: -40pt;
         }
+        .man-option {
+            margin-top: " (pt (* line-height 0.25)) ";
+        }
         .descr {
           margin-left: 2em;
         }
         .nav-prev, .nav-next {
-            font-size: small;
+            font-size: 90%;
         }
         @media (max-width: 500px) {
           .block {
