@@ -144,6 +144,8 @@
     (std-page (std-nav-links "blog")
               "a programmer's view of the world"
       (man-options
+        `("NoUnderstand NoFlo" "noflo"
+          "Like the unix shell, but completely different.")
         `("Test Driven Development" "test-driven"
           "100% of something.")
         `("Given When Then" "gherkin"
