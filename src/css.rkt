@@ -181,6 +181,7 @@
         }
         code, pre {
           font-family: \"DejaVu Sans Mono\", \"Droid Sans Mono\", monospace;
+          color: " ( c 'inline-headings ) ";
         }
         .block pre {
           padding-left: 2em;
@@ -273,17 +274,17 @@
         a:visited {
             color: " (c 'a-visited) ";
         }
-        *::selection {
-            color: " (c 'bg) ";
-            background-color: " (c 'fg) ";
-        }
         *::-moz-selection {
             color: " (c 'bg) ";
-            background-color: " (c 'fg) ";
+            background-color: " (c 'inline-headings) ";
         }
         *::-webkit-selection {
             color: " (c 'bg) ";
-            background-color: " (c 'fg) ";
+            background-color: " (c 'inline-headings) ";
+        }
+        *::selection {
+            color: " (c 'bg) ";
+            background-color: " (c 'inline-headings) ";
         }
         .man-page {
             display: inline-block;
@@ -335,9 +336,9 @@
                         'inline-headings "66ff66"
                         'headings        "66ff66"
                         'headings-border "66aa66"
-                        'a               "ccff66"
+                        'a               "ddff66"
+                        'a-visited       "aadd66"
                         'a-hover-bg      "ffff00"
-                        'a-visited       "cccc44"
                         'borders         "227722"
                         'highlight1      "339933"
                         'highlight2      "77aa33"
