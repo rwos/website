@@ -144,6 +144,8 @@
     (std-page (std-nav-links "blog")
               "a programmer's view of the world"
       (man-options
+        `("I ain't gonna work on Maggie's farm no more" "imagineeasy"
+          "Work. Life.")
         `("NoUnderstand NoFlo" "noflo"
           "Like the unix shell, but completely different.")
         `("Test Driven Development" "test-driven"
