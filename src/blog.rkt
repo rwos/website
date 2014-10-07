@@ -60,7 +60,7 @@
   (define (blog-post-size name)
     (string-length (last (blog-data name))))
   (define (blog-post-content name)
-    (last (blog-data name)))
+    (third (blog-data name)))
 
   ;;; sorting and lists of posts
 
