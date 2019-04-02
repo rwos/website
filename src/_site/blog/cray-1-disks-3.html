@@ -1,0 +1,72 @@
+<!doctype html><html lang="en"><head><meta http-equiv="Content-type" content="text/html;charset=UTF-8"><meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0"><title>Continued | r-wos.org</title> <style>
+    * { line-height: 140%; }
+    @-moz-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@-webkit-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@-o-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@keyframes blink {
+ 0% {
+    opacity: 1;
+ }
+ 50% {
+    opacity: 0;
+ }
+ 100% {
+    opacity: 1;
+ }
+}
+
+blink {
+  display: inline;
+  -webkit-animation: blink 1s steps(1) infinite;
+  -moz-animation: blink 1s steps(1) infinite;
+  -o-animation: blink 1s steps(1) infinite;
+  animation: blink 1s steps(1) infinite;
+}
+
+    </style></head><body style="margin:15px auto;max-width:40em"> <nav> <a href="/">Home</a> - <a href="/blog">Blog</a> - <a href="/feed.xml">RSS</a> - <a href="/hacks">Hacks</a> - <a href="/about">About</a> </nav> <main><h1>Continued</h1><p>2013-04-12<p>Things I’ve learned today in my <a href="http://r-wos.org/blog/cray-1-disks">little</a> <a href="http://r-wos.org/blog/cray-1-disks-2">Cray-1</a> adventure:</p><p>The Cray-1 seems to use a Data General Eclipse as its control computer. The Eclipse’s OS is called RDOS - and that’s also the system the assembler is running on. (RDOS has the <code class="highlighter-rouge">PROG/A/B</code> switch syntax described in the assembler manual, and also uses the <code class="highlighter-rouge">.SV</code> file extension for executables.)</p><p>The good news is that there is an Eclipse simulator in <code class="highlighter-rouge">simh</code>, and they also have an <a href="http://simh.trailing-edge.com/software.html">RDOS software kit</a>.</p><p>The boot instructions are in the <code class="highlighter-rouge">simh</code> manual, but I at least had to replace the mentions of <code class="highlighter-rouge">dp0</code> with <code class="highlighter-rouge">dkp0</code> (which is how <code class="highlighter-rouge">simh</code> calls the “moving head disk”):</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># install simh, then do
+$ eclipseemu # at least that's what it's called on debian
+sim&gt; att dkp0 zrdos75.dsk
+sim&gt; set tti dasher
+sim&gt; boot dkp0
+FILENAME? (cr)
+DATE (mm/dd/yy)? xx/yy/zz
+TIME (hh:mm:ss)? hh:mm:ss
+R
+list/e
+</code></pre></div></div><p>RDOS doesn’t seem to have an on-line help system, which makes using it a bit difficult. But there’s <a href="http://bitsavers.informatik.uni-stuttgart.de/pdf/dg/software/rdos/093-000109-01_RDOS_Command_Line_Interpreter.pdf">a PDF manual on bitsavers</a>.</p><p>So that all works but it doesn’t really bring us that much further. I guessed that the Cray OS disk might actually be (at least partly) an RDOS disk, but it isn’t:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>R
+init dp1
+DISK FORMAT ERROR:  DP1
+</code></pre></div></div><p>Admittedly, that was a bit naive. The COS disk belongs to a Cray X-MP and in the <a href="http://bitsavers.informatik.uni-stuttgart.de/pdf/cray/HR-0032_X-MP_MainframeRef_Nov82.pdf">reference manual for <em>that</em> machine</a> (bitsavers is a gold mine) there’s no mention of the Eclipse.</p><p>Said manual also contains the following section:</p><blockquote><p>SYSTEM DEADSTART<br/> […] Once the I/O Subsystem is operating, the CRAY X-MP mainframe can be deadstarted from the Peripheral Expander magnatic tape unit or the DD-20 disk unit.</p></blockquote><p>The problem is that it refers to the “I/O Subsystem (IOS) Operator’s Guide” for further information - and I couldn’t find that guide, yet.</p><p>The Cray-1 manual, on the other hand, says that</p><blockquote><p>COS is loaded into memory and activated through a system startup procedure performed on the MCU (maintenance control unit). At startup, permanent datasets are reloaded or re-established on mass storage.</p></blockquote><p>Is the Data General Eclipse the MCU? Probably - but probably only for the Cray-1. What’s the MCU-like thing for the Cray X-MP? Is there one?</p><p>To sum up, I can’t really say that I understand the whole auxiliary stuff around the mainframe.</p><p>So, maybe a better way to move on would be to try to manually extract the COS image that seems to be on the disk and ignore the whole IOS stuff for the moment.</p><hr><h2>See Also</h2><p>Previously: <a href="/blog/cray-1-disks-2">Playing with Cray-1 Disks, Part 2</a></p><p>Next up: <a href="/blog/r-listing">Certainly Not Mainstream</a></p><p> The machine thinks that the Web-Log entries <a href="/blog/cray-1-disks-3">Continued</a>, <a href="/blog/cray-1-disks-2">Playing with Cray-1 Disks, Part 2</a>, and <a href="/blog/purely-functional-games">Purely Functional Games</a> might be related to the topic so eloquently discussed above. The machine is sometimes right.</p></main></body></html>

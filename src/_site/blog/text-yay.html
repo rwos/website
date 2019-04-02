@@ -1,0 +1,63 @@
+<!doctype html><html lang="en"><head><meta http-equiv="Content-type" content="text/html;charset=UTF-8"><meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0"><title>Text! Yay! | r-wos.org</title> <style>
+    * { line-height: 140%; }
+    @-moz-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@-webkit-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@-o-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@keyframes blink {
+ 0% {
+    opacity: 1;
+ }
+ 50% {
+    opacity: 0;
+ }
+ 100% {
+    opacity: 1;
+ }
+}
+
+blink {
+  display: inline;
+  -webkit-animation: blink 1s steps(1) infinite;
+  -moz-animation: blink 1s steps(1) infinite;
+  -o-animation: blink 1s steps(1) infinite;
+  animation: blink 1s steps(1) infinite;
+}
+
+    </style></head><body style="margin:15px auto;max-width:40em"> <nav> <a href="/">Home</a> - <a href="/blog">Blog</a> - <a href="/feed.xml">RSS</a> - <a href="/hacks">Hacks</a> - <a href="/about">About</a> </nav> <main><h1>Text! Yay!</h1><p>2012-05-01<p>That one was surprisingly easy, then hard, and eventually pretty easy again.</p><p>In most GUI-frameworks, I think, one could have just used the normal text-on-canvas functions to draw some text on top of the OpenGL canvas. At least that’s what I had expected.</p><p>Well, it doesn’t really work that way in Racket’s GUI framework. So, text rendering in OpenGL it is.</p><p>Some googling later, I was horrified - the way one renders text in OpenGL is basically the following:</p><ul><li>obtaining a bitmap of the text</li><li>converting that to a texture</li><li>mapping that texture onto an object</li><li>rendering the object</li></ul><p>But I figured I had no choice. Off to Racket’s documentation (which is excellent, by the way) for point one on the list: obtaining a bitmap with text on it.</p><p>That’s <em>really</em> easy in racket:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(let* ([text-target (make-bitmap 200 200)]
+       [dc (new bitmap-dc% [bitmap text-target])])
+  (send dc draw-text "hello, world!"))
+</code></pre></div></div><p>All right, now - how can I convert that to an OpenGL texture? Turns out, I don’t have to. There’s a handy function which directly converts that bitmap into an OpenGL display-list - ready for rendering.</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(gl-call-list (bitmap-&gt;gl-list text-target))
+</code></pre></div></div><p>So, at the end of the day, that was quite easy. It’s not perfect (the letters look pretty bad and turning on font-smoothing only makes it worse) but good enough for now. And there’s an up-side: the text-holding object behaves like any other 3D object in the scene, now. It can be textured, reacts to the scene’s lightening, etc.</p><p>Screenshot:</p><p><img src="http://r-wos.org/media/game-2-1.png" style="width:90%"/></p><p>(Please ignore the ugly wood-panel background, that’s only there because it was easy to do.)</p><hr><h2>See Also</h2><p>Previously: <a href="/blog/planets-yay">Planets! Yay!</a></p><p>Next up: <a href="/blog/these-feet-are-made-for-walking">These feet are made for walking</a></p><p> The machine thinks that the Web-Log entries <a href="/blog/text-yay">Text! Yay!</a>, <a href="/blog/ludum-dare-26-postmortem">26th Ludum Dare - Postmortem</a>, and <a href="/blog/purely-functional-games">Purely Functional Games</a> might be related to the topic so eloquently discussed above. The machine is sometimes right.</p></main></body></html>

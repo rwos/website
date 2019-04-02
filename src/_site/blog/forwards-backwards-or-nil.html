@@ -1,0 +1,59 @@
+<!doctype html><html lang="en"><head><meta http-equiv="Content-type" content="text/html;charset=UTF-8"><meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0"><title>Forwards, Backwards, or nil | r-wos.org</title> <style>
+    * { line-height: 140%; }
+    @-moz-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@-webkit-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@-o-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@keyframes blink {
+ 0% {
+    opacity: 1;
+ }
+ 50% {
+    opacity: 0;
+ }
+ 100% {
+    opacity: 1;
+ }
+}
+
+blink {
+  display: inline;
+  -webkit-animation: blink 1s steps(1) infinite;
+  -moz-animation: blink 1s steps(1) infinite;
+  -o-animation: blink 1s steps(1) infinite;
+  animation: blink 1s steps(1) infinite;
+}
+
+    </style></head><body style="margin:15px auto;max-width:40em"> <nav> <a href="/">Home</a> - <a href="/blog">Blog</a> - <a href="/feed.xml">RSS</a> - <a href="/hacks">Hacks</a> - <a href="/about">About</a> </nav> <main><h1>Forwards, Backwards, or nil</h1><p>2011-07-05<p>Programming languages can be categorised into <a href="http://en.wikipedia.org/wiki/List_of_programming_languages_by_category" target="_blank">many</a>, many - uh, categories. That’s no news.</p><p>But, no matter if you write object-oriented, structured, functional, or <a href="http://www.esolangs.org/wiki/Brainfuck" target="_blank">brainfuck</a> - someday someone will <em>read</em> your program. (Well, maybe not if you’re writing in Brainfuck… let’s better just keep that aside for now)</p><p>Now, the first thing that I notice in a new programming language is not whether it’s object-oriented. And it’s not whether it supports monads or functors or even first-class functions. I only see <em>the direction of reading</em>.</p><p>In my very personal categorisation, there are exactly 3 directions currently available in programming languages:</p><ol><li>left-to-right</li><li>right-to-left</li><li>nil</li></ol><p>Let me explain.</p><p>The first one on the list is the easiest one to find examples for. Everybody knows it: Lisp (everybody <em>does</em> know Lisp, right?). In Lisp everything reads strictly from left to right: Add one to one <code class="highlighter-rouge">(+ 1 1)</code>. Display “hello” <code class="highlighter-rouge">(display "hello")</code>. Define ls as a list of one and two <code class="highlighter-rouge">(define ls (list 1 2))</code>.</p><p>Easy and - more importantly - consistent.</p><p>Now let’s come two item two on the list, the right-to-left languages. These are harder to find. The most prominent example among the high-level languages is probably Forth. In Forth, most things read from right to left. Add one and one: “<code class="highlighter-rouge">1 1 +</code>”. Display the duplicate of 2: “<code class="highlighter-rouge">2 DUP .</code>”.</p><p>There are exceptions to these in Forth, but overall, due to its stack-based nature, it has a very strong right-to-left feeling. At least for me.</p><p>The third point on the list is… non-existent, really</p><p>Most languages like C or Java or Fortran don’t really have a built-in reading direction - or I just don’t see it. Still, they cannot really be considered “both-ways” as <em>they lack the right-to-left way</em>. There is no way to write a C program that looks like Forth. C just lacks the stack (a programmer-accessible stack, that is) - and with it a <em>whole world</em> of expressions and idioms.</p><p>And that is what I miss most in programming languages: Lisp <em>and</em> Forth. I want <em>both</em> of them. At the same time. In one language.</p><p>How hard can it be?</p><hr><h2>See Also</h2><p>Next up: <a href="/blog/arbitrary-limits-or-64-bits-ought-to-be-enough-for-anybody">Arbitrary Limits, or "64 Bits ought to be enough for anybody"</a></p><p> The machine thinks that the Web-Log entries <a href="/blog/forwards-backwards-or-nil">Forwards, Backwards, or nil</a>, <a href="/blog/purely-functional-games">Purely Functional Games</a>, and <a href="/blog/gherkin">Given When Then</a> might be related to the topic so eloquently discussed above. The machine is sometimes right.</p></main></body></html>

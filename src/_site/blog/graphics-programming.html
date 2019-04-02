@@ -1,0 +1,59 @@
+<!doctype html><html lang="en"><head><meta http-equiv="Content-type" content="text/html;charset=UTF-8"><meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0"><title>Graphics Programming | r-wos.org</title> <style>
+    * { line-height: 140%; }
+    @-moz-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@-webkit-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@-o-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@keyframes blink {
+ 0% {
+    opacity: 1;
+ }
+ 50% {
+    opacity: 0;
+ }
+ 100% {
+    opacity: 1;
+ }
+}
+
+blink {
+  display: inline;
+  -webkit-animation: blink 1s steps(1) infinite;
+  -moz-animation: blink 1s steps(1) infinite;
+  -o-animation: blink 1s steps(1) infinite;
+  animation: blink 1s steps(1) infinite;
+}
+
+    </style></head><body style="margin:15px auto;max-width:40em"> <nav> <a href="/">Home</a> - <a href="/blog">Blog</a> - <a href="/feed.xml">RSS</a> - <a href="/hacks">Hacks</a> - <a href="/about">About</a> </nav> <main><h1>Graphics Programming</h1><p>2011-07-30<p>I’m programming now for 6 years or so and I’ve never written a game.</p><p>A game that works, I should say. I have written my share of pongs and pacmans, but none of them were really playable. I have always lost interest when the complicated things (like moving the ball without flicker) were done. Carving out the last bugs, or implementing high score tables? Nah, too boring. Actually implementing some story line, or some more features? Boring. Too much work.</p><p>Well, after working at a large web shop for nearly a year now, my definition of “boring” has shifted significantly. And suddenly, making a <em>real</em> game, i.e. one that is more than a tech-demo, sounds like the most exciting thing on earth.</p><p>And I realised that I have much to learn. I have done some graphics “programming” some years ago, in C++ and with DirectX 8. I didn’t understand much of C++ at the time and was mostly copying things around, changing that parameter, recompiling, see what it does, etc, ad infinitum.</p><p>I have tried to get my head around C++ afterwards, and bought some books. But the more I learned, the more I was disgusted by that baroque feature-rich pile-of-everything they called a programming language. Well, to make a long story short: I don’t like C++.</p><p>I do, however, like C.</p><p>But, uh, how do you do graphics programming in C?</p><p>So I set out to find a good graphics library. It absolutely had to have C bindings (obviously) and it had to work on Linux as an X11 client (i.e. on my main machine) and on the Linux Framebuffer (on my <a href="http://en.qi-hardware.com/wiki/Ben_NanoNote">NanoNote</a>). It sure would be nice to have it working my friends’ machines (mostly Windows 7), too - what’s a game without the players?</p><p>I was lucky: about every graphics library ever done fits this bill. But the big ones (gtk and qt) are, well, big. Too big for my needs. So I opted for a small, relatively low-level wrapper library called <a href="http://www.libsdl.org/">SDL</a>. Until now, it seems like a perfect match: it’s simple and light-weight and a joy to use.</p><p>Graphics programming feels still pretty cumbersome to me, but I’m getting there. I now have a window, coloured text, and a rectangle.</p><p>And I’m still not bored at all.</p><hr><h2>See Also</h2><p>Previously: <a href="/blog/q-your-ides-use-vi">:q! your IDEs - use vi</a></p><p>Next up: <a href="/blog/more-cowbell">More Cowbell!</a></p><p> The machine thinks that the Web-Log entries <a href="/blog/graphics-programming">Graphics Programming</a>, <a href="/blog/ludum-dare-26-postmortem">26th Ludum Dare - Postmortem</a>, and <a href="/blog/purely-functional-games">Purely Functional Games</a> might be related to the topic so eloquently discussed above. The machine is sometimes right.</p></main></body></html>

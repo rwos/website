@@ -1,0 +1,155 @@
+<!doctype html><html lang="en"><head><meta http-equiv="Content-type" content="text/html;charset=UTF-8"><meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0"><title>CoffeeScript - Second Impressions | r-wos.org</title> <style>
+    * { line-height: 140%; }
+    @-moz-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@-webkit-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@-o-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@keyframes blink {
+ 0% {
+    opacity: 1;
+ }
+ 50% {
+    opacity: 0;
+ }
+ 100% {
+    opacity: 1;
+ }
+}
+
+blink {
+  display: inline;
+  -webkit-animation: blink 1s steps(1) infinite;
+  -moz-animation: blink 1s steps(1) infinite;
+  -o-animation: blink 1s steps(1) infinite;
+  animation: blink 1s steps(1) infinite;
+}
+
+    </style></head><body style="margin:15px auto;max-width:40em"> <nav> <a href="/">Home</a> - <a href="/blog">Blog</a> - <a href="/feed.xml">RSS</a> - <a href="/hacks">Hacks</a> - <a href="/about">About</a> </nav> <main><h1>CoffeeScript - Second Impressions</h1><p>2013-06-14<p>Here’s a small raycaster in CoffeeScript. I wrote that just to see how it would look. (There’s also a small rant at the end, if that’s what you’re looking for.)</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>DIST = 9; Z_STEP = 0.1; X_STEP = 2; FOV = Math.PI/3
+
+map_at = (x, y) -&gt; [
+    " XX"
+    "   "
+    "X X"
+    ][Math.round y]?[Math.round x] == "X"
+
+move = (x, y, dist, dir) -&gt; [Math.sin(dir) * dist + x,
+                             Math.cos(dir) * dist + y]
+
+cast = (x, y, dir) -&gt; # optimizing for LOC, here...
+    for dist in [0...DIST] by Z_STEP
+        break if map_at (move x, y, dist, dir)...
+    dist
+
+clear = (canvas) -&gt;
+    ctx = canvas.getContext '2d'
+    ctx.fillStyle = "#fff"
+    ctx.fillRect 0, 0, canvas.width, canvas.height
+
+draw = (canvas, col, dist) -&gt;
+    dist_frac = Math.min(dist, DIST)/DIST
+    wall = (1-dist_frac) * canvas.height
+    color = Math.round dist_frac*255
+    ctx = canvas.getContext '2d'
+    ctx.fillStyle = "rgb(#{color}, #{color}, #{color})"
+    ctx.fillRect col, canvas.height/2 - wall/2, X_STEP, wall
+
+render = (canvas, player) -&gt;
+    clear canvas
+    for col in [0..canvas.width] by X_STEP
+        view_col = (col - canvas.width/2)
+        view_dir = view_col*(FOV/canvas.width)
+        draw canvas, col,
+             cast player.x, player.y, player.dir + view_dir
+
+running = false
+frame = -&gt;
+    clearInterval running
+    cycle = new Date().getTime()/1000
+    render document.getElementById('canvas'),
+             x:   Math.sin(cycle)*6 + 1
+             y:   Math.cos(cycle)*6 + 1
+             dir: cycle + Math.PI # look into center
+    running = setInterval frame, 20
+
+do frame
+</code></pre></div></div><p>Result <small>(click through from your RSS reader if you can’t see a canvas)</small>:</p><div> <canvas id="canvas" width="100" height="100"></canvas> <script>(function(){var t,n,r,e,i,a,h,u,l,o,f,c;t=9,e=.1,r=2,n=Math.PI/3,l=function(t,n){var r;return"X"===(null!=(r=[" XX","   ","X X"][Math.round(n)])?r[Math.round(t)]:void 0)},o=function(t,n,r,e){return[Math.sin(e)*r+t,Math.cos(e)*r+n]},i=function(n,r,i){var a,h;for(a=h=0;(e>0?t>h:h>t)&&!l.apply(null,o(n,r,a,i));a=h+=e);return a},a=function(t){var n;return n=t.getContext("2d"),n.fillStyle="#fff",n.fillRect(0,0,t.width,t.height)},h=function(n,e,i){var a,h,u,l;return u=Math.min(i,t)/t,l=(1-u)*n.height,a=Math.round(255*u),h=n.getContext("2d"),h.fillStyle="rgb("+a+", "+a+", "+a+")",h.fillRect(e,n.height/2-l/2,r,l)},f=function(t,e){var u,l,o,f,c,d;for(a(t),d=[],u=f=0,c=t.width;r>0?c>=f:f>=c;u=f+=r)l=u-t.width/2,o=l*(n/t.width),d.push(h(t,u,i(e.x,e.y,e.dir+o)));return d},c=!1,(u=function(){var t;return clearInterval(c),t=(new Date).getTime()/1e3,f(document.getElementById("canvas"),{x:6*Math.sin(t)+1,y:6*Math.cos(t)+1,dir:t+Math.PI}),c=setInterval(u,20)})()}).call(this)</script></div><p>Not bad, certainly more succinct than JavaScript, but …well - maybe I’ve been writing too much Scheme lately but I’ve grown to <em>like</em> having parentheses around everything. Making most of the nesting implicit may <em>look</em> cleaner, but it feels so brittle to me. One basically relies on operator precedence, and - somehow - that’s making me uncomfortable. (To be fair - I could have included much more parentheses in the above code, I just thought I’d try and go full-on crazy with CoffeeScript’s syntax).</p><p>But the biggest problem I have with these significant-whitespace and implicit-nesting languages is that they don’t go far enough: If I was to write something like</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> foo = bar x,y
+       * factor
+</code></pre></div></div><p>or even</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>foo = bar x,y  * factor
+</code></pre></div></div><p>a human reader would probably assume it means</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>foo = bar(x,y) * factor
+</code></pre></div></div><p>But CoffeeScript parses the second one as</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>foo = bar(x,y*factor)
+</code></pre></div></div><p>and errors-out on the first one. In the same vein, this works in CoffeeScript:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>coffee&gt; (x for x in [0..3] when x != 2)
+[ 0, 1, 3]
+</code></pre></div></div><p>But this doesn’t:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>coffee&gt; (x for x in [0..3] unless x == 2)
+[ 0, 1, 2, 3 ]
+</code></pre></div></div><p>even though <code class="highlighter-rouge">unless</code> is a keyword and behaves as one would expect in most other cases.</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>coffee&gt; x = 1 unless true is false
+1
+</code></pre></div></div><p>I mean, one <em>can</em> go down the <strike>highway to hell</strike> road of “code that looks like English sentences”, but one has to go all the way, with a real natural language parser. But what all of these languages - including CoffeeScript - do is rename “&amp;&amp;” to “and” and replace some other symbols with “then” and “when”. So now stuff looks like English but behaves like code - including strange parse errors. How does that help anyone?</p><p>That’s what I meant when I said “90% design” in the last post - it just doesn’t fucking work <em>all</em> of the time, and that’s frustrating. One man’s “why would you do <em>that</em>?” is another man’s “basic usage”.</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x = 1 if true      # works
+
+if true x = 1      # doesn't
+
+if true then x = 1 # works
+
+if true then       # doesn't work
+    x = 1          # (parse error)
+
+if true then       # "works"
+x = 1              # (always sets x to 1)
+
+if true            #
+    x = 1          # works
+
+if true and true   #
+    x = 1          # works
+
+if true            #
+and true           # doesn't work
+    x = 1          # (parse error)
+
+if true            #
+   and true        # doesn't work
+    x = 1          # (different parse error)
+
+if true and        #
+   true            #
+    x = 1          # works
+
+if true and        #
+    true           #
+    x = 1          # doesn't (!)
+
+if true and        #
+     true          #
+    x = 1          # works (!!!!!)
+</code></pre></div></div><p>Python would have the same problem, if it wasn’t for the fact that stuff in parentheses is free-form there - but no such luxury in CoffeeScript.</p><p>Still, all-in-all I find CoffeeScript rather nice - it has quite a law-and-order syntax but the execution model is unchanged from JavaScript (i.e. nice and free). Simple things - that is, “real-world code” - seem to look better in CoffeeScript. And (big plus) it compiles into straight-forward, readable JavaScript.</p><p>It does leave many of JavaScript’s warts unfixed (I assume this is by design), but yeah, at least everything is an expression now and the scope behaves as it should.</p><hr><h2>See Also</h2><p>Previously: <a href="/blog/first-coffeescript">CoffeeScript - First Impressions</a></p><p>Next up: <a href="/blog/wtf-js">wtf.js</a></p><p> The machine thinks that the Web-Log entries <a href="/blog/second-coffeescript">CoffeeScript - Second Impressions</a>, <a href="/blog/ludum-dare-26-postmortem">26th Ludum Dare - Postmortem</a>, and <a href="/blog/purely-functional-games">Purely Functional Games</a> might be related to the topic so eloquently discussed above. The machine is sometimes right.</p></main></body></html>

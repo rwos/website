@@ -1,4 +1,4 @@
-<canvas id="canvas" width="800" height="600" style="width:100%;top:0;left:0;position:absolute;z-index:-9999"></canvas>
+<canvas id="canvas" width="800" height="600" style="width:100vh;top:0;left:0;position:absolute;z-index:-9999"></canvas>
 
 <script>
 var C = el("canvas")

@@ -1,0 +1,59 @@
+<!doctype html><html lang="en"><head><meta http-equiv="Content-type" content="text/html;charset=UTF-8"><meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0"><title>By the Way | r-wos.org</title> <style>
+    * { line-height: 140%; }
+    @-moz-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@-webkit-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@-o-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@keyframes blink {
+ 0% {
+    opacity: 1;
+ }
+ 50% {
+    opacity: 0;
+ }
+ 100% {
+    opacity: 1;
+ }
+}
+
+blink {
+  display: inline;
+  -webkit-animation: blink 1s steps(1) infinite;
+  -moz-animation: blink 1s steps(1) infinite;
+  -o-animation: blink 1s steps(1) infinite;
+  animation: blink 1s steps(1) infinite;
+}
+
+    </style></head><body style="margin:15px auto;max-width:40em"> <nav> <a href="/">Home</a> - <a href="/blog">Blog</a> - <a href="/feed.xml">RSS</a> - <a href="/hacks">Hacks</a> - <a href="/about">About</a> </nav> <main><h1>By the Way</h1><p>2012-03-11<p>Hi there! Long time no see!</p><p>I got a bit side-tracked. Well, that’s an understatement.</p><p>At first, I just wanted to re-haul the site’s design a bit. Then I thought, why not re-haul the back-end, too? I was thinking of a wiki-like system, but with pages consisting of independently editable (and lockable) blocks. Just doing that would probably already qualify as a second-system effect.</p><p>But I didn’t write a wiki-system. I wrote a programming language instead.</p><p>When it’s finished, it will drive this site - as a first small project. I have a “nearly working”[TM] version on my local machine, and I’ll deploy it “really soon now”[TM].</p><p>Sadly, the language itself is also not in a state where I could publish the code. I need to clean up some stuff, first. I sincerely hope that this clean-up session will end in an actual clean-up - and not in me attempting to write a new operating system or something like that…</p><p>Just some small facts about the language: it’s basically a Lisp, in that it doesn’t do anything special a Lisp couldn’t do, too. It has first-class macros which is a bit unusual, but I’m pretty sure that it’s not revolutionary. There’s probably some Lisp which had them since the mid-seventies (that’s a save bet - for every “new” feature in programming languages there’s a Lisp that had it for at least 30 years).</p><p>It also has some constructs which ease the construction of simple, limited macros. These small macros are hygienic - and thus just as easy and straight-forward to write as a function.</p><p>I’ll say more about the language as soon as I have the code up on github. It’s pointless to tell you about it without you being able to actually try it.</p><p>The run-time system is currently an interpreter written in Python (though that will change soon, the file is called “bootstrap” <em>hint</em>). Writing that interpreter took much longer than it should. I took all the wrong turns one could possibly take. But, to say it with Edison: I have not failed a thousand times - I successfully found 1000 things that won’t work. Or something like that.</p><p>Things that I thought would be trivial ended up being pretty hard (parsing numbers is one example) - and some things that I thought would be impossible for me to implement basically wrote themselves as soon as I looked at it right.</p><p>Most of this may have been aided by my decision to first write some programs in the language, and then implement the interpreter. Sometimes the high-level constructs I made up were tricky to implement elegantly. So, programmer-me and language-implementor-me often fought each other constantly.</p><p>I can’t even imagine how people manage to write programming languages for other people to use. Just tailoring it to my own needs is hard enough. I didn’t know what I wanted, and I didn’t know how to get it. What a wonderful combination.</p><p>The clean-up of the interpreter should be done soon, it’s a small program. (That’s a bit sad - so much work for only a couple of hundred relatively trivial lines of code. This must be the thing named “learning” I heard so much about lately…)</p><p>After that I’ll finally write that wiki system I wanted to write all along.</p><p>No, wait - that was the second idea. What was the first thing again? Ah, yes, CSS tweaks.</p><p>Well, yeah, should be done really soon now…</p><hr><h2>See Also</h2><p>Previously: <a href="/blog/there-s-one-thing-wrong-with-python">There's one thing wrong with Python</a></p><p>Next up: <a href="/blog/welcome-to-the-machine">Welcome to the Machine</a></p><p> The machine thinks that the Web-Log entries <a href="/blog/by-the-way">By the Way</a>, <a href="/blog/ludum-dare-26-postmortem">26th Ludum Dare - Postmortem</a>, and <a href="/blog/purely-functional-games">Purely Functional Games</a> might be related to the topic so eloquently discussed above. The machine is sometimes right.</p></main></body></html>

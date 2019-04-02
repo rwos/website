@@ -1,0 +1,62 @@
+<!doctype html><html lang="en"><head><meta http-equiv="Content-type" content="text/html;charset=UTF-8"><meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0"><title>Javahaha | r-wos.org</title> <style>
+    * { line-height: 140%; }
+    @-moz-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@-webkit-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@-o-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@keyframes blink {
+ 0% {
+    opacity: 1;
+ }
+ 50% {
+    opacity: 0;
+ }
+ 100% {
+    opacity: 1;
+ }
+}
+
+blink {
+  display: inline;
+  -webkit-animation: blink 1s steps(1) infinite;
+  -moz-animation: blink 1s steps(1) infinite;
+  -o-animation: blink 1s steps(1) infinite;
+  animation: blink 1s steps(1) infinite;
+}
+
+    </style></head><body style="margin:15px auto;max-width:40em"> <nav> <a href="/">Home</a> - <a href="/blog">Blog</a> - <a href="/feed.xml">RSS</a> - <a href="/hacks">Hacks</a> - <a href="/about">About</a> </nav> <main><h1>Javahaha</h1><p>2013-04-30<p>A lot of the Ludum Dare games are written in Java. Much to my surprise, I did have a JRE installed on my machine. So most of the games worked out of the box, but sometimes the JRE died with a peculiar error:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Exception in thread "main"
+    java.lang.UnsupportedClassVersionError: $file
+    (Unsupported major.minor version 51.0)
+</code></pre></div></div><p>Let’s try and understand this error, shall we?</p><ul><li><p><code class="highlighter-rouge">major.minor version 51.0</code> - major.minor is the standard format of a version number, no need to say that in the error message.</p></li><li><p><code class="highlighter-rouge">UnsupportedClassVersionError</code> - I’m sorry, is there a shortage of space characters? Is your keyboard broken? Oh, it’s an identifier and you can’t have spaces in identifiers? Well, don’t dump the identifier to the user, then.</p><p>Oh, you have to dump the Identifier because otherwise the user wouldn’t know that it’s the “Class Version” that’s unsupported? Well, how about including <em>vital information</em> like that in actual the error message? Sounds like a good idea? Yeah, thought so.</p></li><li><p>The unsupported class version is <code class="highlighter-rouge">51.0</code>. The JRE I have installed is version <code class="highlighter-rouge">6</code> (Debian package <code class="highlighter-rouge">openjdk-6-jre</code>). If I ask the program <code class="highlighter-rouge">java</code> what its version is, I get back <code class="highlighter-rouge">java version "1.6.0_27"</code>. And <code class="highlighter-rouge">IcedTea6 1.12.4 (6b27-1.12.4-1)</code>. And <code class="highlighter-rouge">OpenJDK 64-Bit Server VM (build 20.0-b12)</code>. WTF?!</p></li><li><p>No really, what the <em>fuck</em> is going on there?</p><p>The language is version 6; the VM is version 1.6.0_27(?); the class version (whatever <em>that</em> is) that this VM can’t run is 51.</p><p>What the hell? Off to $search-engine.</p></li><li><p>And here’s what I learned (and what the error message should say):</p><p>The JRE is too old. The program you’re trying to run was compiled for Java 7. You only have Java 6. Please update.</p></li></ul><hr/><p>Can you image that Java didn’t exist until 1995? It was completely made up from scratch less than 20 years ago! How could they accumulate this kind of cruft in less than two decades? How will this ecosystem look like when it reaches the age of C, or Lisp?</p><p>But it’s not only that - the error message itself also reminds me why I dislike Java.</p><p>“We can send <code class="highlighter-rouge">toString()</code> to basically everything. So, for error messages, let’s just send <code class="highlighter-rouge">toString()</code> to the Exception. Wow, how <em>elegant</em>. How <em>object-oriented</em>. Oh, look how much we don’t care about the implementation. What a great application of encapsulation and separation of concerns!</p><p>And everyone gets the same message - users, developers, log files, API consumers! And they all get a stack trace! Because users <em>love</em> stack traces!”</p><p>What a Wrong And Stupid Thing To Do.</p><hr><h2>See Also</h2><p>Previously: <a href="/blog/ludum-dare-26-timelapse">Ludum Dare 26 - Timelapse</a></p><p>Next up: <a href="/blog/dynamic-linking">Overwriting Dynamically Linked Stuff</a></p><p> The machine thinks that the Web-Log entries <a href="/blog/javahaha">Javahaha</a>, <a href="/blog/ludum-dare-26-postmortem">26th Ludum Dare - Postmortem</a>, and <a href="/blog/purely-functional-games">Purely Functional Games</a> might be related to the topic so eloquently discussed above. The machine is sometimes right.</p></main></body></html>

@@ -1,0 +1,167 @@
+<!doctype html><html lang="en"><head><meta http-equiv="Content-type" content="text/html;charset=UTF-8"><meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0"><title>Given When Then | r-wos.org</title> <style>
+    * { line-height: 140%; }
+    @-moz-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@-webkit-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@-o-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@keyframes blink {
+ 0% {
+    opacity: 1;
+ }
+ 50% {
+    opacity: 0;
+ }
+ 100% {
+    opacity: 1;
+ }
+}
+
+blink {
+  display: inline;
+  -webkit-animation: blink 1s steps(1) infinite;
+  -moz-animation: blink 1s steps(1) infinite;
+  -o-animation: blink 1s steps(1) infinite;
+  animation: blink 1s steps(1) infinite;
+}
+
+    </style></head><body style="margin:15px auto;max-width:40em"> <nav> <a href="/">Home</a> - <a href="/blog">Blog</a> - <a href="/feed.xml">RSS</a> - <a href="/hacks">Hacks</a> - <a href="/about">About</a> </nav> <main><h1>Given When Then</h1><p>2013-10-27<p><a href="https://github.com/cucumber/cucumber/wiki/Gherkin">Gherkin</a> is a hack.</p><p>Gherkin is the “language” (I’ll justify the use of scare-quotes in a minute) used by the <a href="https://github.com/cucumber/cucumber">Cucumber</a> test framework. Or, if you’re using PHP, the language behind the PHP port <a href="http://behat.org/">behat</a>.</p><p>Tests usually look something like this (example lifted straight from cucumber’s docs):</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Feature: Serve coffee
+  In order to earn money
+  Customers should be able to
+  buy coffee at all times
+
+  Scenario: Buy last coffee
+    Given there are 1 coffees left in the machine
+    And I have deposited 1$
+    When I press the coffee button
+    Then I should be served a coffee
+</code></pre></div></div><p>Which <em>is</em> very nice. Having tests that are as easily readable as this is obviously fantastic!</p><p>What is not nice is how it’s implemented. What is even less nice, is how it’s sold as a “business readable, domain specific language”. I can live very well with crude hacks, as long as the README states “it’s a crude hack”. Glancing over obvious limitations in exchange for marketing slogans bothers me, however. Among programmers, we should be honest first.</p><h2 id="intro">intro</h2><p>Let’s step through the test above:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Feature: Serve coffee
+  In order to earn money
+  Customers should be able to
+  buy coffee at all times
+</code></pre></div></div><p>This whole block is just a comment and subsequently ignored. You have to have one of those at the top of your files, and the block below <code class="highlighter-rouge">Feature</code> has to be indented, however.</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  Scenario: Buy last coffee
+</code></pre></div></div><p>Another comment. Now comes the actual executable code:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Given there are 1 coffees left in the machine
+And I have deposited 1$
+When I press the coffee button
+Then I should be served a coffee
+</code></pre></div></div><p>Every line here is a “step”, and every step does something.</p><h2 id="assertions-and-instructions">assertions and instructions</h2><p>Even thought there are semantic differences between sentences beginning with with <code class="highlighter-rouge">Given</code>, <code class="highlighter-rouge">When</code>, and <code class="highlighter-rouge">Then</code> in English, they are all the same thing in Gherkin.</p><p>Suppose the first sentence</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Given there are 1 coffees left in the machine
+</code></pre></div></div><p>sets up the machine to have 1 coffees [sic!] left. You start to run into problems once you now write a different test where the <em>outcome</em> should be that the machine has one coffee left. Say, something like this:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Given there are 2 coffees left in the machine
+When I order one coffee
+Then there are 1 coffees left in the machine.
+</code></pre></div></div><p>Perfectly reasonable for a human, but for Gherkin this translates to:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set up the machine to have 2 coffees left
+order one coffee
+set up the machine to have 1 coffee left
+</code></pre></div></div><p>Which is not only not right, it’s not even wrong. This test will run and it will run <em>successfully</em> every time.</p><p>What Gherkin wants you to write is something like this:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Given there are 2 coffees left in the machine
+When I order one coffee
+Then there should be 1 coffees left in the machine.
+</code></pre></div></div><p>So that the programmers can implement the “there should be” sentence as an assertion, and the “there are” sentence as a instruction. Why is this difference not handled via the <code class="highlighter-rouge">Given</code>/<code class="highlighter-rouge">Then</code> keywords? Who knows.</p><p>This minimalism/stupidity in Gherkin’s approach to parsing results in a programming language with extremely low orthogonality. In fact, there’s none at all. If you come across a step like</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Given there are 1 coffees left in the machine
+</code></pre></div></div><p>this does <em>not</em> guarantee at all that</p><ul><li>there’s a step <code class="highlighter-rouge">Given there are 2 coffees left in the machine</code></li><li>there’s a step <code class="highlighter-rouge">Given there are 1 cappuccinos left in the machine</code></li><li>there’s a step <code class="highlighter-rouge">Then there should be 1 coffees left in the machine</code></li><li>and so on</li></ul><p>I think this is pretty confusing, <em>especially</em> for non-programmers. Also, depending on how you write your regexps, the step above is distinct from all of the following:</p><ul><li>Given there are 1 coffees  left in the machine</li><li>Given there are 1 coffees left in the machine.</li><li>Given there are 1 coffees left in the machine!</li><li>Given there are 1 coffee left in the machine</li><li>Given there is 1 coffee left in the machine</li><li>Given there is one coffee left in the machine</li><li>Given there are 1 coffees left</li><li>and so on</li></ul><p>This is easily traceable back to the simplistic implementation, but that doesn’t help anyone. Gherkin is aimed at non-technical folk - and it’s syntactically <em>less</em> forgiving than JavaScript! In terms of human-friendliness of the syntax it’s comparable to the older fixed-format versions of FORTRAN.</p><p>In other words: Gherkin is (or can be) nice to read, but it’s <em>extremely</em> unfriendly to write.</p><h2 id="2-problems">2 problems</h2><p>Let’s talk about the implementation. Gherkin is regexp-based</p> <strike>because that's an absolutely reasonable choice for parsing a natural language</strike><p>.</p><p>So, for every “step”, you have a regexp with some code behind it, that implements this step. It looks something like this (in cucumber, behat is a bit more verbose):</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Given /I have deposited (\d+)\$/ do |n|
+    @machine.deposit(n)
+end
+</code></pre></div></div><p>In other words: there is no Gherkin language. At all. Gherkin is a lexical scanner, nothing more. The parser (regexps) and evaluator (associated code) is solely in your hands to implement. And because Gherkin limits you to per-line regexps, the resulting Gherkin-based DSL is <em>less</em> capable than pretty much anything you could’ve come up with yourself.</p><p>In behat at least (I assume it’s the same in cucumber), there’s also no way to stack regexps. Every step has to match exactly <em>one</em> regexp. What that means is that you can’t special-case steps, and you can’t override them. (Well, you can, but it’s extremely hacky).</p><p>There are other limitations: It’s not possible to use the “language” itself to extend its functionality. You can’t write new Gherkin steps in Gherkin. (Again, technically the last sentence is wrong. You <em>can</em> do that but you’d have to implement it yourself and Gherkin won’t help you.)</p><h2 id="overtaken-by-a-pdp-6">overtaken by a PDP-6</h2><p>The <a href="http://hci.stanford.edu/~winograd/shrdlu/">shrdlu</a> program was much ahead of its time, and I’m not saying that its approach to natural language understanding would have been a good one for Gherkin to take in general.</p><p>However, at least one feature would be an obvious improvement to Gherkin, and not that hard to implement: The whole notation of context.</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>When I type "foo" into the password box
+Then it should change its color to red
+And next to it "Your password is too short" should appear.
+</code></pre></div></div><p>You <em>can</em> do something like that in Gherkin today but you’d have to implement it yourself. Which might not be that surprising at this point. Gherkin does almost nothing - Gherkin <em>is</em> almost nothing.</p><p>It’s just a small hack.</p><h2 id="bonus">bonus</h2><p>Here’s an implementation of the core of Gherkin in ~30 lines of Racket:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">#</span><span class="nv">lang</span> <span class="nv">racket</span>
+
+<span class="p">(</span><span class="k">define</span> <span class="nv">*steps*</span> <span class="o">'</span><span class="p">())</span>
+<span class="p">(</span><span class="k">define-syntax-rule</span> <span class="p">(</span><span class="nf">prepend!</span> <span class="nv">l</span> <span class="nv">x</span><span class="p">)</span> <span class="p">(</span><span class="k">set!</span> <span class="nv">l</span> <span class="p">(</span><span class="nb">cons</span> <span class="nv">x</span> <span class="nv">l</span><span class="p">)))</span>
+<span class="p">(</span><span class="k">define-syntax-rule</span> <span class="p">(</span><span class="nf">Given</span> <span class="nv">r</span> <span class="p">(</span><span class="nf">args</span> <span class="o">...</span><span class="p">)</span> <span class="nv">body</span> <span class="o">...</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">prepend!</span> <span class="nv">*steps*</span> <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">regexp</span> <span class="nv">r</span><span class="p">)</span>
+                          <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nf">full-match</span> <span class="nv">args</span> <span class="o">...</span><span class="p">)</span> <span class="p">(</span><span class="k">begin</span> <span class="nv">body</span> <span class="o">...</span><span class="p">)))))</span>
+<span class="p">(</span><span class="k">define-syntax-rule</span> <span class="p">(</span><span class="nf">Then</span> <span class="nv">r</span> <span class="p">(</span><span class="nf">args</span> <span class="o">...</span><span class="p">)</span> <span class="nv">body</span> <span class="o">...</span><span class="p">)</span> <span class="p">(</span><span class="nf">Given</span> <span class="nv">r</span> <span class="p">(</span><span class="nf">args</span> <span class="o">...</span><span class="p">)</span> <span class="nv">body</span> <span class="o">...</span><span class="p">))</span>
+<span class="p">(</span><span class="k">define-syntax-rule</span> <span class="p">(</span><span class="nf">When</span> <span class="nv">r</span> <span class="p">(</span><span class="nf">args</span> <span class="o">...</span><span class="p">)</span> <span class="nv">body</span> <span class="o">...</span><span class="p">)</span> <span class="p">(</span><span class="nf">Given</span> <span class="nv">r</span> <span class="p">(</span><span class="nf">args</span> <span class="o">...</span><span class="p">)</span> <span class="nv">body</span> <span class="o">...</span><span class="p">))</span>
+
+<span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">trim-step</span> <span class="nv">step</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">regexp-replaces</span> <span class="p">(</span><span class="nf">string-trim</span> <span class="nv">step</span><span class="p">)</span>
+                   <span class="o">'</span><span class="p">([</span><span class="nf">#rx"^</span><span class="p">(</span><span class="nf">Given|And|Then|When</span><span class="p">)</span> <span class="s">" ""])))
+
+(define (match-step s r) (regexp-match r (trim-step s)))
+
+(define (find-step s)
+  (define found (findf (compose (curry match-step s) car) *steps*))
+  (if found
+    (values (car found) (cdr found))
+    (values #f #f)))
+
+(define (run-step step)
+  (displayln step)
+  (define-values (step-regexp step-fn) (find-step step))
+  (if step-fn
+    (with-handlers ([exn:fail? (lambda (e) (printf "</span><span class="nv">FAILED:</span> <span class="nv">~a\n"</span> <span class="p">(</span><span class="nb">exn-message</span> <span class="nv">e</span><span class="p">)))])</span>
+      <span class="p">(</span><span class="nb">apply</span> <span class="nv">step-fn</span> <span class="p">(</span><span class="nf">match-step</span> <span class="nv">step</span> <span class="nv">step-regexp</span><span class="p">)))</span>
+    <span class="p">(</span><span class="nb">printf</span> <span class="s">"\tStep not implemented. Implement with something like:\n\t~s\n\n"</span>
+      <span class="o">`</span><span class="p">(</span><span class="nf">Given</span> <span class="o">,</span><span class="p">(</span><span class="nf">trim-step</span> <span class="nv">step</span><span class="p">)</span> <span class="p">()</span> <span class="p">(</span><span class="k">do</span> <span class="nv">whatever</span><span class="p">)))))</span>
+
+<span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">run-feature</span> <span class="nv">f</span><span class="p">)</span> <span class="p">(</span><span class="nb">for-each</span> <span class="nv">run-step</span> <span class="p">(</span><span class="nf">string-split</span> <span class="nv">f</span> <span class="s">"\n"</span><span class="p">)))</span>
+</code></pre></div></div><p>Step implementations would look like this:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;;; utilities
+(require net/url)
+(define *content* "")
+(define (GET url)
+  (call/input-url (string-&gt;url url) get-pure-port
+    (lambda (p) (set! *content* (port-&gt;string p)))))
+
+;;; steps
+
+(Given "^I am on '([^']*)'$" (url) (GET url))
+
+(Then "^I should see '([^']*)'$" (text)
+  (unless (regexp-match? (regexp text) *content*)
+    (error "Text not found")))
+</code></pre></div></div><p>And you’d run it like this:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-&gt; (run-feature "
+  Given I am on 'http://example.com'
+   Then I should see 'Example Domain'
+")
+
+Given I am on 'http://example.com'
+ Then I should see 'Example Domain'
+
+-&gt; (run-feature "
+  Given I am on 'http://example.com'
+   Then I should see 'Foobar'
+")
+
+Given I am on 'http://example.com'
+ Then I should see 'Foobar'
+FAILED: Text not found
+
+-&gt; (run-feature "
+  Given I am on 'http://example.com'
+  Then everything should work
+")
+
+Given I am on 'http://example.com'
+Then everything should work
+    Step not implemented. Implement with something like:
+    (Given "everything should work" () (do whatever))
+</code></pre></div></div><p>It’s just a hack. A nice one, maybe - but just a hack nonetheless.</p><hr><h2>See Also</h2><p>Previously: <a href="/blog/owncloud">ownCloud</a></p><p>Next up: <a href="/blog/test-driven">Test Driven Development</a></p><p> The machine thinks that the Web-Log entries <a href="/blog/gherkin">Given When Then</a>, <a href="/blog/ludum-dare-26-postmortem">26th Ludum Dare - Postmortem</a>, and <a href="/blog/test-driven">Test Driven Development</a> might be related to the topic so eloquently discussed above. The machine is sometimes right.</p></main></body></html>

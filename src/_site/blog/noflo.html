@@ -1,0 +1,177 @@
+<!doctype html><html lang="en"><head><meta http-equiv="Content-type" content="text/html;charset=UTF-8"><meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0"><title>NoUnderstand NoFlo | r-wos.org</title> <style>
+    * { line-height: 140%; }
+    @-moz-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@-webkit-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@-o-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@keyframes blink {
+ 0% {
+    opacity: 1;
+ }
+ 50% {
+    opacity: 0;
+ }
+ 100% {
+    opacity: 1;
+ }
+}
+
+blink {
+  display: inline;
+  -webkit-animation: blink 1s steps(1) infinite;
+  -moz-animation: blink 1s steps(1) infinite;
+  -o-animation: blink 1s steps(1) infinite;
+  animation: blink 1s steps(1) infinite;
+}
+
+    </style></head><body style="margin:15px auto;max-width:40em"> <nav> <a href="/">Home</a> - <a href="/blog">Blog</a> - <a href="/feed.xml">RSS</a> - <a href="/hacks">Hacks</a> - <a href="/about">About</a> </nav> <main><h1>NoUnderstand NoFlo</h1><p>2014-05-24<p>Playing with <a href="http://noflojs.org/">NoFlo</a> a bit, currently. It’s a flow-based programming environment in JavaScript. It might not be apparent from this post but I do quite like it. Data-flow programming is probably not much of an improvement if you start with a sane language. But since JavaScript is a rotten piece of shit all the way through, NoFlo actually improves things considerably.</p><p>I haven’t written enough stuff in it to know whether or not it’s fit for doing real-world in-browser things, but it does look like it. One of the nice things about it is that it lets you avoid writing in continuation passing style, mostly. Again - in a sane language, no one would do that anyway, but yeah. JavaScript.</p><p>As to the flow-based part of it - a few comparisons immediately come to mind. One of them might be CSP, or Go’s implementation of CSP. But I’m not a Go programmer, so I can only compare it to that other system I know: unix processes, as exposed by the unix shell.</p><p>Obvious from the start: NoFlo is two-dimensional, the shell is one-dimensional. Now, that’s not strictly true - one can certainly arrange unix processes in a two-dimensional pattern - but for this exercise, let’s only consider the plain old one-dimensional unix pipeline.</p><p>Say, something super-simple like this:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>grep '^a' | head
+</code></pre></div></div><p>And that’s where my gripes with NoFlo start, because I find it extremely difficult to write even something simple like that in it.</p><p>The naive translation of the program above into NoFlo might look something like this (the syntax is a built-in DSL, which NoFlo can execute directly):</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Read(filesystem/ReadFile) OUT -&gt; IN Split(strings/SplitStr)
+Split OUT -&gt; IN Filter(strings/Filter)
+Filter OUT -&gt; IN Head(packets/Range)
+Head OUT -&gt; IN Display(core/Output)
+
+'^a' -&gt; PATTERN Filter
+'10' -&gt; LENGTH Head
+
+'/dev/stdin' -&gt; IN Read
+</code></pre></div></div><p>It’s more verbose, but that’s alright since that is obviously a side-effect of being more organized (component names) and more flexible (multiple IO channels) than the shell.</p><p>The thing is that it’s not the same.</p><p>In the unix shell version, <code class="highlighter-rouge">head</code> will terminate after it read and printed 10 lines. This will send a <code class="highlighter-rouge">SIGPIPE</code> to <code class="highlighter-rouge">grep</code>, which terminates <code class="highlighter-rouge">grep</code>. In other words, the following will terminate after 10 lines of output:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(cat /usr/share/dict/words; cat) | grep '^a' | head
+</code></pre></div></div><p>Whereas the NoFlo program will keep running, blocked on reading from <code class="highlighter-rouge">stdin</code>.</p><p>And not only will it keep running - <em>it will also not have printed anything</em>. Because - somehow - it’s not concurrent.</p><p>To be fair - that is probably my fault. There has to be a way to write this in NoFlo so it prints the matching lines out as soon as they are read. But it’s apparently not the default, and I can’t find anything about this in the documentation.</p><p>The fact that it doesn’t work out of the box is a bit weird</p><ul><li>especially if you want to let non-experts like me write NoFlo programs. Which, I think, is one of the goals of the project.</li></ul><hr/><p>First NoFlo program, first deadlock - what can we do? Well, we can certainly simulate the SIGPIPE by just terminating the whole NoFlo program after ten lines. This is impossible to implement in the NoFlo DSL because we’d need to pass a function (<code class="highlighter-rouge">process.exit</code>) to the callback component, but there is no syntax to do that. So, let’s just quickly write an <code class="highlighter-rouge">eval</code> component to solve this:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>noflo = require "noflo"
+
+class Eval extends noflo.Component
+  description: "Send the evaluated input to the output"
+  constructor: -&gt;
+    @inPorts  = {in:  new noflo.Port 'string'}
+    @outPorts = {out: new noflo.Port 'all'}
+    @inPorts.in.on "data", (data) =&gt;
+      @outPorts.out.send eval(data)
+    @inPorts.in.on "disconnect", =&gt;
+      @outPorts.out.disconnect()
+
+exports.getComponent = -&gt; new Eval()
+</code></pre></div></div><p>After <a href="http://bergie.iki.fi/blog/distributing-noflo-components/">adding that to our package.json</a>, we can now use it like this:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>'process.exit' -&gt; IN Eval(Eval)
+Eval OUT -&gt; CALLBACK Kill(core/Callback)
+</code></pre></div></div><p>We’ll need to trigger Kill once we printed 10 lines. I couldn’t really figure out how to connect it directly to <code class="highlighter-rouge">packets/Range</code>, so I just used a counter. This leaves us with the following:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Read(filesystem/ReadFile) OUT -&gt; IN Split(strings/SplitStr)
+Split OUT -&gt; IN Filter(strings/Filter)
+Filter OUT -&gt; IN Head(packets/Range)
+Head OUT -&gt; IN Display(core/Output)
+Head OUT -&gt; IN Counter(flow/CountDown)
+
+'^a' -&gt; PATTERN Filter
+
+'10' -&gt; LENGTH Head
+'10' -&gt; COUNT Counter
+
+'process.exit' -&gt; IN Eval(Eval)
+Eval OUT -&gt; CALLBACK Kill(core/Callback)
+Counter OUT -&gt; IN Kill
+
+'/dev/stdin' -&gt; IN Read
+</code></pre></div></div><p>However, that doesn’t solve the problem. Something in the pipeline still blocks until it read everything. So, <code class="highlighter-rouge">packets/Range</code> isn’t even receiving any data.</p><p>As far as I can tell, the problem here is node’s <code class="highlighter-rouge">fs.readFile</code> (used in NoFlo’s <code class="highlighter-rouge">filesystem/ReadFile</code>), which seems to not pass any data to the callback before it read the complete file. So that’s stupid, but fixable:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fs = require "fs"
+noflo = require "noflo"
+
+class ReadByte extends noflo.AsyncComponent
+  description: "Read single bytes from a file"
+
+  constructor: -&gt;
+    @inPorts =
+      in: new noflo.Port()
+    @outPorts =
+      out: new noflo.Port()
+      error: new noflo.Port()
+    super()
+    @inPorts.in.on "disconnect", =&gt;
+      @outPorts.out.disconnect()
+
+  doAsync: (filename, callback) -&gt;
+    buf = new Buffer 1
+    fd = fs.openSync filename, 'r'
+    fs.read fd, buf, 0, 1, null, (err, bytesRead, buffer) =&gt;
+      return callback err if err?
+      @outPorts.out.send buffer.toString()
+      @outPorts.out.disconnect()
+      fs.close(fd)
+      setTimeout () =&gt;
+        @doAsync filename, callback
+      , 0
+exports.getComponent = -&gt; new ReadByte()
+</code></pre></div></div><p>This is laughingly inefficient, but fuck it. At this point it’s pretty much clear that I’m on the wrong path. But I can’t figure out the right one. And I still think that <code class="highlighter-rouge">grep foo | head</code> is something that NoFlo should be able to do.</p><p>So, hacking on:</p><p>Using the above component instead of <code class="highlighter-rouge">filesystem/ReadFile</code> <em>would</em> make the whole thing work, if it wasn’t for <code class="highlighter-rouge">strings/SplitStr</code> which isn’t build for single-character data.</p><p>So here’s a thing that splits a stream of chars into lines:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>noflo = require "noflo"
+
+class StreamSplit extends noflo.Component
+  description: "Split the input into lines"
+
+  constructor: -&gt;
+    @inPorts  = {in:  new noflo.Port 'string'}
+    @outPorts = {out: new noflo.Port 'all'}
+    @cur = ''
+    @inPorts.in.on 'data', (data) =&gt;
+      for c in data.split()
+        if c != '\n'
+          @cur += c
+        else
+          @outPorts.out.send @cur
+          @cur = ''
+
+    @inPorts.in.on "disconnect", =&gt;
+      @outPorts.out.disconnect()
+exports.getComponent = -&gt; new StreamSplit()
+</code></pre></div></div><p>Wiring it all up:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Read(ReadByte) OUT -&gt; IN Split(StreamSplit)
+Split OUT -&gt; IN Filter(strings/Filter)
+Filter OUT -&gt; IN Head(packets/Range)
+Head OUT -&gt; IN Display(core/Output)
+Head OUT -&gt; IN Counter(flow/CountDown)
+
+'^a' -&gt; PATTERN Filter
+
+'10' -&gt; LENGTH Head
+'10' -&gt; COUNT Counter
+
+'process.exit' -&gt; IN Eval(Eval)
+Eval OUT -&gt; CALLBACK Kill(core/Callback)
+Counter OUT -&gt; IN Kill
+
+'/dev/stdin' -&gt; IN Read
+</code></pre></div></div><p>And it works!</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ (cat /usr/share/dict/words; cat) | ./node_modules/.bin/noflo graphs/GrepHead.fbp
+a
+aa
+aal
+aalii
+aam
+aardvark
+aardwolf
+aba
+abac
+abaca
+cat: write error: Broken pipe
+</code></pre></div></div><p>It’s still inefficient, though - there’s more data read from the file than needed.</p><hr/><p>So the first lesson I draw from this is to avoid all that and just don’t bother with NoFlo for anything stream-based. Which is weird because NoFlo <em>should</em> be perfect for that kind of stuff.</p><p>Maybe re-creating shell semantics is just not something one should try to do. But I really think that the standard components should be built to support data streams. The connect/disconnect stuff seems weird to me. I probably just don’t understand it right, but I also can’t find an explanation. Now, I’m not saying that the above clusterfuck is the only solution - I’m sure there are better ways. But it <em>is</em> quite obvious that the standard library is broken if you want to handle byte streams.</p><p>The second lesson is that I probably need to read NoFlo’s source.</p><hr><h2>See Also</h2><p>Previously: <a href="/blog/test-driven">Test Driven Development</a></p><p>Next up: <a href="/blog/imagineeasy">I ain't gonna work on Maggie's farm no more</a></p><p> The machine thinks that the Web-Log entries <a href="/blog/noflo">NoUnderstand NoFlo</a>, <a href="/blog/purely-functional-games">Purely Functional Games</a>, and <a href="/blog/ludum-dare-26-postmortem">26th Ludum Dare - Postmortem</a> might be related to the topic so eloquently discussed above. The machine is sometimes right.</p></main></body></html>

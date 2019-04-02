@@ -1,0 +1,59 @@
+<!doctype html><html lang="en"><head><meta http-equiv="Content-type" content="text/html;charset=UTF-8"><meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0"><title>todo: do | r-wos.org</title> <style>
+    * { line-height: 140%; }
+    @-moz-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@-webkit-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@-o-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@keyframes blink {
+ 0% {
+    opacity: 1;
+ }
+ 50% {
+    opacity: 0;
+ }
+ 100% {
+    opacity: 1;
+ }
+}
+
+blink {
+  display: inline;
+  -webkit-animation: blink 1s steps(1) infinite;
+  -moz-animation: blink 1s steps(1) infinite;
+  -o-animation: blink 1s steps(1) infinite;
+  animation: blink 1s steps(1) infinite;
+}
+
+    </style></head><body style="margin:15px auto;max-width:40em"> <nav> <a href="/">Home</a> - <a href="/blog">Blog</a> - <a href="/feed.xml">RSS</a> - <a href="/hacks">Hacks</a> - <a href="/about">About</a> </nav> <main><h1>todo: do</h1><p>2013-02-22<p>I’m not a big fan of anything in list form, really, but I do keep TODO lists. I’m currently using <a href="https://trello.com">Trello</a> for that.</p><p>Trello is great, but it invites one (well, me) to play with it. That is, to create new lists and re-order stuff and label it and re-label it, and so on. The result is that I now have a very nice TODO list but I’ve done nothing. I knew I had to stop using Trello after I created a meta-TODO list for the TODO lists some days ago. That’s getting seriously unhealthy…</p><p>I think the main problem is that Trello lives in the browser, but the stuff I want to do lives (mostly) in <code class="highlighter-rouge">~/src</code>.</p><p>Now, it’s a well-known law in programming that every programmer has to write a hello-world program, a blog engine, and a TODO organizer.</p><p>So I did what I had todo (ahem) and wrote a small program that finds TODO and GOAL files in <code class="highlighter-rouge">~/src</code>, orders them by age, and displays them (oldest first).</p><p>I called it “slacker”, obviously.</p><p><img src="http://r-wos.org/media/slacker.png" style="max-width:100%"/></p><p>No, it’s not pretty. We’ll see if it helps.</p><p><small>PS: The code is <a href="https://github.com/rwos/slacker">on github</a> if you want it - though it’s currently more a small hack than anything else. It works on Linux/X11 and <em>should</em> work on Mac OS X and Windows, too.</small></p><hr><h2>See Also</h2><p>Previously: <a href="/blog/make-frp-mainstream">Make FRP Mainstream!</a></p><p>Next up: <a href="/blog/ping-turtle">Ping Turtle</a></p><p> The machine thinks that the Web-Log entries <a href="/blog/tododo">todo: do</a>, <a href="/blog/ludum-dare-26-postmortem">26th Ludum Dare - Postmortem</a>, and <a href="/blog/purely-functional-games">Purely Functional Games</a> might be related to the topic so eloquently discussed above. The machine is sometimes right.</p></main></body></html>

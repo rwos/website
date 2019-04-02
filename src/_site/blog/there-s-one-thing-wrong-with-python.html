@@ -1,0 +1,107 @@
+<!doctype html><html lang="en"><head><meta http-equiv="Content-type" content="text/html;charset=UTF-8"><meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0"><title>There's one thing wrong with Python | r-wos.org</title> <style>
+    * { line-height: 140%; }
+    @-moz-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@-webkit-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@-o-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@keyframes blink {
+ 0% {
+    opacity: 1;
+ }
+ 50% {
+    opacity: 0;
+ }
+ 100% {
+    opacity: 1;
+ }
+}
+
+blink {
+  display: inline;
+  -webkit-animation: blink 1s steps(1) infinite;
+  -moz-animation: blink 1s steps(1) infinite;
+  -o-animation: blink 1s steps(1) infinite;
+  animation: blink 1s steps(1) infinite;
+}
+
+    </style></head><body style="margin:15px auto;max-width:40em"> <nav> <a href="/">Home</a> - <a href="/blog">Blog</a> - <a href="/feed.xml">RSS</a> - <a href="/hacks">Hacks</a> - <a href="/about">About</a> </nav> <main><h1>There's one thing wrong with Python</h1><p>2011-12-14<p>Finally! I found something that is wrong with Python! <small>With Python2, that is - Python3 saves itself from being wrong by being stupid.</small></p><p>And it’s really wrong, it’s of “absolutely broken” wrongness. On a scale from 0 (right) to 12 (wrong) this would score a straight twenty-seven.</p><p>It’s about scope in nested functions.</p><p>Normally, scope in python is pretty straight-forward. Okay, to access the global scope from a non-global scope, one has to use the <code class="highlighter-rouge">global</code> keyword:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>foo = 0
+def bar():
+    global foo # no access to foo without this
+    print foo
+</code></pre></div></div><p>That’s stupid but it doesn’t really qualify as being wrong. Now enter nested functions:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def foo():
+    state = 1
+    def bar():
+        pass # "pass" is a no-op
+    bar()
+    return state
+print foo()
+</code></pre></div></div><p>That’s the (artifical) example I’ll be using. It doesn’t do something useful and the nested function is not needed here, but that’s not the point. I “discovered” the behaviour I’m going to describe while writing a lexer. Which <em>did</em> do something useful. Or at least it would have - if python had let it.</p><p>So, the program above is perfectly valid python and prints <code class="highlighter-rouge">1</code>, as you would expect.</p><p>This, on the other hand, is <em>not</em> valid python:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def foo():
+    state = 1
+    def bar():
+        state += 1
+    bar()
+    return state
+print foo() # should print 2, but doesn't
+</code></pre></div></div><p>It gives an <code class="highlighter-rouge">UnboundLocalError</code>: “local variable ‘state’ referenced before assignment”.</p><p>The unhelpful error message notwithstanding, that seems to be the same case as with global variables. Seems like we always have to be explicit to access higher-than-local scope.</p><p>Well, yes and no.</p><p>Yes, that might have been the thought behind it.</p><p>No, <code class="highlighter-rouge">global</code> doesn’t work in this case - and there is no complement for use in functions. <small>I’m told that python 3 has <code class="highlighter-rouge">nonlocal</code> which solves this issue - but again: I think that requiring that explicitness is just stupid.</small></p><p>But wait, there’s more! We were wrong about the need to be explicit: in fact, <code class="highlighter-rouge">bar()</code> <em>does</em> have access to <code class="highlighter-rouge">state</code> - by default! How come?</p><p>Well, local functions can <em>access</em> all variables local to their parent function. They just can’t rebind them.</p><p>To see how utterly, utterly wrong this is, take a look at the following code. Which does <em>exactly</em> what the last snipped intended to do, but is absolutely legal python. Because this time, we cheat our ways around that idiotic “no rebind” policy:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def foo():
+    state = [1]
+    def bar():
+        state[0] += 1
+    bar()
+    return state[0]
+print foo() # prints 2
+</code></pre></div></div><p>Really, are you kidding me or what? How can “access, but not rebind” ever have seemed to be a good idea? I sincerly hope that this behaviour is only due to some implementation detail and fell out for free.</p><p>Because I just cannot imagine anyone being stupid enough to implement this deliberately.</p><p>Ironically, this is also legal:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def foo():
+    global state
+    state = 1
+    def bar():
+        global state
+        state += 1
+    bar()
+    return state
+print foo() # prints 2
+</code></pre></div></div><p>Great, your scope-access control bullshit allows introducing global variables that <em>nobody knows about</em> because they are not declared anywhere in the global scope - but it doesn’t allow nested functions to access perfectly encapsulated <em>local</em> variables of their parents. Gnah!</p><p>But let’s explore this some more: solely accessing <code class="highlighter-rouge">state</code> in <code class="highlighter-rouge">bar()</code> is allowed - which, for instance, makes the following legal python:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def foo():
+    state = 1
+    def bar():
+        print state # prints 1
+    bar()
+    return state
+print foo() # prints 1
+</code></pre></div></div><p>That was expected. What was unexpected: this is also legal:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def foo():
+    state = 1
+    def bar():
+        state = 2
+    bar()
+    return state
+print foo() # prints 1 [sic!]
+</code></pre></div></div><p>That’s because in this case the <code class="highlighter-rouge">state</code> that <code class="highlighter-rouge">bar()</code> sets to <code class="highlighter-rouge">2</code> is a <em>different</em> <code class="highlighter-rouge">state</code> than the one in <code class="highlighter-rouge">foo()</code>. No Error, everything is fine. How… why… I don’t even… ARG!</p><p>But I’m not mad. There’s one thing horribly wrong with Python.</p><p>That’s pretty good for a programming language, I’d say.</p><hr><h2>See Also</h2><p>Previously: <a href="/blog/why">Why?</a></p><p>Next up: <a href="/blog/by-the-way">By the Way</a></p><p> The machine thinks that the Web-Log entries <a href="/blog/there-s-one-thing-wrong-with-python">There's one thing wrong with Python</a>, <a href="/blog/purely-functional-games">Purely Functional Games</a>, and <a href="/blog/first-coffeescript">CoffeeScript - First Impressions</a> might be related to the topic so eloquently discussed above. The machine is sometimes right.</p></main></body></html>

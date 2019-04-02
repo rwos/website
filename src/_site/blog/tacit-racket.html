@@ -1,0 +1,99 @@
+<!doctype html><html lang="en"><head><meta http-equiv="Content-type" content="text/html;charset=UTF-8"><meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0"><title>Tacit Programming in Racket | r-wos.org</title> <style>
+    * { line-height: 140%; }
+    @-moz-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@-webkit-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@-o-keyframes blink {
+ 0% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 1;
+ }
+}
+
+@keyframes blink {
+ 0% {
+    opacity: 1;
+ }
+ 50% {
+    opacity: 0;
+ }
+ 100% {
+    opacity: 1;
+ }
+}
+
+blink {
+  display: inline;
+  -webkit-animation: blink 1s steps(1) infinite;
+  -moz-animation: blink 1s steps(1) infinite;
+  -o-animation: blink 1s steps(1) infinite;
+  animation: blink 1s steps(1) infinite;
+}
+
+    </style></head><body style="margin:15px auto;max-width:40em"> <nav> <a href="/">Home</a> - <a href="/blog">Blog</a> - <a href="/feed.xml">RSS</a> - <a href="/hacks">Hacks</a> - <a href="/about">About</a> </nav> <main><h1>Tacit Programming in Racket</h1><p>2013-01-12<p><small>(There’s also a <a href="http://r-wos.org/blog/tacit-racket-2">second part</a>)</small></p><p>Just a quick technical note: tacit (aka point-free aka - hahaha - pointless) programming works just fine in Racket.</p><p>Let’s take the usual example problem: we want to get the average of a list of numbers.</p><p>The average is the sum of all the numbers divided by the length of the list, so let’s first make a sum function:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(define (sum ls) (apply + ls))
+</code></pre></div></div><p>This would work, as would <code class="highlighter-rouge">(define (sum ls) (foldl + 0 ls))</code> - but there’s still the “ls” parameter in there. Tacit programming is programming via function composition, without using explicit parameters. So, lets get rid of it.</p><p>Let’s take the apply definition above. We can see that <code class="highlighter-rouge">(sum ...)</code> is exactly the same as <code class="highlighter-rouge">(apply + ...)</code>, so if we could just transform the apply function to one that has the “+” already built-in and only takes the one remaining argument - the list - that would be great.</p><p>And, why yes we can: The operation that helps us here is called “currying” <a href="http://en.wikipedia.org/wiki/Currying">because “schönfinkeling” would sound ridiculous</a>.</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;;; curry is in #lang racket - if you use racket/base, just
+;;; (require racket/function)
+;;; "-&gt;" is the prompt
+
+-&gt; (curry apply)
+#&lt;procedure:curried&gt;
+
+-&gt; ((curry apply) +)
+#&lt;procedure:curried&gt;
+
+-&gt; (((curry apply) +) '(1 2 3))
+6
+</code></pre></div></div><p>Aha! Now we have a function, <code class="highlighter-rouge">((curry apply) +)</code>, that takes a list of numbers as the only argument and returns the sum. So, why not call that function “sum”:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-&gt; (define sum ((curry apply) +))
+
+;; check if it still works
+-&gt; (sum '(1 2 3))
+6
+</code></pre></div></div><p>Now we need a length function. For that, we just take the built-in <code class="highlighter-rouge">length</code> function.</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-&gt; (length '(1 2 3))
+3
+</code></pre></div></div><p>The average is now:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-&gt; (/ (sum '(1 2 3)) (length '(1 2 3)))
+2
+</code></pre></div></div><p>We still have the list parameter (or, in this case, the list) in it, however. So let’s take it out. There are probably ways to do that with just basic function combination and currying, but it’s late at night so let’s just cheat a little and define a higher-order function that does exactly what we want:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; I called that function "-&lt;" because you shouldn't use it, as it's more a
+;; result of my limited knowledge of tacit programming than anything else.
+;; This is (probably) not the most elegant way to solve our problem.
+-&gt; (define (-&lt; head . fns)
+     (lambda (x) (apply head (map (lambda (fn) (fn x)) fns))))
+</code></pre></div></div><p>This takes a “head” function and an arbitrary number of child functions and returns a function that takes an argument to which all the child functions are applied, with the head function getting applied to the results.</p><p>That’s a bit confusing to explain, but really simple to use:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-&gt; (-&lt; / sum length)
+#&lt;procedure&gt;
+
+-&gt; ((-&lt; / sum length) '(1 2 3))
+2
+</code></pre></div></div><p>And with that little non-tacit cheat we now have a rather beautiful average function:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-&gt; (define avg (-&lt; / sum length))
+
+-&gt; (avg '(2 3 4 5 6))
+4
+-&gt; (avg '(1 2 3 4 5 6 7 8))
+9/2
+</code></pre></div></div><p>Another important higher-order function for tacit programming that wasn’t mentioned here is <code class="highlighter-rouge">compose</code>, as it’s called in Racket. It combines functions and it’s really very simple:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(compose foo bar baz)
+</code></pre></div></div><p>is just the point-free version of</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(lambda (x) (foo (bar (baz x))))
+</code></pre></div></div><p>All of this seems like a lot of work just for avoiding explicit parameters, but once one has a small collection of primitives it’s actually pretty easy to write new functions in a point-free style.</p><p>Of course, whether or not you like tacit programming as a whole is a bit of a question of taste. It’s certainly very compact and powerful, but it also can be very confusing at times. Just have a look at APL, J, or Forth for an example of what it looks like if one just takes tacit programming and runs with it.</p><p>(<a href="http://r-wos.org/blog/tacit-racket-2">part 2</a>)</p><hr><h2>See Also</h2><p>Previously: <a href="/blog/happy-new-year">The most latest "new year" type post of the year</a></p><p>Next up: <a href="/blog/semantics">&lt;font color="green"&gt;</a></p><p> The machine thinks that the Web-Log entries <a href="/blog/tacit-racket">Tacit Programming in Racket</a>, <a href="/blog/tacit-racket-2">Tacit Programming in Racket, Part 2</a>, and <a href="/blog/purely-functional-games">Purely Functional Games</a> might be related to the topic so eloquently discussed above. The machine is sometimes right.</p></main></body></html>
