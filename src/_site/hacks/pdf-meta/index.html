@@ -1,0 +1,102 @@
+<html>
+<body>
+<h3>Will probably not work in browsers other than FF &gt;= 23</h3>
+<input type="file" id="f">
+<br>
+<table>
+<tr><td>
+<canvas id="c" style="border:1px solid black"></canvas>
+</td><td>
+Example files:<br><br>
+<a href="m68k.pdf">tiny PDF made with Excel</a><br><br>
+<a href="wirth.pdf">small PDF with funky but useless rdf metadata</a><br><br>
+<a href="csp.pdf">medium PDF with bad/typical metadata</a><br><br>
+<a href="http://www.quartus.net/files/PalmOS/Forth/Docs/dpans94.pdf">
+    PDF (ANSI standard) with title and author
+</a><br><br>
+</td>
+</tr>
+</table>
+<p id="o">
+</p>
+
+<!--<script type="text/javascript" src="compatibility.js"></script>-->
+<script type="text/javascript" src="l10n.js"></script>
+<script type="text/javascript" src="pdf.js"></script>
+
+<script type="text/javascript">
+
+document.body.onload = function() {
+    alert("loaded");
+}
+
+function isfunc(f) {
+    var o = {};
+    return f && o.toString.call(f) === '[object Function]';
+}
+
+
+function insertLiteral(literalString, targetElement)
+{
+    var textNode = document.createTextNode(literalString);
+    targetElement.appendChild(textNode)
+    return textNode;
+}
+
+function print(el, obj, tab) {
+    var iter = 0;
+    for (var i in obj) {
+        if (isfunc(obj[i])) {
+            o.innerHTML += tab + "(function " + i + ")<br>";
+        } else if (i === "metaDocument") {
+            o.innerHTML += tab + "(metaDocument)<br>";
+            insertLiteral(obj[i].documentElement.innerHTML, o);
+            o.innerHTML += tab + "<br>";
+        } else if (typeof obj[i] === "object") {
+            o.innerHTML += tab + "<b>" + i + "</b><br>";
+            print(el, obj[i], tab+"&nbsp;&nbsp;");
+        } else {
+            o.innerHTML += tab + "<b>" + i + "</b>";
+            o.innerHTML += ": " + obj[i] + "<br>";
+        }
+    }
+}
+
+document.getElementById('f').onchange = function(e) {
+
+    var f = e.target.files[0];
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+
+        var url = e.target.result;
+
+        PDFJS.getDocument(url).then(function getPdfHelloWorld(pdf) {
+                pdf.getMetadata().then(function(m) {
+                        var o = document.getElementById("o");
+                        o.innerHTML = "";
+                        print(o, m, "");
+                    });
+                pdf.getPage(1).then(function getPageHelloWorld(page) {
+                    var scale = 0.5;
+                    var viewport = page.getViewport(scale);
+
+                    var canvas = document.getElementById('c');
+                    var context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+
+                    page.render({canvasContext: context, viewport: viewport});
+                    });
+                });
+
+    };
+
+    reader.readAsDataURL(f);
+}
+
+</script>
+
+</body>
+</html>
+

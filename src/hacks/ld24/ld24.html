@@ -1,0 +1,69 @@
+<!doctype html>
+<head>
+    <title>Moore's game - Ludum Dare 24 | r-wos.org</title>
+</head>
+<style>
+    body {
+        background: #EEEEEF;
+        font-family: Helvetica,Arial,sans-serif;
+        font-size: 11pt;
+        line-height: 1.5em;
+        max-width:800px;
+        text-align:center;
+        margin: 2em;
+        margin-left:auto;
+        margin-right:auto;
+    }
+    .box {
+        border: 1px solid #D0D0DF;
+        border-radius: 0.5em 0.5em 0.5em 0.5em;
+        box-shadow: 0.1em 0.1em 0.5em #a0a0ad;
+    }
+    #ctrl-hint {
+        max-width: 600px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+    pre {
+        text-align: left;
+    }
+</style>
+<body>
+    <canvas id="c" class="box" width="640" height="480" style="position:relative"></canvas>
+    <div id="ctrl-hint"></div>
+    <hr>
+    <div>
+        Jump to level:
+        <a href="javascript:chg_level('pong');">pong</a>
+        <a href="javascript:chg_level('breakout');">breakout</a>
+        <a href="javascript:chg_level('asteroids');">asteroids</a>
+        <a href="javascript:chg_level('pacman');">pacman</a>
+        <a href="javascript:chg_level('bros');">bros</a>
+        <a href="javascript:chg_level('lucas');">lucas</a>
+        <a href="javascript:chg_level('wolf');">wolf</a>
+    </div>
+    <hr>
+    <div><small>
+            Made by
+            <a href="http://r-wos.org">Richard Wossal</a>
+            &lt;<a href="mailto:richard@r-wos.org">richard@r-wos.org</a>&gt;
+            in 48 hours for the
+            <a href="http://www.ludumdare.com/compo/">ludum dare</a>
+            game programming competition.
+    </small></div>
+    <div><small>
+        <a href="https://github.com/rwos/ludum-dare-24">source code (JavaScript / HTML5 - will make your eyes bleed)</a>
+    </small></div>
+    <script src="game.js"></script>
+    <script src="tr.js"></script>
+    <script src="tic.js"></script>
+    <script src="pong.js"></script>
+    <script src="breakout.js"></script>
+    <script src="asteroids.js"></script>
+    <script src="pacman.js"></script>
+    <script src="bros.js"></script>
+    <script src="lucas.js"></script>
+    <script src="wolf.js"></script>
+    <script src="run.js"></script>
+</body>
+
