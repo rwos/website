@@ -1,5 +1,5 @@
 #!/bin/bash
-BASEURL="http://r-wos.org"
+BASEURL="localhost:4000"
 echo "checking $BASEURL"
 LANG=C
 wget -e robots=off \

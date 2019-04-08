@@ -11,7 +11,7 @@ title: "Weeks of hacking can save you hours of planning"
 
 <dl>
   {% for page in site.pages %}
-  {% if page.title and page.url != "/" %}
+  {% if page.title and page.subtitle and page.url != "/" %}
     <dt>
       <a href="{{ page.url }}">{{ page.title }}</a>
     </dt>

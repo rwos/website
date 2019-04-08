@@ -5,3 +5,6 @@ RUN gem install jekyll bundler jekyll-feed octopress-minify-html \
     classifier-reborn rb-gsl
 
 WORKDIR /website
+
+FROM nginx:alpine as prod
+#
