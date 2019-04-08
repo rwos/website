@@ -9,22 +9,27 @@ title: "Weeks of hacking can save you hours of planning"
   <blink><font color="green">w</font><font color="red">o</font><font color="blue">n</font><font color="olive">d</font><font color="purple">e</font><font color="green">r</font></blink><font color="fuchsia">w</font><font color="gray">o</font><font color="black">r</font><font color="salmon">l</font><font color="rebeccapurple">d</font>
 </p>
 
-<ul>
+<dl>
   {% for page in site.pages %}
   {% if page.title and page.url != "/" %}
-    <li>
-      <a href="{{ page.url }}">{{ page.title }}</a> {{ page.subtitle }}
-    </li>
+    <dt>
+      <a href="{{ page.url }}">{{ page.title }}</a>
+    </dt>
+    <dd>
+      {{ page.subtitle }}
+    </dd>
   {% endif %}
   {% endfor %}
-  <li>
+  <dt>
     <a href="https://idlewords.com/talks/website_obesity.htm">Why</a>
+  </dt>
+  <dd>
     is this
     <a href="https://idlewords.com/talks/website_obesity.htm">page</a>
     so
     <a href="https://idlewords.com/talks/website_obesity.htm">incredibly beautiful</a>?
-  </li>
-</ul>
+  </dd>
+</dl>
 
 <p>Elsewhere on the web:</p>
 
