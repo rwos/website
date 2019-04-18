@@ -35,6 +35,12 @@ title: "Weeks of hacking can save you hours of planning"
 
 <ul>
   <li>
+    the world's most important web app, <a href="https://rwos.github.io/gifstopmotion">gifstopmotion</a>
+  </li>
+  <li>
+    <a href="http://vimscript.org/">http://vimscript.org/</a>
+  </li>
+  <li>
     public <a href="{{ site.github_url }}" target="_blank">code and stuff</a> (github.com)
   </li>
   <li>

@@ -12,6 +12,10 @@ permalink: /hacks
   <dd>
     An implementation of the command I keep typing all day long.
   </dd>
+  <dt><a href="https://rwos.github.io/gifstopmotion/">gifstopmotion</a></dt>
+  <dd>
+    Critical Business Software as a Service (create captioned stop-motion gifs).
+  </dd>
   <dt><a href="/hacks/ld26">::.::::::.</a></dt>
   <dd>
     My entry for the 26th <a href="http://www.ludumdare.com/compo/">Ludum Dare</a>
