@@ -1,0 +1,24 @@
+- work through ALL
+
+
+- MULTIPLE TRAEFIK LABELS (vimscript.org, etc)
+
+    https://stackoverflow.com/questions/52240784/traefik-multiple-frontend-rules-to-one-docker-container
+
+    services:
+     testapi:
+       image: git.xxxx.com/api/core/test:latest
+       restart: always
+       networks:
+         - web
+         - default
+       expose:
+         - "80"
+       labels:
+         - "traefik.enable=true"
+         - "traefik.port=80"
+         - "traefik.docker.network=web"
+         #this domain is used for app
+         - "traefik.foo.frontend.rule=Host:api.test.mydomain.com"
+         - "traefik.bar.frontend.rule=Host:www.test.mydomain.com,m.test.mydomain.com;PathPrefixStrp:/_"
+

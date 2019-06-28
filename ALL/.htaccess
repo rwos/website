@@ -1,0 +1,42 @@
+ExpiresActive on
+ExpiresByType image/png "access plus 1 month"
+ExpiresByType image/gif "access plus 1 month"
+ExpiresByType image/jpeg "access plus 1 month"
+ExpiresByType text/css "access plus 1 week"
+
+# special MIME type for icons - see
+# http://www.iana.org/assignments/media-types/image/vnd.microsoft.icon
+AddType image/vnd.microsoft.icon .ico
+# now we have icon MIME type, we can use it
+# my favicon doesn't change much
+ExpiresByType image/vnd.microsoft.icon "access plus 3 months"
+
+# page speed suggestion
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css|xml|gz)$">
+    Header append Vary Accept-Encoding
+  </FilesMatch>
+</IfModule>
+
+Header unset ETag
+FileETag None
+
+# content negotiation for index file
+DirectoryIndex index
+
+# rewrite for gzipped css/js
+#RewriteEngine On
+#RewriteBase /
+#RewriteCond %{HTTP:Accept-Encoding} .*gzip.*
+#RewriteRule ^(.*)\.js$ $1.js.gz [L]
+#RewriteRule ^(.*)\.css$ $1.css.gz [L]
+#AddEncoding x-gzip text.gz
+
+# charset in header
+AddCharset UTF-8 .html .html.gz .js .js.gz .css .css.gz
+
+# custom error documents
+ErrorDocument 404 /404.html
+ErrorDocument 500 /500.html
+

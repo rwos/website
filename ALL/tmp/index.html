@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <head>
+    <title></title>
+    <style>
+      canvas { width: 100%; height: 100% }
+      * { margin: 0; padding: 0; }
+      #stats { position: absolute; top:0; left: 0; }
+    </style>
+  </head>
+  <body>
+    <script>
+    window.onerror = function (errorMsg, url, lineNumber) {
+      alert(errorMsg);
+      document.write(errorMsg);
+      document.write(url);
+      document.write(lineNumber);
+      return false;
+    }
+
+    </script>
+    <script src="lib/three.min.js"></script>
+<script>
+Object.keys(THREE.ShaderLib).forEach(function (key) {
+    THREE.ShaderLib[key].fragmentShader =
+    THREE.ShaderLib[key].fragmentShader.replace('#extension GL_EXT_frag_depth : enable', '');
+});
+  </script>
+    <script src="lib/stats.min.js"></script>
+    <script src="snake.js"></script>
+  </body>
+</html>
