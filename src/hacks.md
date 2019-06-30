@@ -21,7 +21,7 @@ permalink: /hacks
     My entry for the 26th <a href="http://www.ludumdare.com/compo/">Ludum Dare</a>
     48h game programming competition.
   </dd>
-  <dt><a href="/hacks/ld24">Moore's Game</a></dt>
+  <dt><a href="/hacks/ld24/ld24.html">Moore's Game</a></dt>
   <dd>
     My entry for the 24th <a href="http://www.ludumdare.com/compo/">Ludum Dare</a>
     48h game programming competition.
