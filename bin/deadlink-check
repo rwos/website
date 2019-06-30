@@ -4,6 +4,6 @@ echo "checking $BASEURL"
 LANG=C
 wget -e robots=off \
     --spider --no-directories --delete-after \
-    --recursive --level=100 \
+    --recursive --level=1000 \
     --page-requisites \
     "$BASEURL"
