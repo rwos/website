@@ -1,60 +1,6 @@
 <!doctype html><html lang="en"><head><meta http-equiv="Content-type" content="text/html;charset=UTF-8"><meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0"><meta name="Description" content="Homepage of Richard Wossal. Weeks of hacking can save you hours of planning."><title>Playing with Cray-1 Disks | r-wos.org</title> <style>
     * { line-height: 140%; }
-    @-moz-keyframes blink {
- 0% {
-   opacity: 1;
- }
- 50% {
-   opacity: 0;
- }
- 100% {
-   opacity: 1;
- }
-}
-
-@-webkit-keyframes blink {
- 0% {
-   opacity: 1;
- }
- 50% {
-   opacity: 0;
- }
- 100% {
-   opacity: 1;
- }
-}
-
-@-o-keyframes blink {
- 0% {
-   opacity: 1;
- }
- 50% {
-   opacity: 0;
- }
- 100% {
-   opacity: 1;
- }
-}
-
-@keyframes blink {
- 0% {
-    opacity: 1;
- }
- 50% {
-    opacity: 0;
- }
- 100% {
-    opacity: 1;
- }
-}
-
-blink {
-  display: inline;
-  -webkit-animation: blink 1s steps(1) infinite;
-  -moz-animation: blink 1s steps(1) infinite;
-  -o-animation: blink 1s steps(1) infinite;
-  animation: blink 1s steps(1) infinite;
-}
+    @-moz-keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}@-webkit-keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}@-o-keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}@keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}blink{display:inline;-webkit-animation:blink 1s steps(1) infinite;-moz-animation:blink 1s steps(1) infinite;-o-animation:blink 1s steps(1) infinite;animation:blink 1s steps(1) infinite}
 
     </style></head><body style="margin:15px auto;max-width:40em"> <nav> <a href="/">Home</a> - <a href="/blog">Blog</a> - <a href="/feed.xml">RSS</a> - <a href="/hacks">Hacks</a> - <a href="/about">About</a> </nav> <main><h1>Playing with Cray-1 Disks</h1><p><time datetime="2013-04-09">2013-04-09</time></p><p>You might have heard about <a href="http://www.chrisfenton.com/homebrew-cray-1a/">the guy who made a fantastic small FPGA Cray-1</a>.</p><p>He also found two old backup disks, one of which contains the <a href="http://www.chrisfenton.com/cos-recovery/">last known copy of the Cray Operating System</a>.</p><p>I’ve just started playing around with the disk images - it’s quite exciting!</p><p>The non-COS disk seems to contain some kind of system test application (there’s a lot of BASIC code on there that hints into that direction).</p><p>I haven’t found anything too interesting yet, I’ll have to write some tools first. However, there is one text file on the application disk I found by manually going through the strings. It describes a language called APAL, whatever that stands for (there doesn’t seem to be any APAL code on the disk):</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INTRODUCTION
 

@@ -1,60 +1,6 @@
 <!doctype html><html lang="en"><head><meta http-equiv="Content-type" content="text/html;charset=UTF-8"><meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0"><meta name="Description" content="Homepage of Richard Wossal. Weeks of hacking can save you hours of planning."><title>NoUnderstand NoFlo | r-wos.org</title> <style>
     * { line-height: 140%; }
-    @-moz-keyframes blink {
- 0% {
-   opacity: 1;
- }
- 50% {
-   opacity: 0;
- }
- 100% {
-   opacity: 1;
- }
-}
-
-@-webkit-keyframes blink {
- 0% {
-   opacity: 1;
- }
- 50% {
-   opacity: 0;
- }
- 100% {
-   opacity: 1;
- }
-}
-
-@-o-keyframes blink {
- 0% {
-   opacity: 1;
- }
- 50% {
-   opacity: 0;
- }
- 100% {
-   opacity: 1;
- }
-}
-
-@keyframes blink {
- 0% {
-    opacity: 1;
- }
- 50% {
-    opacity: 0;
- }
- 100% {
-    opacity: 1;
- }
-}
-
-blink {
-  display: inline;
-  -webkit-animation: blink 1s steps(1) infinite;
-  -moz-animation: blink 1s steps(1) infinite;
-  -o-animation: blink 1s steps(1) infinite;
-  animation: blink 1s steps(1) infinite;
-}
+    @-moz-keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}@-webkit-keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}@-o-keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}@keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}blink{display:inline;-webkit-animation:blink 1s steps(1) infinite;-moz-animation:blink 1s steps(1) infinite;-o-animation:blink 1s steps(1) infinite;animation:blink 1s steps(1) infinite}
 
     </style></head><body style="margin:15px auto;max-width:40em"> <nav> <a href="/">Home</a> - <a href="/blog">Blog</a> - <a href="/feed.xml">RSS</a> - <a href="/hacks">Hacks</a> - <a href="/about">About</a> </nav> <main><h1>NoUnderstand NoFlo</h1><p><time datetime="2014-05-24">2014-05-24</time></p><p>Playing with <a href="http://noflojs.org/">NoFlo</a> a bit, currently. It’s a flow-based programming environment in JavaScript. It might not be apparent from this post but I do quite like it. Data-flow programming is probably not much of an improvement if you start with a sane language. But since JavaScript is a rotten piece of shit all the way through, NoFlo actually improves things considerably.</p><p>I haven’t written enough stuff in it to know whether or not it’s fit for doing real-world in-browser things, but it does look like it. One of the nice things about it is that it lets you avoid writing in continuation passing style, mostly. Again - in a sane language, no one would do that anyway, but yeah. JavaScript.</p><p>As to the flow-based part of it - a few comparisons immediately come to mind. One of them might be CSP, or Go’s implementation of CSP. But I’m not a Go programmer, so I can only compare it to that other system I know: unix processes, as exposed by the unix shell.</p><p>Obvious from the start: NoFlo is two-dimensional, the shell is one-dimensional. Now, that’s not strictly true - one can certainly arrange unix processes in a two-dimensional pattern - but for this exercise, let’s only consider the plain old one-dimensional unix pipeline.</p><p>Say, something super-simple like this:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>grep '^a' | head
 </code></pre></div></div><p>And that’s where my gripes with NoFlo start, because I find it extremely difficult to write even something simple like that in it.</p><p>The naive translation of the program above into NoFlo might look something like this (the syntax is a built-in DSL, which NoFlo can execute directly):</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Read(filesystem/ReadFile) OUT -&gt; IN Split(strings/SplitStr)

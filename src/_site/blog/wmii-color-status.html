@@ -1,60 +1,6 @@
 <!doctype html><html lang="en"><head><meta http-equiv="Content-type" content="text/html;charset=UTF-8"><meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0"><meta name="Description" content="Homepage of Richard Wossal. Weeks of hacking can save you hours of planning."><title>Colored Text in wmii's Status Bar | r-wos.org</title> <style>
     * { line-height: 140%; }
-    @-moz-keyframes blink {
- 0% {
-   opacity: 1;
- }
- 50% {
-   opacity: 0;
- }
- 100% {
-   opacity: 1;
- }
-}
-
-@-webkit-keyframes blink {
- 0% {
-   opacity: 1;
- }
- 50% {
-   opacity: 0;
- }
- 100% {
-   opacity: 1;
- }
-}
-
-@-o-keyframes blink {
- 0% {
-   opacity: 1;
- }
- 50% {
-   opacity: 0;
- }
- 100% {
-   opacity: 1;
- }
-}
-
-@keyframes blink {
- 0% {
-    opacity: 1;
- }
- 50% {
-    opacity: 0;
- }
- 100% {
-    opacity: 1;
- }
-}
-
-blink {
-  display: inline;
-  -webkit-animation: blink 1s steps(1) infinite;
-  -moz-animation: blink 1s steps(1) infinite;
-  -o-animation: blink 1s steps(1) infinite;
-  animation: blink 1s steps(1) infinite;
-}
+    @-moz-keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}@-webkit-keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}@-o-keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}@keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}blink{display:inline;-webkit-animation:blink 1s steps(1) infinite;-moz-animation:blink 1s steps(1) infinite;-o-animation:blink 1s steps(1) infinite;animation:blink 1s steps(1) infinite}
 
     </style></head><body style="margin:15px auto;max-width:40em"> <nav> <a href="/">Home</a> - <a href="/blog">Blog</a> - <a href="/feed.xml">RSS</a> - <a href="/hacks">Hacks</a> - <a href="/about">About</a> </nav> <main><h1>Colored Text in wmii's Status Bar</h1><p><time datetime="2013-06-08">2013-06-08</time></p><p>Another entry without any ranting - what is this blog coming to? In order to not <em>entirely</em> slip into the realms of factual boringness this one is only useful for people who use <code class="highlighter-rouge">wmii</code> as their window manager:</p><p>The <code class="highlighter-rouge">wmii</code> status bar doesn’t interpret ANSI escape codes for colors, but one can set the colors globally for the whole bar. If one wants to color only specific sections of the status bar, one has to divide it into more bars.</p><p>This is easily done by writing a new file into <code class="highlighter-rouge">/rbar</code> in <code class="highlighter-rouge">wmii</code>’s virtual file system. I suppose you already have your own <code class="highlighter-rouge">status</code> function in your <code class="highlighter-rouge">wmiirc_local</code> - just add something like the following:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>status() {
     # [...]

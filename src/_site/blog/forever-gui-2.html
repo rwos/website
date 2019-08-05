@@ -1,60 +1,6 @@
 <!doctype html><html lang="en"><head><meta http-equiv="Content-type" content="text/html;charset=UTF-8"><meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0"><meta name="Description" content="Homepage of Richard Wossal. Weeks of hacking can save you hours of planning."><title>A Graphical Forever Project, Part 2 | r-wos.org</title> <style>
     * { line-height: 140%; }
-    @-moz-keyframes blink {
- 0% {
-   opacity: 1;
- }
- 50% {
-   opacity: 0;
- }
- 100% {
-   opacity: 1;
- }
-}
-
-@-webkit-keyframes blink {
- 0% {
-   opacity: 1;
- }
- 50% {
-   opacity: 0;
- }
- 100% {
-   opacity: 1;
- }
-}
-
-@-o-keyframes blink {
- 0% {
-   opacity: 1;
- }
- 50% {
-   opacity: 0;
- }
- 100% {
-   opacity: 1;
- }
-}
-
-@keyframes blink {
- 0% {
-    opacity: 1;
- }
- 50% {
-    opacity: 0;
- }
- 100% {
-    opacity: 1;
- }
-}
-
-blink {
-  display: inline;
-  -webkit-animation: blink 1s steps(1) infinite;
-  -moz-animation: blink 1s steps(1) infinite;
-  -o-animation: blink 1s steps(1) infinite;
-  animation: blink 1s steps(1) infinite;
-}
+    @-moz-keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}@-webkit-keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}@-o-keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}@keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}blink{display:inline;-webkit-animation:blink 1s steps(1) infinite;-moz-animation:blink 1s steps(1) infinite;-o-animation:blink 1s steps(1) infinite;animation:blink 1s steps(1) infinite}
 
     </style></head><body style="margin:15px auto;max-width:40em"> <nav> <a href="/">Home</a> - <a href="/blog">Blog</a> - <a href="/feed.xml">RSS</a> - <a href="/hacks">Hacks</a> - <a href="/about">About</a> </nav> <main><h1>A Graphical Forever Project, Part 2</h1><p><time datetime="2013-02-15">2013-02-15</time></p><p><small>(<a href="http://r-wos.org/blog/forever-gui">part 1</a>)</small></p><p>My first idea of how we could simplify creating graphical user interfaces was to just take a unix pipe and to either render something graphical for each component, or only one input-element and one output element.</p><p>That is, for example <code class="highlighter-rouge">find ./ -name *.c | xargs grep -n "[^f]gets" | vi -</code> would result in a number of little boxes on the screen, connected by pipes, with the last box being <code class="highlighter-rouge">vi</code>. The <code class="highlighter-rouge">find</code> box may have had a text-field for the directory in it, and some (actually: much more) other widgets for controlling all the other options. As would the <code class="highlighter-rouge">xargs</code> box, and so on.</p><p>That would be very simple (<em>no</em> work at all to implement a GUI), but also very stupid.</p><p>The relationship between a program and its GUI is a bit funny. If you look at today’s GUI programs, you’ll find that there’s usually no connection at all between the structure of the program and the structure of the GUI. Which is fine, I think. With current graphics systems you are absolutely free to do the GUI whatever way you want.</p><p>So I came to the (not too surprising) conclusion that a graphics system has to have that distinction between GUI and program.</p><p>Currently, most GUIs are trees. It may be worthwhile to explore other means of grouping in GUIs, but as a whole the current parent-children approach seems to work rather well. The unix shell language can’t easily express trees. The unix file system can, however. So it seems rather natural to map containers (windows, group-boxes, tabs, …) to directories, and containees (buttons, text-fields, …) to files.</p><p>But creating complex file trees is cumbersome with the standard unix tools. Trees are, however, easy to express as s-expressions.</p><p>Putting it all together: say, we want a program that has takes a word, <a href="http://duckduckgo.com?q=define+hello">searches for the definition on duckduckgo</a>, and shows the result. If we were to run that program on the command line, we’d expect a plain-text answer. If we were to run it as a desktop application, we’d expect a little formatting.</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
 word-input <span class="o">=</span> text-input <span class="nt">-name</span> word

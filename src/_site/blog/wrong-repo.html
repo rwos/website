@@ -1,60 +1,6 @@
 <!doctype html><html lang="en"><head><meta http-equiv="Content-type" content="text/html;charset=UTF-8"><meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0"><meta name="Description" content="Homepage of Richard Wossal. Weeks of hacking can save you hours of planning."><title>You've picked the wrong repository | r-wos.org</title> <style>
     * { line-height: 140%; }
-    @-moz-keyframes blink {
- 0% {
-   opacity: 1;
- }
- 50% {
-   opacity: 0;
- }
- 100% {
-   opacity: 1;
- }
-}
-
-@-webkit-keyframes blink {
- 0% {
-   opacity: 1;
- }
- 50% {
-   opacity: 0;
- }
- 100% {
-   opacity: 1;
- }
-}
-
-@-o-keyframes blink {
- 0% {
-   opacity: 1;
- }
- 50% {
-   opacity: 0;
- }
- 100% {
-   opacity: 1;
- }
-}
-
-@keyframes blink {
- 0% {
-    opacity: 1;
- }
- 50% {
-    opacity: 0;
- }
- 100% {
-    opacity: 1;
- }
-}
-
-blink {
-  display: inline;
-  -webkit-animation: blink 1s steps(1) infinite;
-  -moz-animation: blink 1s steps(1) infinite;
-  -o-animation: blink 1s steps(1) infinite;
-  animation: blink 1s steps(1) infinite;
-}
+    @-moz-keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}@-webkit-keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}@-o-keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}@keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}blink{display:inline;-webkit-animation:blink 1s steps(1) infinite;-moz-animation:blink 1s steps(1) infinite;-o-animation:blink 1s steps(1) infinite;animation:blink 1s steps(1) infinite}
 
     </style></head><body style="margin:15px auto;max-width:40em"> <nav> <a href="/">Home</a> - <a href="/blog">Blog</a> - <a href="/feed.xml">RSS</a> - <a href="/hacks">Hacks</a> - <a href="/about">About</a> </nav> <main><h1>You've picked the wrong repository</h1><p><time datetime="2013-02-07">2013-02-07</time></p><p>Apparently, recruiting spammers are making progress - they now have a perl script that parses github user profiles:</p><blockquote><p><code class="highlighter-rouge">Subject: Data mining project</code><br/> <code class="highlighter-rouge">Date: Thu, 7 Feb 2013 10:44:06 -0000</code><br/> <code class="highlighter-rouge">From: "Tanya Kotwall" &lt;tanya.kotwall@njfeurope.com&gt;</code><br/> <code class="highlighter-rouge">To: &lt;richard@r-wos.org&gt;</code><br/></p><p>Hi Richard,</p><p>Notice your github online.. (was trying to understand the <code class="highlighter-rouge">my_brain_hurts</code> repositories)</p><p>A contact of mine founded trustyou.com in Munich, it’s a datamining platform and they partner with businesses like tripadvisor. At the moment they are looking for a front end web applications engineer as well as python backend engineer.. not sure if you are aware of anyone in the community who could be up for a challenge (down in Munich)?</p><p>Thanks very much for your thoughts J</p><p>Tanya Kotwall</p><p>Senior Consultant</p><p>NJF Europe Ltd</p></blockquote><p>Here are the entire contents of the repo that they have problems to understand:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from os import*
 r='s=[0]*8**5'
