@@ -10,7 +10,7 @@ description: My home on the information super highway.
 baseurl: ""
 url: "https://r-wos.org"
 github_url: "https://github.com/rwos"
-github_url: "https://twitter.com/r_wos"
+twitter_url: "https://twitter.com/r_wos"
 
 markdown: kramdown
 plugins:
