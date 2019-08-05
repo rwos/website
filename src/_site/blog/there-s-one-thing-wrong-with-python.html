@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta http-equiv="Content-type" content="text/html;charset=UTF-8"><meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0"><title>There's one thing wrong with Python | r-wos.org</title> <style>
+<!doctype html><html lang="en"><head><meta http-equiv="Content-type" content="text/html;charset=UTF-8"><meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0"><meta name="Description" content="Homepage of Richard Wossal. Weeks of hacking can save you hours of planning."><title>There's one thing wrong with Python | r-wos.org</title> <style>
     * { line-height: 140%; }
     @-moz-keyframes blink {
  0% {
@@ -56,7 +56,7 @@ blink {
   animation: blink 1s steps(1) infinite;
 }
 
-    </style></head><body style="margin:15px auto;max-width:40em"> <nav> <a href="/">Home</a> - <a href="/blog">Blog</a> - <a href="/feed.xml">RSS</a> - <a href="/hacks">Hacks</a> - <a href="/about">About</a> </nav> <main><h1>There's one thing wrong with Python</h1><p>2011-12-14<p>Finally! I found something that is wrong with Python! <small>With Python2, that is - Python3 saves itself from being wrong by being stupid.</small></p><p>And it’s really wrong, it’s of “absolutely broken” wrongness. On a scale from 0 (right) to 12 (wrong) this would score a straight twenty-seven.</p><p>It’s about scope in nested functions.</p><p>Normally, scope in python is pretty straight-forward. Okay, to access the global scope from a non-global scope, one has to use the <code class="highlighter-rouge">global</code> keyword:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>foo = 0
+    </style></head><body style="margin:15px auto;max-width:40em"> <nav> <a href="/">Home</a> - <a href="/blog">Blog</a> - <a href="/feed.xml">RSS</a> - <a href="/hacks">Hacks</a> - <a href="/about">About</a> </nav> <main><h1>There's one thing wrong with Python</h1><p><time datetime="2011-12-14">2011-12-14</time></p><p>Finally! I found something that is wrong with Python! <small>With Python2, that is - Python3 saves itself from being wrong by being stupid.</small></p><p>And it’s really wrong, it’s of “absolutely broken” wrongness. On a scale from 0 (right) to 12 (wrong) this would score a straight twenty-seven.</p><p>It’s about scope in nested functions.</p><p>Normally, scope in python is pretty straight-forward. Okay, to access the global scope from a non-global scope, one has to use the <code class="highlighter-rouge">global</code> keyword:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>foo = 0
 def bar():
     global foo # no access to foo without this
     print foo

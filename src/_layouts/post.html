@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-<p>{{ page.date | split: ' ' | first }}
+<p><time datetime="{{ page.date | split: ' ' | first }}">{{ page.date | split: ' ' | first }}</time></p>
 
 {{ content }}
 
@@ -16,7 +16,6 @@ layout: default
 <p>Next up: <a href="{{ page.next.url }}">{{ page.next.title }}</a></p>
 {% endif %}
 
-<!-- TODO: filter the current page out -->
 {% assign related_sorted = site.related_posts %}
 <p>
   The machine thinks that the Web-Log entries

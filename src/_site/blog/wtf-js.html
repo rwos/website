@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta http-equiv="Content-type" content="text/html;charset=UTF-8"><meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0"><title>wtf.js | r-wos.org</title> <style>
+<!doctype html><html lang="en"><head><meta http-equiv="Content-type" content="text/html;charset=UTF-8"><meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0"><meta name="Description" content="Homepage of Richard Wossal. Weeks of hacking can save you hours of planning."><title>wtf.js | r-wos.org</title> <style>
     * { line-height: 140%; }
     @-moz-keyframes blink {
  0% {
@@ -56,7 +56,7 @@ blink {
   animation: blink 1s steps(1) infinite;
 }
 
-    </style></head><body style="margin:15px auto;max-width:40em"> <nav> <a href="/">Home</a> - <a href="/blog">Blog</a> - <a href="/feed.xml">RSS</a> - <a href="/hacks">Hacks</a> - <a href="/about">About</a> </nav> <main><h1>wtf.js</h1><p>2013-07-09<p>Playing with node.js currently, and I don’t grok it. I’m passable (not “good”, just passable) in JavaScript but I don’t get why anyone would ever want to program in the style node.js dictates.</p><p>It’s async, yeah. <em>Only</em> async. And async without language-level promises, or channels, or a <code class="highlighter-rouge">select</code>. Or multi-processing. Or anything really. They basically write in continuation passing style. In one thread. By hand. And it wouldn’t completely surprise me if they chiseled it in stone and OCR’d it back.</p><p>If you are going backwards, you might as well go all the way.</p><p>Let’s make two HTTP requests, shall we?</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var result_1, result 2;
+    </style></head><body style="margin:15px auto;max-width:40em"> <nav> <a href="/">Home</a> - <a href="/blog">Blog</a> - <a href="/feed.xml">RSS</a> - <a href="/hacks">Hacks</a> - <a href="/about">About</a> </nav> <main><h1>wtf.js</h1><p><time datetime="2013-07-09">2013-07-09</time></p><p>Playing with node.js currently, and I don’t grok it. I’m passable (not “good”, just passable) in JavaScript but I don’t get why anyone would ever want to program in the style node.js dictates.</p><p>It’s async, yeah. <em>Only</em> async. And async without language-level promises, or channels, or a <code class="highlighter-rouge">select</code>. Or multi-processing. Or anything really. They basically write in continuation passing style. In one thread. By hand. And it wouldn’t completely surprise me if they chiseled it in stone and OCR’d it back.</p><p>If you are going backwards, you might as well go all the way.</p><p>Let’s make two HTTP requests, shall we?</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var result_1, result 2;
 http.get("http://one.com",
   function(response) {
     response.on('data',
