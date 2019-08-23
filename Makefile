@@ -15,5 +15,9 @@ serve-prod: build-prod
 		-p 8080:80 \
 		website-prod
 
+push: build-prod
+	docker tag website-prod rwos/website:latest
+	docker push rwos/website:latest
+
 lint: bin/deadlink-check
 	bin/deadlink-check
