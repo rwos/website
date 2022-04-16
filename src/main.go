@@ -27,22 +27,29 @@ import (
 	"github.com/yuin/goldmark-highlighting"
 	"github.com/yuin/goldmark/extension"
 	"github.com/yuin/goldmark/parser"
-	"github.com/yuin/goldmark/renderer/html"
+	goldmarkhtml "github.com/yuin/goldmark/renderer/html"
+	"golang.org/x/net/html"
 	"gopkg.in/yaml.v2"
 )
 
 type PageConfig struct {
-	Title string
-	Tags  []string
+	Title    string
+	Subtitle string
+	Tags     []string
+	Path     string
+	Dest     string
+	Link     string
 }
 
 const contentBase = "content/"
 const buildBase = "../build/"
 
+var md goldmark.Markdown
+
 func main() {
 	// TODO: https://github.com/abhinav/goldmark-toc
 	// TODO: https://github.com/yuin/goldmark-highlighting
-	md := goldmark.New(
+	md = goldmark.New(
 		goldmark.WithExtensions(
 			extension.GFM,
 			extension.Footnote,
@@ -57,7 +64,7 @@ func main() {
 			parser.WithAutoHeadingID(),
 		),
 		goldmark.WithRendererOptions(
-			html.WithUnsafe(),
+			goldmarkhtml.WithUnsafe(),
 		),
 	)
 
@@ -85,63 +92,22 @@ func main() {
 		fatalIfError(err)
 	}
 
-	allTags := map[string][]string{} // tag => list of destination files that have that tag
+	allTags := map[string][]PageConfig{} // tag => list of destination files that have that tag
 
 	for _, p := range files {
 		dest := buildBase + strings.TrimPrefix(p, contentBase)
-		dest = strings.TrimSuffix(dest, ".md") + ".html"
-
-		// static files: just copy
-		if !strings.HasSuffix(p, ".md") || strings.HasSuffix(p, "README.md") {
-			fmt.Printf("copying %s to %s\n", p, dest)
-			input, err := ioutil.ReadFile(p)
-			fatalIfError(err)
-			err = ioutil.WriteFile(dest, input, 0644)
-			fatalIfError(err)
-			continue
+		if strings.HasSuffix(dest, ".md") && !strings.HasSuffix(dest, "README.md") {
+			dest = strings.TrimSuffix(dest, ".md") + ".html"
 		}
 
-		// md files: process
 		fmt.Printf("rendering %s to %s\n", p, dest)
-		b, err := ioutil.ReadFile(p)
-		fatalIfError(err)
-		contents := strings.SplitN(string(b), "\n---\n", 2)
-		config := PageConfig{}
-		body := contents[0]
-		if len(contents) == 2 {
-			err := yaml.Unmarshal([]byte(contents[0]), &config)
-			fatalIfError(err)
-			body = contents[1]
-		}
-
-		// applying defaults
-		if config.Title == "" {
-			config.Title = titleFromPath(p)
-		}
-		for _, t := range tagsFromPath(p) {
-			config.Tags = append(config.Tags, t)
-		}
-		if len(config.Tags) == 1 && strings.HasSuffix(p, "index.md") {
-			// index file => remove its own tag, add "tags" tag
-			config.Tags = []string{"tags"}
-		}
-		// make tags unique
-		uniqueTags := map[string]bool{}
+		config, body := configAndBodyOf(p, dest)
 		for _, t := range config.Tags {
-			uniqueTags[t] = true
+			allTags[t] = append(allTags[t], config)
 		}
-		config.Tags = []string{}
-		for t := range uniqueTags {
-			config.Tags = append(config.Tags, t)
-			allTags[t] = append(allTags[t], p)
-		}
-		fmt.Printf("%v tags - %s\n", len(config.Tags), dest)
 
-		// rendering base content
-		var buf bytes.Buffer
-		err = md.Convert([]byte(body), &buf)
-		fatalIfError(err)
-		err = ioutil.WriteFile(dest, buf.Bytes(), 0644)
+		// writing base content
+		err = ioutil.WriteFile(dest, []byte(body), 0644)
 		fatalIfError(err)
 	}
 
@@ -159,11 +125,15 @@ func main() {
 		// construcing index
 		_, err = f.WriteString("\n<dl>")
 		fatalIfError(err)
-		for _, fWithTag := range files {
+		for _, c := range files {
 			_, err = f.WriteString(fmt.Sprintf(
-				`<dt><a href="XXXTODO">%s</a></dt><dd>DESCRIPTION</dd>`,
-				fWithTag))
+				`<dt><a href="%s">%s</a></dt>`,
+				c.Link, c.Title))
 			fatalIfError(err)
+			if c.Subtitle != "" {
+				_, err = f.WriteString(fmt.Sprintf(`<dd>%s<dd>`, c.Subtitle))
+				fatalIfError(err)
+			}
 		}
 		_, err = f.WriteString("\n</dl>")
 		fatalIfError(err)
@@ -171,15 +141,143 @@ func main() {
 	}
 }
 
-func titleFromPath(p string) string {
-	out := path.Base(p)
-	if !strings.HasSuffix(out, ".md") {
-		panic("expected md file here")
+func configAndBodyOf(p string, dest string) (config PageConfig, body string) {
+	b, err := ioutil.ReadFile(p)
+	fatalIfError(err)
+	if !strings.HasSuffix(p, ".md") || strings.HasSuffix(p, "README.md") {
+		// static files => body == contents
+		body = string(b)
+	} else {
+		// md files => body is rendered, might have config on top
+		contents := strings.SplitN(string(b), "\n---\n", 2)
+		mdBody := contents[0]
+		if len(contents) == 2 {
+			err := yaml.Unmarshal([]byte(contents[0]), &config)
+			fatalIfError(err)
+			mdBody = contents[1]
+		}
+		var buf bytes.Buffer
+		err = md.Convert([]byte(mdBody), &buf)
+		fatalIfError(err)
+		body = buf.String()
 	}
+
+	// config: applying defaults
+	config.Path = p
+	config.Dest = dest
+	config.Link = "/" + strings.TrimPrefix(dest, buildBase)
+	if config.Title == "" {
+		config.Title = titleFromPath(p)
+	}
+	if config.Subtitle == "" {
+		config.Subtitle = descriptionFromHtml(p)
+	}
+
+	// only construct tags for html and md files
+	if !strings.HasSuffix(p, ".md") && !strings.HasSuffix(p, ".html") {
+		return config, body
+	}
+	if strings.HasSuffix(p, "README.md") {
+		return config, body // "README.md"s also don't need tags and stuff
+	}
+
+	// config: constructing tags
+	for _, t := range tagsFromPath(p) {
+		config.Tags = append(config.Tags, t)
+	}
+	if len(config.Tags) == 1 &&
+		(strings.HasSuffix(p, config.Tags[0]+"/index.md") ||
+			strings.HasSuffix(p, config.Tags[0]+"/index.html")) {
+		// tag index file => remove its own tag, add "tags" tag
+		config.Tags = []string{"tags"}
+	}
+	// make tags unique
+	uniqueTags := map[string]bool{}
+	for _, t := range config.Tags {
+		uniqueTags[t] = true
+	}
+	config.Tags = []string{}
+	for t := range uniqueTags {
+		config.Tags = append(config.Tags, t)
+	}
+	return config, body
+}
+
+func descriptionFromHtml(p string) string {
+	f, err := os.Open(p)
+	fatalIfError(err)
+	defer f.Close()
+	doc, err := html.Parse(f)
+	if err != nil {
+		fmt.Printf("tried parsing %s as HTML, that failed: %s\n", p, err)
+		return ""
+	}
+	var walker func(*html.Node)
+	desc := ""
+	walker = func(n *html.Node) {
+		if n.Type == html.ElementNode && n.Data == "meta" {
+			found := false
+			for _, attr := range n.Attr {
+				if attr.Key == "name" && attr.Val == "description" {
+					found = true
+				}
+			}
+			if !found {
+				return
+			}
+			for _, attr := range n.Attr {
+				if attr.Key == "content" {
+					desc = attr.Val
+				}
+			}
+		}
+		for c := n.FirstChild; c != nil; c = c.NextSibling {
+			walker(c)
+		}
+	}
+	walker(doc)
+	return desc
+}
+
+func titleFromPath(p string) string {
+	if strings.HasSuffix(p, ".html") {
+		// parse title from HTML
+		f, err := os.Open(p)
+		fatalIfError(err)
+		defer f.Close()
+		doc, err := html.Parse(f)
+		if err != nil {
+			fmt.Printf("tried parsing %s as HTML, that failed: %s\n", p, err)
+			goto titleFromPath
+		}
+		var walker func(*html.Node)
+		title := ""
+		walker = func(n *html.Node) {
+			if n.Type == html.ElementNode && n.Data == "title" {
+				if n.FirstChild.Type != html.TextNode {
+					fmt.Printf("tried parsing %s as HTML, didn't find title\n", p)
+					return
+				}
+				title = n.FirstChild.Data
+				return
+			}
+			for c := n.FirstChild; c != nil; c = c.NextSibling {
+				walker(c)
+			}
+		}
+		walker(doc)
+		if title != "" {
+			return title
+		}
+	}
+titleFromPath:
+	out := path.Base(p)
 	out = strings.TrimSuffix(out, filepath.Ext(out))
 	out = strings.ReplaceAll(out, "-", " ")
-	if out == "" {
-		panic("no file name left?")
+	out = strings.ReplaceAll(out, "_", " ")
+	if out == "index" {
+		parts := strings.Split(filepath.Dir(p), "/")
+		return parts[len(parts)-1]
 	}
 	return out
 }
@@ -189,13 +287,13 @@ func tagsFromPath(p string) []string {
 	base := filepath.Base(in)
 	in = strings.TrimSuffix(in, base)
 	parts := strings.Split(in, "/")
-	nonEmptyParts := []string{}
+	// return first part only (/hacks/ld26 => only tagged as "hacks" by default)
 	for _, p := range parts {
 		if p != "" {
-			nonEmptyParts = append(nonEmptyParts, p)
+			return []string{p}
 		}
 	}
-	return nonEmptyParts
+	return []string{}
 }
 
 func fatalIfError(err error) {
