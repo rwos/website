@@ -15,6 +15,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"sort"
 	"strings"
 
 	chroma "github.com/alecthomas/chroma/formatters/html"
@@ -131,6 +132,17 @@ func main() {
 		f, err := os.OpenFile(target, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 		fatalIfError(err)
 		// construcing index
+		sort.Slice(files, func(i, j int) bool {
+			// sorting - first by date, newest first; then alphabetically
+			//           except that the posts with subtitle always go to the top
+			if files[i].Subtitle != files[j].Subtitle && (files[i].Subtitle == "" || files[j].Subtitle == "") {
+				return files[i].Subtitle != ""
+			}
+			if files[i].Date == files[j].Date {
+				return files[i].Title > files[j].Title
+			}
+			return files[i].Date > files[j].Date
+		})
 		_, err = f.WriteString("\n<dl>")
 		fatalIfError(err)
 		for _, c := range files {
