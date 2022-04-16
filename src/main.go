@@ -125,8 +125,12 @@ func main() {
 		err := os.MkdirAll(dir, 0755)
 		fatalIfError(err)
 		target := path.Join(dir, "index.html")
-		pagesWhichNeedLayout[target] = PageConfig{
-			Dest: target,
+		if pagesWhichNeedLayout[target].Dest == "" {
+			pagesWhichNeedLayout[target] = PageConfig{
+				Dest:     target,
+				Title:    tag,
+				Subtitle: fmt.Sprintf("All things tagged \"%s\"", tag),
+			}
 		}
 		fmt.Printf("appending index to %s\n", target)
 		f, err := os.OpenFile(target, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
