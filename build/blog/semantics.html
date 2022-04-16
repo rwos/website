@@ -1,0 +1,50 @@
+<p>I'm currently looking into adorning this website with a bit of semantic
+<strike>bullshit</strike> information. Because that's where the web's heading
+isn't it?</p>
+<p>Well, I've briefly looked into <a href="http://schema.org">schema.org</a>, which describes
+a reasonably simple
+set of types of information that can be directly embedded into the various HTML
+tags. So that's a plus, but there's something missing: There is neither a type
+for &quot;source code&quot; nor a type for &quot;description of software&quot;. There's &quot;blog&quot; and
+&quot;blog post&quot; and all that - and the format is extensible. But still, that seems
+like quite a big omission to me. There's &quot;software application&quot; and &quot;review&quot;
+and &quot;article&quot;, so you could make it an &quot;article&quot; about a &quot;software
+application&quot;. Well, yeah. That's not very elegant, is it?</p>
+<p>(As an aside I find it rather funny how the programmers designing and
+implementing those kind of things - other examples would be XML and most GUIs -
+completely forget about their own profession. I mean, obviously <em>only</em> catering
+to programmers would be bad too, but <em>not at all</em> thinking about programmers
+when programming something isn't quite right either, is it?)</p>
+<p>Also, if you really want to present <em>all</em> the information you have about
+whatever it is you're publishing, the HTML tag soup gets rather - soupy (well,
+that didn't work). Maybe it would be better to a have a scheme where you
+basically just provide the site template as an extra page - but instead of the
+usual content you just describe what kind of content there would be, if this
+was the actual page. Something like:</p>
+<pre><code>&lt;h1&gt;title&lt;/h1&gt;
+&lt;div id=&quot;foo&quot;&gt;
+    blog-post-content
+    &lt;span id=&quot;bar&quot;&gt;author&lt;/span&gt;
+&lt;/div&gt;
+</code></pre>
+<p>And the other side (search engines for example) would fetch this template
+and parse it and apply it to your page.
+That way, you wouldn't have to rework all your markup if you want to include
+semantic information. Also, the question of what to specify would go away,
+because you would only say what it is, what you're publishing - and not have to
+worry about whether to include the author on every post or only on the main
+&quot;blog&quot;-element, or only on the main &quot;website&quot;-element and so on.</p>
+<p>Aside from schema.org, there are countless other ways of including semantic
+information into HTML pages. And I can't read about them and compare them
+because I keep falling asleep. It's so boring.</p>
+<p>Sometimes I long for the days of the font tag. Things weren't perfect, but
+nobody said they would be. Everything is so <em>right</em> in today's web. You
+separate semantics from presentation and separate that from that and load
+everything asynchronously and everything defers everything somewhere else and
+&quot;don't use <code>&lt;b&gt;</code>&quot; and it's all so static and it's <em>still</em> a huge mess. But now
+with stricter rules.</p>
+<p>So, fuck semantic tags.</p>
+<p>Was that a post that started as a happy story about how I'd <em>like</em> to include
+semantic tags into my homepage and ended in a somewhat diffuse rant against -
+uh - <em>progress</em>?</p>
+<p>You bet it was.</p>

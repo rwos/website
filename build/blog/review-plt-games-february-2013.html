@@ -1,0 +1,160 @@
+<p>A relatively new addition to the existing 423439 programming competitions on
+the web is <a href="http://www.pltgames.com">PLT Games</a>, a monthly programming language
+programming competition. <small>(Though I don't really know where the &quot;competition&quot;
+part is - one can rate languages but there seems to be no page for the results.)</small></p>
+<p>I've thought about taking part a number of times now, but I've never
+found the time (which is to say: the time was there, of course - I just
+didn't use it to write a programming language). So, instead of a
+submission, here's a review of the <a href="http://www.pltgames.com/competition/2013/2">submissions for February 2013</a>.</p>
+<p>The theme was &quot;gamification&quot; - and as luck would have it there are only
+two entries. Which makes reviewing &quot;all of them&quot; rather easy...</p>
+<h2 id="grinder">Grinder</h2>
+<p><a href="https://github.com/gatesphere/grinder">https://github.com/gatesphere/grinder</a></p>
+<p>Grinder is a wrapper around Python, with an RPG-like shop system where you can
+unlock Python modules by paying with gold. Gold is earned by running Python
+programs. You lose gold if the program throws an (uncaught) exception
+or has syntax errors.</p>
+<p>So, let's see how it works:</p>
+<pre><code>$ ./grinder stats
+Your grinder stats:
+Gold: 0
+Unlocked modules:
+</code></pre>
+<p>Hm, we seem to start without any gold or unlocked modules. &quot;hello world&quot; it is,
+then:</p>
+<pre><code>$ cat &gt; hello.py
+print &quot;hello, world&quot;
+^D
+$ ./grinder hello.py 
+hello, world
+</code></pre>
+<p>How much did we earn?</p>
+<pre><code>$ ./grinder stats
+Your grinder stats:
+Gold: 21
+Unlocked modules:
+</code></pre>
+<p>21 pieces of gold - that isn't a lot, the README says we need 500 to unlock a
+module. Though, I do have an idea where the number comes from...</p>
+<pre><code>$ wc -c hello.py
+21 hello.py
+</code></pre>
+<p>Well, that was simple - let's farm us some gold, shall we?</p>
+<pre><code>$ for i in `seq 100`; do echo &quot;# foo&quot; &gt;&gt; hello.py; done
+$ wc -c hello.py
+621 hello.py
+</code></pre>
+<p>That should do.</p>
+<pre><code>$ ./grinder stats
+Your grinder stats:
+Gold: 42
+Unlocked modules:
+</code></pre>
+<p>Okay, it's cleverer than that. Let's see if it catches this:</p>
+<pre><code>$ for i in `seq 100`; do ./grinder hello.py; done
+$ ./grinder stats
+Your grinder stats:
+Gold: 2142
+Unlocked modules:
+</code></pre>
+<p>Nope - and there we have it: the first problem of gamification are cheaters
+like me. That got boring rather quickly... Still, let's just visit the shop to
+see what it looks like:</p>
+<pre><code>$ ./grinder shop
+Welcome to the Grinder shop!
+Your grinder stats:
+Gold: 2142
+Unlocked modules:
+Commands that can be entered below:
+  b modulename
+    -&gt; unlocks modulename -- costs 500 gold
+  q
+    -&gt; quits shopping
+</code></pre>
+<p>Okay, let's buy the <code>os</code> module:</p>
+<pre><code>command?&gt; b os
+purchase module os? (y/n)&gt; y
+purchased module os
+</code></pre>
+<p>And try it:</p>
+<pre><code>$ cat &gt; os.py
+import os
+print os.name
+^D
+$ ./grinder os.py
+posix
+</code></pre>
+<p>Okay, let's try a module we don't have yet:</p>
+<pre><code>$ cat &gt; sys.py
+import sys
+print sys.argv
+^D
+$ ./grinder sys.py
+Error! Module sys not unlocked!
+</code></pre>
+<p>Fair enough - let's see if we can sneak our way past that restriction:</p>
+<pre><code>$ cat &gt; backimport.py
+import sys 
+^D
+</code></pre>
+<p>And now, after buying only <code>backimport</code> (but not <code>sys</code>):</p>
+<pre><code>$ cat &gt; sys-backdoor.py
+from backimport import * 
+print sys.argv
+$ ./grinder sys-backdoor.py 
+['./grinder', 'sys-backdoor.py']
+</code></pre>
+<p>So that works, too. Which means that we only need to buy one module. But
+we could also buy more than one since gold is easy to come by. All in all, it's
+a nice idea but it's too easy to circumvent. Let's see what the other
+submission is like.</p>
+<h2 id="strip-18">STRIP-18</h2>
+<p><a href="https://github.com/pufuwozu/strip18">https://github.com/pufuwozu/strip18</a></p>
+<p>This one is more a programming language game than a game programming language -
+if that makes sense. <a href="http://brianmckenna.org/files/strip18/">You can play it online</a>.
+It's fun, though a bit short. The concept is interesting - basically the language/game
+gives you more powerful constructs once you've proven that you can do what they do
+yourself (i.e. you get multiplication, once you've shown you know how to multiply
+two numbers using only addition).</p>
+<p>It stops at lambda but it would be cool if it went on - maybe one could get
+namespaces and symbols once one implemented recursion with a Y combinator?</p>
+<p>I tried writing the Y (actually, the Z) combinator in STRIP-18, but it didn't
+work. For the record, I think it should be:</p>
+<pre><code>(f) =&gt; (((x) =&gt; ((x)(x)))((g) =&gt; (((f)((v) =&gt; (((g)(g))(v)))))))
+</code></pre>
+<p>It's possible, likely even, that I have made an error here but I think
+the main problem is that there is something funny going on with function literals -
+there seem to be no first class functions or something:</p>
+<p>This:</p>
+<pre><code>&gt;&gt; (a) =&gt; (2)
+[object Object]
+</code></pre>
+<p>is a function, and calling works like that:</p>
+<pre><code>&gt;&gt; ((a) =&gt; (2))(0)
+2
+</code></pre>
+<p>But you can't define function-returning functions:</p>
+<pre><code>&gt;&gt; (a) =&gt; ((b) =&gt; (2))
+[object Object]
+&gt;&gt; ((a) =&gt; ((b) =&gt; (2)))(0)
+[object Object]
+</code></pre>
+<p>This seems to work so far, but when we try to call the inner-most
+function:</p>
+<pre><code>&gt;&gt; (((a) =&gt; ((b) =&gt; (2)))(0))(0)
+node is undefined
+</code></pre>
+<p>I'm not enough of a computer scientist to know which property of literal
+functions exactly is missing here - but the functions in STRIP-18 differ from
+Scheme's or Python's <code>lambda</code> forms. (That, or I've overlooked something).</p>
+<h2 id="result">Result</h2>
+<p>I find both languages pretty neat. Grinder is obviously just a toy, but it's
+a nice idea. I'll rate STRIP-18 a bit higher because the evil side of me
+would love to see something like that in production systems...
+&quot;Thou shalt not use objects before you understand pointers!&quot; ;-)</p>
+<p>That was fun. The current PLT games theme is &quot;live coding&quot; - and the March
+still has some days left...</p>
+<p>It's a shame that the competition website seems so dead - I like the idea
+of a programming language competition but it's no fun without
+...well, the <em>fun</em> part - reviews, leader boards, discussions, that sort of
+thing. Well, we'll see.</p>

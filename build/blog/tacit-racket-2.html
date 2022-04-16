@@ -1,0 +1,131 @@
+<p>I've learned a bit more about tacit programming since
+<a href="http://r-wos.org/blog/tacit-racket">last time</a>. What I will attempt
+to do today is re-create the higher-order forms called <a href="http://www.jsoftware.com/help/learning/09.htm"><em>hooks</em> and
+<em>forks</em> in the J programming language</a>
+in Racket.</p>
+<h2 id="monadic-forks">Monadic Forks</h2>
+<p>Last time, I defined a function I called <code>-&lt;</code>:</p>
+<pre><code>(define (-&lt; head . fns)
+  (lambda (x) (apply head (map (lambda (fn) (fn x)) fns))))
+</code></pre>
+<p>What it does is best explained by an example:</p>
+<pre><code>(-&lt; / sum length)
+; is equivalent to
+(lambda args
+  (/ (apply sum args)
+     (apply length args)))
+</code></pre>
+<p>I gave it that funny symbol as a name because I couldn't think of a
+good name for what it does. Turns out, the people devising the J
+programming language couldn't think of a good name either: they
+call that function a &quot;monadic fork&quot;. <em>Monadic</em> as in &quot;one argument&quot; (i.e. what
+other languages would call &quot;unary&quot; - <em>not</em> monadic in the Haskell sense),
+and <em>fork</em> as in ...well, fork in the road, I suppose.</p>
+<p>My version takes an arbitrary number of arguments, though - because
+that's what you would expect in Lisp. So it's not even monadic.
+It's also not constrained to forking into two paths - we can
+supply an arbitrary number of &quot;child&quot; functions.</p>
+<p>But still, &quot;fork&quot; seems to be a better name than &quot;-&lt;&quot;:</p>
+<pre><code>(define fork -&lt;)
+</code></pre>
+<h2 id="monadic-hooks">Monadic Hooks</h2>
+<p>A monadic hook in J is basically the same as a fork, just without the forking.
+...which is not a good explaination, I admit. It's probably best explained by
+an example:</p>
+<pre><code>(hook foo bar)
+; is equivalent to
+(lambda (arg)
+  (foo arg (bar arg)))
+</code></pre>
+<p>It's a useful construct in some situations. The example used in the J manual is
+finding out if a number is equal to its floor - i.e. if it is an integer.
+Racket has that function already built-in, under the name <code>integer?</code> - but
+let's suppose it did not. The non-tacit version is:</p>
+<pre><code>(define (integer? x) (= x (floor x)))
+</code></pre>
+<p>The tacit version would be:</p>
+<pre><code>(define integer? (hook = floor))
+</code></pre>
+<p>With that in mind, we can implement <code>hook</code> in Racket:</p>
+<pre><code>(define (hook f1 f2)
+  (lambda args
+    (apply f1 (cons (apply f2 args)
+                     args))))
+</code></pre>
+<p>(This, again, returns a function that takes an arbitrary number of
+arguments, not just one. Changing it to also take an arbitrary number
+of functions would be possible, too, of course - we'll get there
+later.)</p>
+<h2 id="dyadic-hooks">Dyadic Hooks</h2>
+<p>Monadic hooks supply every function with the same argument (or, in
+our implementation above, with all arguments). Dyadic
+(&quot;2-ary&quot; or &quot;binary&quot;) hooks give every argument to only one single function.
+Example:</p>
+<pre><code>(hook/dyadic foo bar)
+; is equivalent to
+(lambda (arg1 arg2)
+  (foo arg1 (bar arg2)))
+</code></pre>
+<p>This is useful for combining functions with different parameters. Again,
+I'll take the example from the J manual: Say, we want a function <code>hr</code>
+that converts hours and minutes into a decimal fraction of an hour.</p>
+<pre><code>;;; (This looks much better with infix notation: 3 hr 15)
+-&gt; (hr 3 15)
+3.25
+-&gt; (hr 2 30)
+2.5
+</code></pre>
+<p>The non-tacit version of <code>hr</code> is:</p>
+<pre><code>(define (hr h m) (+ h (/ m 60)))
+</code></pre>
+<p>The tacit version would be:</p>
+<pre><code>(define hr (hook/dyadic + (curryr / 60)))
+</code></pre>
+<p>Which, as you might have noticed, is longer. And harder to understand.
+The basic concept of the &quot;hooks&quot; does have some beauty, though - especially
+if we expand it to take an arbitrary number of functions. There is
+the monadic-style hook, the one that applies every function to
+the same argument:</p>
+<pre><code>foo x   ⇑      ⇑     ⇑
+       bar x   ⇑     ⇑
+              baz x  ⇑
+                    qux x
+</code></pre>
+<p>And there is the &quot;dyadic&quot; hook, the one that applies the arguments
+in order:</p>
+<pre><code>foo x1   ⇑       ⇑      ⇑
+        bar x2   ⇑      ⇑
+                baz x3  ⇑
+                       qux x4
+</code></pre>
+<p>Of course, both &quot;monadic&quot; and &quot;dyadic&quot; are the wrong words for an
+implementation that takes an arbitrary number of functions. And
+&quot;hook&quot; isn't a very good name either. These are more like trees.</p>
+<blockquote>
+<p>There are only two hard things in Computer Science: cache invalidation and
+naming things.
+<br><small>Phil Karlton</small></p>
+</blockquote>
+<p>I think part of the reason why these functions (especially the &quot;hooks&quot;) are so
+obscure is that they don't have a good name. The operation of <code>fold</code> (also
+called <code>reduce</code> sometimes) isn't too straight-forward either. But it's clear,
+since you can say &quot;it's a fold&quot;. If the thing has a name you only have to
+understand it once.</p>
+<h2 id="hooks-as-forks">Hooks as Forks</h2>
+<p>As you might have noticed, &quot;monadic&quot; hooks (the ones where every function gets
+the same arguments) are basically a special case of forks. They are forks
+with the identity function (<code>identity</code> in Racket) on one side. Taking our
+<code>integer?</code> example from above:</p>
+<pre><code>(hook = floor)
+; is the same as
+(lambda (x) (= x (floor x)))
+; which is the same as
+(lambda (x) (= (identiy x)
+               (floor x)))
+; which is the same as
+(fork = identity floor)
+</code></pre>
+<p>And that concludes today's tacit programming lession.
+See you next time, where we will use it to construct arbitrarily obscure
+versions of once simple functions in order to drive everyone insane. ;-)</p>
+<p>Happy Hacking!</p>

@@ -1,0 +1,43 @@
+<pre><code> #lang racket
+ (require net/url)
+ (port-&gt;string
+   (get-pure-port
+     (string-&gt;url &quot;http://r-wos.org&quot;)))
+</code></pre>
+<p>Racket Appreciation Day was today, for me. I tried writing a small script
+that reads from Github's API and displays a list
+of &quot;@mentions&quot; in <a href="http://www.gnu.org/software/guile/">Guile</a>.</p>
+<small>
+(Why Guile? Well, the short version of the story is
+that I'd like to run this program on my [Ben NanoNote](http://en.qi-hardware.com/wiki/Ben_NanoNote)
+since I have that machine lying around for quite some time now,
+looking for something, *anything* to use it for.
+<p>The NanoNote comes with Guile. It also comes with Python, Bash,
+GForth and Lua, and I could probably cross-compile Racket for it
+(it's a MIPS CPU), but yeah - I thought writing something in Guile
+would be interesting.)
+</small></p>
+<p>And Guile <em>is</em> quite nice, as a language - but some things
+still made me miss <a href="http://racket-lang.org">Racket</a>.</p>
+<p>Examples are: local <code>define</code>s, <code>let-values</code>, <code>port-&gt;string</code>, Racket's
+<code>for</code> loop forms, and the quality of the documentation:
+Guile's docs don't include the return value in the function signature -
+you have to parse the prose around it for that information. Not nice.</p>
+<p>But what triggered this post is Guile's absolutely <em>stupid</em> HTTP client.
+It's reasonably easy to use, and generally works, except that it
+<em>verifies</em> the response headers.</p>
+<p>What the fuck?! Since when are the receiving ends of clients in a
+network supposed to play the RFC-Nazi role? Or the receiving end
+of anything, really: &quot;Be conservative in what you send, be liberal
+in what you accept&quot;, isn't that the networking credo?</p>
+<p>Well, not so with Guile's HTTP client. This one throws a <code>Bad Header</code> exception
+and trashes the response if the server decided to send something that isn't
+part of some RFC. And, as if that wasn't bad enough, it also throws
+for basically everything with a <code>Content-Location</code> header. As an example,
+it refuses to accept the response you'll get after
+requesting <a href="http://r-wos.org">http://r-wos.org</a>.</p>
+<p>Okay, so now I have two options. Either I write my own <code>http-get</code> - which means
+basically writing in C, except slower, and with more parentheses.
+Or I use <code>(system &quot;curl ...&quot;)</code>. Not nice, part two.</p>
+<p>So here's my tip of the day: use Racket if you can.</p>
+<p>And just use Python or something, if you can't.</p>

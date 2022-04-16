@@ -1,0 +1,22 @@
+<p>Another entry without any ranting - what is this blog coming to?
+In order to not <em>entirely</em> slip into the realms of factual boringness
+this one is only useful for people who use <code>wmii</code> as their window manager:</p>
+<p>The <code>wmii</code> status bar doesn't interpret ANSI escape codes for colors,
+but one can set the colors globally for the whole bar. If one wants
+to color only specific sections of the status bar, one has to divide
+it into more bars.</p>
+<p>This is easily done by writing a new file into <code>/rbar</code> in <code>wmii</code>'s
+virtual file system. I suppose you already have your own <code>status</code> function
+in your <code>wmiirc_local</code> - just add something like the following:</p>
+<pre><code>status() {
+    # [...]
+    echo -n &quot;colors #ff0000 #000000 #000000\n&quot; \
+            &quot;label this will be red&quot; | \
+        wmiir create /rbar/little_red_text_bar
+    # [...]
+}
+</code></pre>
+<p>And that's pretty much it. The files in <code>/rbar</code> are displayed
+in alphabetical order. Since the default status bar is called
+<code>/rbar/status</code>, the <code>little_red_text_bar</code> will end up on the left
+side of it.</p>

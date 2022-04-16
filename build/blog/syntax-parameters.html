@@ -1,0 +1,35 @@
+<p>This is just a short note, because I know I'll forget it if I don't write
+it down somewhere:</p>
+<p>Racket's <a href="http://docs.racket-lang.org/reference/stxparam.html?q=define-syntax-parameters">syntax parameters</a>
+can be used to safely break hygiene in macros.</p>
+<p>As an example, say we want to create a macro <code>define/return</code> that makes
+an exit-continuation named <code>return</code> available in the function body - so that
+calling <code>(return value)</code> anywhere in the function does what you would expect
+from most other languages.</p>
+<p>First, the <code>require</code>:</p>
+<pre><code>(require racket/stxparam)
+</code></pre>
+<p>Then, we have to define <code>return</code> as a syntax-parameter:</p>
+<pre><code>(define-syntax-parameter return (syntax-rules ()))
+</code></pre>
+<p>And we can go on writing our macro:</p>
+<pre><code>(define-syntax define/return
+  (syntax-rules ()
+    [(define/return (name args ...) body ...)
+     (define (name args ...)
+       (call/ec (lambda (ret)
+</code></pre>
+<p>Here's the interesting bit: we now have to use <code>syntax-parameterize</code>
+in order to make <code>ret</code> available under the name <code>return</code> for the function
+body:</p>
+<pre><code>         (syntax-parameterize
+             ([return (syntax-rules () [(_ v) (ret v)])])
+           (begin body ...)))))]))
+</code></pre>
+<p>So, the macro is done - here's a (silly) usage example:</p>
+<pre><code>-&gt; (define/return (foo x) (+ 1 (return x)))
+-&gt; (foo 42)
+42
+</code></pre>
+<p>And that's it, I think. I can't claim to <em>really</em> understand what's
+going on here, but it seems to work pretty well...</p>

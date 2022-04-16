@@ -1,0 +1,93 @@
+<p><a href="http://blog.r-wos.org/2011/adventures-with-newsqueak"><small>(part 1 is here)</small></a></p>
+<p>I just ported a small testing script included in the source tree from rc
+(which is Plan9's command interpreter) to bourne shell. And then I ran
+it, obviously.</p>
+<p>The first test to fail was a small snippet called &quot;fio&quot;:</p>
+<pre><code>include &quot;fio.h&quot;
+F:=fopen(&quot;include/fio.h&quot;, 0);
+a:array of char;
+do{
+    a=&lt;-F.in;
+    print(a);
+}while(len a);
+</code></pre>
+<p>This is pretty straight-forward. It includes the fio.h header (probably
+&quot;file input output&quot;) and then opens this exact header file and echoes
+it to standard output. The most notable thing about it is probably
+this line:</p>
+<pre><code>a=&lt;-F.in;
+</code></pre>
+<p>which translates to English as &quot;read from the channel F.in into a&quot;.
+Channels are a thing unique to Newsqueak, but in this case this channel is
+basically only used like some kind of a character stream, very much
+like C++'s <code>std::iostream</code>. Channels can do more than that, some of which I
+covered in
+<a href="http://blog.r-wos.org/2011/channels-in-newsqueak">another blog post</a>.</p>
+<p>But back to the test - why did it fail? Well, to be exact, the line that
+failed was the first one - the include. Here's the <code>strace</code>.</p>
+<pre><code>open(&quot;progs/fio&quot;, O_RDONLY)             = 3
+read(3, &quot;include \&quot;fio.h\&quot;\nF:=fopen(\&quot;include&quot;..., 8192) = 104
+open(&quot;fio.h&quot;, O_RDONLY)                 = -1 ENOENT (No such file or directory)
+open(&quot;/usr/rob/src/squint/include/fio.h&quot;, O_RDONLY) = -1 ENOENT (No such file or directory)
+write(2, &quot;progs/fio:1: can't open fio.h\n\n&quot;..., 31progs/fio:1: can't open fio.h
+</code></pre>
+<p>As you can see, the include statement searches for &quot;fio.h&quot; in
+<code>/usr/rob/src/squint/include/</code>. That won't bring up too much; I'm not Rob
+and modern Unix systems have their &quot;user&quot; directory under <code>/home</code> anyway.</p>
+<p>(Note however, that this path does probably <em>not</em> stem from some ancient
+Unix machine (or a not-so-ancient FreeBSD machine), but from Plan9's use
+of <code>/usr</code> for, well, <em>users</em>. Okay, back to the text:)</p>
+<p>This path is actually hard-coded in the lexer, here's the code from <code>lex.c</code>:</p>
+<pre><code>349        char buf[1024];
+350        fd=open(s, 0);
+351        if(fd&lt;0 &amp;&amp; s[0]!='/' &amp;&amp; s[0]!='.'){
+352            sprint(buf, &quot;/usr/rob/src/squint/include/%s&quot;, s);
+353            fd=open(buf, 0);
+354        }
+355        if(fd&lt;0)
+356            error(&quot;can't open %s\n&quot;, s);
+</code></pre>
+<p>And this fact is even documented in a file called &quot;sq&quot; in the
+source tree:</p>
+<pre><code>include &quot;file&quot;
+include may appear anywhere an identifier is legal
+if file is not found locally, and does not begin with a / or . , 
+it is looked for in /usr/rob/squint/include.
+</code></pre>
+<p>So, what do we learn from all this?</p>
+<ol>
+<li>
+<p>The Newsqueak &quot;include&quot; statement is handled by the lexer
+(which makes sense given that it's much like the one in C,
+where the pre-processor handles it).</p>
+</li>
+<li>
+<p>Obviously, this code was never used by anyone but Rob Pike himself
+(except for, maybe, people on the same machine - and other people
+called &quot;Rob&quot; running either old Unixes or Plan9).</p>
+</li>
+<li>
+<p>Digging through other people's code can be fun. Especially when the
+code is old and/or strange and has stories to tell.</p>
+</li>
+<li>
+<p>This must be fixed.</p>
+</li>
+</ol>
+<p>I'm not yet completely sure how to handle include file lookup. I will
+probably end up using some &quot;config.h&quot; with a compile-time constant,
+or just some hard-coded sane default. However, I think I'll look at how
+python does this, first. There's no rush, right?</p>
+<p>In other news: <a href="http://github.com/rwos/Newsqueak">the interpreter</a>
+still doesn't build with certain newer
+versions of <code>make</code> and/or <code>gcc</code> [nope, it was a 64 bit issue, see
+update below]. It's probably not a code problem, so
+a fix will require someone to look through the Makefiles and stuff.</p>
+<p>I will do that, but not right now, that's just too boring and cumbersome
+after a long day at work.</p>
+<p>(<strong>Update</strong>: Now it does build, and it <em>was</em> in fact a code problem:
+some of the included Plan9 libraries don't build on 64 bit hosts.
+These are probably ancient versions of those libraries anyway, I'll see
+if I can replace them with more current unix ports (or if those have the
+same problems))</p>
+<p>As always: Happy Hacking!</p>

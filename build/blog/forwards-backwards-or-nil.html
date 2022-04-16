@@ -1,0 +1,18 @@
+<p>Programming languages can be categorised into <a href="http://en.wikipedia.org/wiki/List_of_programming_languages_by_category" target="_blank">many</a>, many - uh, categories. That's no news.</p>
+<p>But, no matter if you write object-oriented, structured, functional, or <a href="http://www.esolangs.org/wiki/Brainfuck" target="_blank">brainfuck</a> - someday someone will <em>read</em> your program. (Well, maybe not if you're writing in Brainfuck... let's better just keep that aside for now)</p>
+<p>Now, the first thing that I notice in a new programming language is not whether it's object-oriented. And it's not whether it supports monads or functors or even first-class functions. I only see <em>the direction of reading</em>.</p>
+<p>In my very personal categorisation, there are exactly 3 directions currently available in programming languages:</p>
+<ol>
+	<li>left-to-right</li>
+	<li>right-to-left</li>
+	<li>nil</li>
+</ol>
+Let me explain.
+<p>The first one on the list is the easiest one to find examples for. Everybody knows it: Lisp (everybody <em>does</em> know Lisp, right?). In Lisp everything reads strictly from left to right: Add one to one <code>(+ 1 1)</code>. Display &quot;hello&quot; <code>(display &quot;hello&quot;)</code>. Define ls as a list of one and two <code>(define ls (list 1 2))</code>.</p>
+<p>Easy and - more importantly - consistent.</p>
+<p>Now let's come two item two on the list, the right-to-left languages. These are harder to find. The most prominent example among the high-level languages is probably Forth. In Forth, most things read from right to left. Add one and one: &quot;<code>1 1 +</code>&quot;. Display the duplicate of 2: &quot;<code>2 DUP .</code>&quot;.</p>
+<p>There are exceptions to these in Forth, but overall, due to its stack-based nature, it has a very strong right-to-left feeling. At least for me.</p>
+<p>The third point on the list is... non-existent, really</p>
+<p>Most languages like C or Java or Fortran don't really have a built-in reading direction - or I just don't see it. Still, they cannot really be considered &quot;both-ways&quot; as <em>they lack the right-to-left way</em>. There is no way to write a C program that looks like Forth. C just lacks the stack (a programmer-accessible stack, that is) - and with it a <em>whole world</em> of expressions and idioms.</p>
+<p>And that is what I miss most in programming languages: Lisp <em>and</em> Forth. I want <em>both</em> of them. At the same time. In one language.</p>
+<p>How hard can it be?</p>

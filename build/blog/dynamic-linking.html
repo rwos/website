@@ -1,0 +1,37 @@
+<p>This is just another one of these &quot;I have to write it down somewhere or I'll
+forget it&quot; things.</p>
+<p>Changing the implementation of dynamically linked library functions via
+<code>LD_PRELOAD</code> isn't hard at all - but what wasn't completely obvious to me is
+how to write implementations that use the original version of the function.</p>
+<p>As an example, let's say we want a version of <code>open(2)</code> that prints everything
+it tries to open - but otherwise doesn't change its behaviour. After printing
+the pathname, we would like to just do <code>return open(path, flags);</code>. But that
+wouldn't work, of course - it would recursively call our own <code>open()</code>.</p>
+<p>How do we get the original <code>open(2)</code>? The trick is to use <code>dlsym(3)</code> with the
+special <code>RTLD_NEXT</code> handle. This will find the next occurrence of the specified
+function after the current library (that is, after our <code>LD_PRELOAD</code>ed hook).</p>
+<pre><code>#define _GNU_SOURCE /* RTLD_NEXT is a GNU extension */
+#include &lt;dlfcn.h&gt;
+#include &lt;stdio.h&gt;
+
+int open(const char *pathname, int flags)
+{
+</code></pre>
+<p>Now we need to obtain a function pointer to the original
+<code>open</code>:</p>
+<pre><code>    static int (*sys_open)(const char *, int) = NULL;
+    if (sys_open == NULL) {
+        sys_open = dlsym(RTLD_NEXT, &quot;open&quot;);
+    }
+</code></pre>
+<p>And then we can use it:</p>
+<pre><code>    printf(&quot;%s\n&quot;, pathname);
+    return sys_open(pathname, flags);
+}
+</code></pre>
+<p>Compile the whole thing with:</p>
+<pre><code>gcc -fPIC -shared -o print_open.so print_open.c
+</code></pre>
+<p>And use it as follows:</p>
+<pre><code>LD_PRELOAD=`pwd`/print_open.so PROGRAM
+</code></pre>

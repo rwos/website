@@ -1,0 +1,104 @@
+<p>I always wanted to create some artificial intelligence - well, every programmer
+does, right? So, I thought, I'd dive into some <a
+href="http://en.wikipedia.org/wiki/Genetic_programming">genetic programming</a>
+(not to be confused with generic programming, the time-wasting technique from
+OOP-land).</p>
+<p>Genetic programming basically means that you create some random programs and
+see how well they perform a certain task. Then you pick the best performers,
+mutate and cross-breed them and test this new generation again. Repeat a few
+times until some fitness threshold is reached and spit out the best program.</p>
+<p>Sounds like a perfect natural approach to me. In fact it <em>is</em> <em>the</em> perfect
+natural approach - a thing called <em>evolution</em>.</p>
+<p>Now, the hard points are basically these three:</p>
+<ul>
+<li>how to mutate and cross-breed programs</li>
+<li>how to measure the fitness of programs</li>
+<li>what to choose as the threshold</li>
+</ul>
+<p>Mostly, some kind of Lisp is used as the underlying programming language - but
+that's boring, right?</p>
+<p>So I chose Brainfuck.</p>
+<p>I mean what do you take to implement a brain in? Of course, <em>a language that
+has the word &quot;brain&quot; right in its name</em>. Easy choice. Besides, it enabled me to
+skip all three problems - and so I hacked together some program that spits out
+random Brainfuck (bf) programs. Mutation was done through randomly replacing
+and inserting one of bf's operators. Cross-breeding was not done at all.</p>
+<p>Next, I opted for binary fitness evaluation - right or wrong. Which, quite
+elegantly, made choosing a threshold very easy...</p>
+<p>As an input I presented the program (hereafter called by its given name
+&quot;Stupy&quot;) with a question and an answer. Stupy now tried to rearange his
+Brainfuck brain until it could produced exactly the given answer, when given
+the question as an input.</p>
+<p>Now that alone does not make intelligence - so Stupy recorded all
+question-answer pairs and tested them all. A brain was only held as &quot;working&quot;
+when all known questions produced the right answers, respectively.</p>
+<p>To actually see the intelligence, Stupy made proposals of answers, when given a
+question. He would run the question through his current brain and print out the
+result. So you could see if he really &quot;got it&quot; or if he was just doing random
+guessing.</p>
+<p>Sounds like a good idea, right? Well, no it wasn't.</p>
+<p>At first I was delighted: Stupy was fast! And he really <em>was</em> intelligent - or
+so it seemed. Let me reprint the first session here:</p>
+<pre><code>human &gt;&gt;&gt; 1+1
+stupy &gt;&gt;&gt;
+        human correction &gt;&gt;&gt; 2
+stupy &gt;&gt;&gt; hm no, wait............................ ah! Ok, got it!
+</code></pre>
+<p>Okay, easy - Stupy had created some Brainfuck program that transformed &quot;1+1&quot;
+into &quot;2&quot;. But there are a multitude of different ways to achieve this. So,
+let's test <em>his</em> approach:</p>
+<pre><code>human &gt;&gt;&gt; 2+1
+stupy &gt;&gt;&gt; 3
+        human correction &gt;&gt;&gt;
+                --&gt; right answer
+</code></pre>
+<p>Right answer! <em>Right answer</em>! I created intelligent live! I am the programming
+Uber-Lord! I... must train him more:</p>
+<pre><code>human &gt;&gt;&gt; 1+2
+stupy &gt;&gt;&gt; 2
+        human correction &gt;&gt;&gt; 3
+stupy &gt;&gt;&gt; hm no, wait............................
+.................................................
+[several lines of dots skipped]
+.................................................
+....... uh, I'm too stupid.
+</code></pre>
+<p>Oh.</p>
+<pre><code>human &gt;&gt;&gt; 2+2
+stupy &gt;&gt;&gt; 3
+</code></pre>
+<p>Oh-oh.</p>
+<pre><code>human &gt;&gt;&gt; a
+stupy &gt;&gt;&gt; b
+</code></pre>
+<p>Okay.</p>
+<p>Turns out, Stupy wasn't that intelligent. I increased the timeout, but still -
+even after 4 hours mutating and testing his brain, he didn't get both &quot;1+2&quot; and
+&quot;2+1&quot; right at the same time.</p>
+<p>Maybe Brainfuck wasn't the best choice, after all.</p>
+<p>PS: Some of Stupy's brains:</p>
+<p>(Note that my Brainfuck interpreter had a timeout <del
+datetime="2011-07-18T18:52:20+00:00">to solve the halting problem</del>.
+Besides, as you will notice, most &quot;brains&quot; are not well-formed Brainfuck
+programs - so some of these might not work with regular interpreters, much
+less compilers.)</p>
+<p>&quot;add one to first byte of input and print the result&quot;</p>
+<pre><code>&gt;,+[.&lt;][]
+
+,+.
+
+,+.+]-.+[.+&gt;&gt;[&gt;&gt;&lt;-],[]&lt;-&gt;&lt;][&lt;,,
+</code></pre>
+<p>&quot;echo input (like cat(1))&quot;</p>
+<pre><code>-&gt;,[.,][,&lt;],++&gt;,&lt;[,&lt;&lt;&gt;&gt;.+,,,&lt;&gt;+
+]&gt;[].+]&lt;&lt;+,+[.]-&lt;][,&gt;,.[[,[,,&lt;+
+&lt;.&gt;[+.&gt;]],-,.]    .[&gt;&gt;+[.+.&lt;.+]
++[][,.&lt;&gt;+,-,&lt;-]&lt;-[],]-,-&gt;&lt;+-&gt;+&lt;
++[,]++-.&gt;
+
+,[.,]]][+,&gt;--+[
+</code></pre>
+<p><strong>Update:</strong> The code of a slightly modified version is <a
+href="https://github.com/rwos/scrapyard/tree/master/artificial-stupidity">here</a>.
+This version uses many different brains (worst-case: one for each
+question-answer pair) and thus can answer both 1+2 and 2+1 correctly.</p>

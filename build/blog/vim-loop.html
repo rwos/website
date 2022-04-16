@@ -1,0 +1,8 @@
+<p>I've just discovered this by accident: one can make infinite recursive loops in
+vim. It's very simple: just record a macro and in that macro apply that macro.</p>
+<p>That may seem useless but it's not: I'm now finally able to port my
+very first program to vim. The original form was:</p>
+<pre><code>10 PRINT &quot;HELLO&quot;
+20 GOTO 10
+</code></pre>
+<p>In vim: type <code>&lt;ESC&gt; qaoHELLO &lt;ESC&gt; @aq</code> followed by <code>@a</code>.</p>

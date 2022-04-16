@@ -1,0 +1,148 @@
+<p>Just some short notes about <a href="http://coffeescript.org/">CoffeeScript</a>, after
+maybe 5 hours of playing with it. This is mostly about the syntax - but then
+again, CoffeeScript <em>is</em> mostly about the syntax.</p>
+<p>I like it, overall, it's definitely a step up from JavaScript. Though it is a
+bit of a &quot;works 90% of the time&quot; design: it quickly gets unintuitive once you
+come to the corner-cases. There's a bit too much implicit stuff in the syntax
+for my taste - but it's certainly pretty clean and
+noise-free (at least in simple cases).</p>
+<p>Nice features include:</p>
+<p>Function application chains can be written without parentheses:</p>
+<pre><code>foo a         # like foo(a)
+foo a b c d   # like foo(a(b(c(d))))
+foo a b,c,d   # like foo(a(b, c, d))
+</code></pre>
+<p>So it basically gives you an automatic <code>compose</code> - it doesn't, however, do an
+automatic <code>curry</code>:</p>
+<pre><code>foo = (a, b) -&gt; a+b   # like foo = function(a, b) {return a+b;}
+foo a                 # could/should return &quot;(b) -&gt; a+b&quot; but doesn't
+</code></pre>
+<p>Also, combined with some of the other expression-oriented syntax (especially
+list-comprehensions) one can basically write arbitrarily confusing constructs:</p>
+<pre><code>foo  x  for x in [1, 2, 3]   # like foo(1); foo(2); foo(3);
+foo (x) for x in [1, 2, 3]   # same as above
+foo (x  for x in [1, 2, 3])  # like foo([1, 2, 3])
+</code></pre>
+<p>My first comment isn't quite the whole truth - the whole first line is also an
+expression and that expression evaluates to <code>[1, 2, 3]</code>:</p>
+<pre><code>bar(foo x for x in [1, 2, 3])
+# behaves like foo(1); foo(2); foo(3); bar([1, 2, 3])
+</code></pre>
+<p>Let's try and refactor that:</p>
+<pre><code>result = foo x for x in [1, 2, 3]
+bar(result)
+# behaves like foo(1); foo(2); foo(3); bar(3) -- whoopsy!
+</code></pre>
+<p>Well, that's the price one has to pay for the extreme terseness.</p>
+<h2 id="splats-1">splats 1</h2>
+<p>Then, there's a feature they call &quot;splats&quot;. Which is a stupid name,
+but that's because &quot;splats&quot; are actually three distinct features
+and the name basically refers to the lexical token &quot;...&quot; and not to
+a semantic concept.</p>
+<p>The first &quot;...&quot; usage is for rest-args in function definitions:</p>
+<pre><code>foo = (a, b...) -&gt; # b is a list
+
+# equivalent Scheme code:
+# (define (foo a . b) (#| b is a list |#))
+</code></pre>
+<p>What is nice, is that (unlike in Scheme) this works not only for the last
+parameters, but everywhere (where it makes sense):</p>
+<pre><code>foo = (a..., b) -&gt; # a contains all but the last parameter
+</code></pre>
+<h2 id="splats-2">splats 2</h2>
+<p>Feature number two is splicing arguments in function calls (basically syntactic
+sugar for apply):</p>
+<pre><code>list = [1, 2, 3]
+print list       # like print([1, 2, 3])
+print list...    # like print.apply(null, [1, 2, 3])
+</code></pre>
+<p>Splicing literals and expressions works, too. And you can combine
+spliced arguments with non-spliced ones - though <em>not</em> on the REPL (at least in 1.6.3),
+since it's broken. And the last activity on <a href="https://github.com/jashkenas/coffee-script/issues/2906">a related bug</a>
+is &quot;reopened 2 months ago&quot;.</p>
+<p>That doesn't quite fill me with enthusiasm for CoffeeScript, I have to say...
+(The REPL is also a bit cumbersome to use - one has to manually switch
+into multi-line mode in order to enter line breaks.)</p>
+<p>Some other corner-cases also work (even on the REPL, yay!):</p>
+<pre><code>foo = -&gt; [1, 2] # (function w/o arguments)
+do foo          # (call that function, returns [1, 2])
+
+print do foo    # like print([1, 2])
+print do foo... # like print(1, 2)
+</code></pre>
+<h2 id="splats-3">splats 3</h2>
+<p>The third &quot;splats&quot; usage is in &quot;destructing assignment&quot; from lists and
+objects:</p>
+<pre><code>[head, stuff..., tail] = [1, 2, 3, 4, 5]
+# stuff will be [2, 3, 4]
+# (except on the REPL, where it will fail)
+</code></pre>
+<p>That's really nice, but why they use brackets on the left side of the
+assignment is beyond me.  PHP does something semantically similar (<code>list(a, b, c) = array(1, 2, 3)</code>) - but that's wrong, people! The whole <em>point</em> about the
+left side of such an assignment is that it is <em>not</em> a list.</p>
+<h2 id="cobol">COBOL</h2>
+<p>CoffeeScript also has that whole Perl-like reverse-if stuff:</p>
+<pre><code>x = &quot;foo&quot; if y == &quot;bar&quot;
+</code></pre>
+<p><strike>Python has that too</strike> <small>(Whoops, no, I was misremembering
+here: Python only has the &quot;<code>x = can_fail() or default_value</code>&quot; idiom)</small> -
+and Python also loves code that reads like simplified English sentences. But
+CoffeeScript is in a whole other league:</p>
+<pre><code>while player isnt dead
+    if key is space then jump quickly upwards unless status is jumping
+</code></pre>
+<p>Given a bunch of trivial definitions, this is absolutely valid CoffeeScript
+code. I don't know if they want to win over the COBOL crowd with this
+nonsense, or what is going on here. I just know I don't like it.  (One doesn't
+<em>have to</em> write in that pseudo-readable style, of course - though the tutorial
+does make it clear that this is the preferred way to do things).</p>
+<p>As I see it, this is basically the underlying theme of CoffeeScript: syntactic cuteness.</p>
+<p>There is a syntax for array slices, in which two dots denote an inclusive end, and three dots
+denote an exclusive end - cute, yes, but also a new record for the least amount of pixels that are
+wrong per off-by-one error.</p>
+<p>Also, consider:</p>
+<pre><code>ls = [0, 1, 2, 3]
+ls[0..3]                    # is [0, 1, 2, 3]
+ls[..]                      # is [0, 1, 2, 3]
+ls[0...3]                   # is [0, 1, 2]
+ls[...]                     # is [0, 1, 2, 3]
+ls[0....3]                  # is []
+ls[0.....3]                 # is a parse error
+ls[0....999999999999999999] # is [0]
+ls[0...999999999999999999]  # is [0, 1, 2, 3]
+ls[0..999999999999999999]   # is [0, 1, 2, 3]
+ls[0.999999999999999999]    # is 1
+
+# bonus:
+ls[..-&gt;]    # is [0, 1, 2, 3]
+ls[...-&gt;]   # is []
+ls[..&quot;3&quot;]   # is [0, 1, 2, 3]
+ls[...&quot;3&quot;]  # is [0, 1, 2]
+ls[..&quot;x&quot;]   # is [0, 1, 2 ,3]
+ls[...&quot;x&quot;]  # is []
+</code></pre>
+<p>Unlikely that a programmer would write one of the stranger examples, but if
+CoffeeScript had macros, or a preprocessor, it would be quite difficult to
+use. But it doesn't. It just has cute syntax.</p>
+<p>There's another &quot;cute&quot; thing, <code>?=</code>, which sets a variable to a value
+when the variable is undefined or null:</p>
+<pre><code>x = null
+x ?= 3 # if x is null or undefined, set it to 3
+</code></pre>
+<p>But you have to declare the variable first, which kind of defeats the whole point.
+If you don't want to do that, you can use the following instead:</p>
+<pre><code>x = x ? 3    # set x to 3 if x doesn't exist
+</code></pre>
+<p>But pay attention to not write it as</p>
+<pre><code>x = x? 3
+</code></pre>
+<p>Because that always sets x to <code>undefined</code>. (No, I don't know why.)</p>
+<p>The <code>?</code> also has an accessor variant, as in:</p>
+<pre><code>object?.key
+</code></pre>
+<p>Which returns <code>undefined</code> if <code>key</code> doesn't exist in <code>object</code>. So that's nice,
+especially for longer chains (on the other hand - longer chains of objects
+returning objects aren't exactly good code to begin with).</p>
+<p>Which brings us to the whole hash-table/object stuff, but that's
+stuff for another post.</p>
+<p>Happy Hacking!</p>

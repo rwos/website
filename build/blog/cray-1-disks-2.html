@@ -1,0 +1,62 @@
+<p><small>(<a href="http://r-wos.org/blog/cray-1-disks">part 1</a>)</small></p>
+<p>Nothing ground-breaking to report, yet - but I'm having a lot of
+fun so I thought I might as well blog about it.</p>
+<p>Today (well, actually yesterday, it's 3:30am...) I've read the Cray Assembly Language
+manual I linked last time.</p>
+<p>It not only describes the architecture and instructions of the Cray-1 but also
+the binary output format of the assembler. Unfortunately, nothing on the two disks
+actually has that format, as far as I can tell.</p>
+<p>The only thing on the disks that seems to match the manual are the word-sized program
+names (the Cray-1 has 64-bit words). There's also no sign of the date and time strings
+the manual describes. So, what I thought to be an easy vector to extract the machine code
+doesn't really work.</p>
+<p>However, others have already worked out the file format for the Cray OS disk
+(thought it only really works for what is basically the boot section of the
+disk, but maybe that's because of data corruptions).
+I'm planning to write a small disassembler and try and see if I can find at least
+some code that makes sense.</p>
+<p>I don't really know what I'm doing, to be honest, which is probably what makes
+it so much fun. :-)</p>
+<p>The assembler manual contains a lot of interesting stuff I can't really explain
+myself with my limited knowledge of 1970s batch computing.
+For once, the assembler input is described in terms of punch cards, but there's also a
+section that describes the invocation of the assembler in what looks like a CP/M like
+syntax (assuming the '/X' switch syntax comes from CP/M, I only know it from DOS):</p>
+<blockquote>
+<p><code>CAL Z</code><br>
+causes assembly of CAL source file <code>Z</code>, producing an absolute binary file
+called <code>Z.SV</code><br>
+<code>CAL/N/L A</code><br>
+causes assembly of file <code>A</code>, producing as output a listing file <code>A.LS</code>.</p>
+</blockquote>
+<p>On what kind of machine does the assembler run? Probably not directly on the
+Cray, I imagine. And if that machine has a command prompt sophisticated enough
+to specify flags, why doesn't it also have a simple line editor? How did you
+compute, strange people from the 70s? I have no clue!
+(I feel I should know more about the whole thing, this was only 40 years ago...).</p>
+<p>Oh, and the assembler has apparently 5 error messages: <code>O</code>, <code>L</code>, <code>D</code>, <code>U</code>, and
+<code>R</code>. That are three more than <code>ed(1)</code> has, but still... In some ways, it seems,
+these were simpler times.</p>
+<p>From the ASCII strings it seems that there's quite a bit of fun stuff on the
+Cray OS disk - a source code editor, a complete on-line help system for
+Cray OS and IOS (which, if I understood it correctly, is basically the Cray's
+BIOS, only that it also has its own processor) - oh, and this:</p>
+<pre><code>&amp;*****************************
+&amp;* Leading Edge Technologies *
+&amp;*****************************
+&amp;Preventive Maintenance (TISM):
+&amp;Mon 07:15 - 09:15, Tue 17:00 - 21:00, Fri 07:15 - 09:15.
+&amp;*************************************
+6LTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+&amp;Mon 07:15 - 09:15, Tue 17:00 - 21:00, Fri 07:15 - 09:15.
+&amp;******************************************************
+&amp;* This is M-M-Max MP, here ... PARTY, PARTY, PARTY ! *
+&amp;******************************************************
+%*****************************************************
+%* This is M-M-Max MP, here ... Hey, go home ... NOW *
+%*****************************************************
+%*****************************************************
+%* This is M-M-Max MP, here ... sorry, no NEWS today *
+%*****************************************************
+</code></pre>
+<p>Happy Hacking and good night!</p>

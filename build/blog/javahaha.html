@@ -1,0 +1,55 @@
+<p>A lot of the Ludum Dare games are written in Java. Much to my surprise,
+I did have a JRE installed on my machine. So most of the games worked
+out of the box, but sometimes the JRE died with a peculiar error:</p>
+<pre><code>Exception in thread &quot;main&quot;
+    java.lang.UnsupportedClassVersionError: $file
+    (Unsupported major.minor version 51.0)
+</code></pre>
+<p>Let's try and understand this error, shall we?</p>
+<ul>
+<li>
+<p><code>major.minor version 51.0</code> - major.minor is the standard format of
+a version number, no need to say that in the error message.</p>
+</li>
+<li>
+<p><code>UnsupportedClassVersionError</code> - I'm sorry, is there a shortage of space characters?
+Is your keyboard broken? Oh, it's an identifier and you can't have spaces in identifiers?
+Well, don't dump the identifier to the user, then.</p>
+<p>Oh, you have to dump the Identifier because otherwise the user wouldn't know
+that it's the &quot;Class Version&quot; that's unsupported? Well, how about including
+<em>vital information</em> like that in actual the error message? Sounds like a good
+idea? Yeah, thought so.</p>
+</li>
+<li>
+<p>The unsupported class version is <code>51.0</code>. The JRE I have installed
+is version <code>6</code> (Debian package <code>openjdk-6-jre</code>). If I ask the program <code>java</code>
+what its version is, I get back <code>java version &quot;1.6.0_27&quot;</code>.  And <code>IcedTea6 1.12.4 (6b27-1.12.4-1)</code>. And <code>OpenJDK 64-Bit Server VM (build 20.0-b12)</code>.
+WTF?!</p>
+</li>
+<li>
+<p>No really, what the <em>fuck</em> is going on there?</p>
+<p>The language is version 6; the VM is version 1.6.0_27(?); the
+class version (whatever <em>that</em> is) that this VM can't run is 51.</p>
+<p>What the hell? Off to $search-engine.</p>
+</li>
+<li>
+<p>And here's what I learned (and what the error message should say):</p>
+<p>The JRE is too old. The program you're trying to run was
+compiled for Java 7. You only have Java 6. Please update.</p>
+</li>
+</ul>
+<hr>
+<p>Can you image that Java didn't exist until 1995? It was completely made up
+from scratch less than 20 years ago! How could they accumulate this kind
+of cruft in less than two decades? How will this ecosystem look like when it
+reaches the age of C, or Lisp?</p>
+<p>But it's not only that - the error message itself also reminds me why I dislike
+Java.</p>
+<p>&quot;We can send <code>toString()</code> to basically everything. So, for error messages,
+let's just send <code>toString()</code> to the Exception. Wow, how <em>elegant</em>.
+How <em>object-oriented</em>. Oh, look how much we don't care about the
+implementation. What a great application of encapsulation and
+separation of concerns!</p>
+<p>And everyone gets the same message - users, developers, log files, API
+consumers! And they all get a stack trace! Because users <em>love</em> stack traces!&quot;</p>
+<p>What a Wrong And Stupid Thing To Do.</p>

@@ -1,0 +1,11 @@
+<p>Today I learned: <code>printf(1)</code> is locale-dependent.</p>
+<pre><code>$ printf %f 0.1
+-bash: printf: 0.1: invalid number
+
+$ printf %f 0,1
+0,1
+
+$ LANG=C;printf %f 0.1
+0.1
+</code></pre>
+<p>Why, oh <strong>fucking why</strong>?</p>

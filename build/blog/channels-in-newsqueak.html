@@ -1,0 +1,134 @@
+<p>School can really be a drag, sometimes - especially when I could learn so
+much more at home. For instance via - you guessed it - playing with Newsqueak.</p>
+<p>So, today in our series of <del>&quot;nobody is interested, please stop&quot;</del>
+&quot;Fun with Newsqueak&quot;: Channels.</p>
+<p>The idea goes back to C.A.R. Hoare's
+<a href="http://www.usingcsp.com/">Communicating Sequential Processes</a> or CSP.</p>
+<p>The thing is basically that processes communicate by writing to and
+reading from unbuffered (i.e. <em>blocking</em>), named channels. Sounds simple,
+is simple - and that's in fact what it was done for in the first place.</p>
+<p>CSP is not (necessarily) a programming technique for scaling programs to
+multi-processor machines but more a system that makes some programs easier
+to write and understand. Of course, <em>if</em> suddenly some multi-processor
+machines come along, your programs will be ready - but that's not the point.</p>
+<p>Using channels makes programs more elegant. <em>That</em> is the point.</p>
+<p>So, let's talk about a nice little program that Hoare credits to Doug McIlroy
+(aka the guy who invented the unix-shell pipe (which is, more or less, just
+a two-dimensional channel (and was invented <em>before</em> Hoare wrote his book
+(that should be enough historic context for now)))).</p>
+<p>The specific (Newsqueak-)implementation I'll be using was (probably) written
+by Rob Pike. It's an implementation of the
+<a href="http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes">Sieve of Eratosthenes</a>,
+the well-known prime number sieve.</p>
+<p>But first, some Newsqueak basics: Newsqueak looks pretty much like C, but with
+Pascal-style declarations and first-class functions (<code>prog</code>s).</p>
+<p>If you want to try it out for yourself, you might want to
+<a href="http://github.com/rwos/Newsqueak">grab squint</a>, the interpreter.</p>
+<p>This</p>
+<pre><code>i:int;
+</code></pre>
+<p>declares a variable of type <code>int</code> named &quot;i&quot;. This</p>
+<pre><code>i:=1;
+</code></pre>
+<p>declares a variable of a to-be-decided-on type and assigns
+the number one to it. As 1 is an integer, i is an integer, too. This
+automatic type inference only works when declaring the variable.</p>
+<p>The rest is pretty much like in C, and should be readable - so, let's
+step through some code for a simple counter, implemented using channels.</p>
+<pre><code>counter:=prog(end: int, c: chan of int) {
+</code></pre>
+<p>First, we declare a variable &quot;counter&quot; and assign a <code>prog</code> to it.
+A <code>prog</code> is a literal function, it works much like Javascript's &quot;function&quot;
+syntax, for example. This is the function definition.</p>
+<p>The first argument is of type <code>int</code> and the second is... special. :-)</p>
+<p>It is a <code>chan</code>nel of int - a thing we can write integers into and
+read integers from.</p>
+<pre><code>    i:int;
+    for(i=2; i&lt;end; i++)
+        c&lt;-=i;
+</code></pre>
+<p>Now, we loop through all integers from 2 to <code>end</code> and write them into the
+channel. This line</p>
+<pre><code>        c&lt;-=i;
+</code></pre>
+<p>does the writing and parses as:</p>
+<pre><code>c   # the channel
+&lt;-  # the &quot;write into channel&quot; operator (it points towards the channel)
+=   # assignment operator
+i   # what we are assigning
+</code></pre>
+<p>Oh, and don't we forget the closing brackets and the semicolon:</p>
+<pre><code>};
+</code></pre>
+<p>Putting everything together:</p>
+<pre><code>counter:=prog(end: int, c: chan of int) {
+    i:int;
+    for(i=2; i&lt;end; i++)
+        c&lt;-=i;
+};
+</code></pre>
+<p>Easy, right? Now, how does this execute?</p>
+<p>Well, channels are unbuffered, thus blocking. If
+<code>counter</code> is called with an <code>end</code> of, say, 100, it will first try to write the
+integer <code>2</code> into the channel. But since no-one is reading from the channel,
+and since the channel is unbuffered, that write will block. The program will
+stop until someone comes forward and reads from the channel, receiving the
+<code>2</code>. The next block will be encountered when the <code>counter</code> tries to write
+the 3 (and nobody reads) - and so on.</p>
+<p>As you can see, we'll need some <code>prog</code> reading from the channel - and that <code>prog</code>
+better ran concurrent with <code>counter</code>!</p>
+<p>Enter Newsqueak's <code>begin</code> statement, which helps us here. You can <code>begin</code>
+a <code>prog</code> and off it goes, not blocking further program execution. It behaves
+like fork-and-exec, but it's cheaper and simpler.</p>
+<p>Let's construct a simple &quot;reader&quot; <code>prog</code>:</p>
+<pre><code>reader:=prog(c: chan of int) {
+    i:int;
+    for (;;) {
+        # reading from c (note the arrow pointing to the left)
+        i=&lt;-c;
+        print(i, &quot;\n&quot;);
+    }
+};
+</code></pre>
+<p>This one should be obvious by now: it tries to read from the integer
+channel <code>c</code> in an infinite loop (but it won't loop all the time:
+read operations block, too, if there's nothing to read).
+When it got some integer off the channel, it just prints it (and a newline).</p>
+<p>Now we combine this <code>prog</code> with the counter from above and invoke the
+mechanism with the following three lines:</p>
+<pre><code>count:=mk(chan of int); # mk (&quot;make&quot;) is like &quot;new&quot; in other languages:
+                        # an object creator, if you will.
+                        # &quot;count&quot; is now a chan of int,
+                        # nothing special happened
+begin counter(100, count);
+begin reader(count);
+</code></pre>
+<p>What happens? The <code>counter</code> will (try to) &quot;pump&quot; numbers into the channel,
+while the <code>reader</code> gets them off and prints them.</p>
+<p>These 2 processes communicate via the blocking channel alone - we don't have
+to stop them, or otherwise control execution. We just pushed the start button
+and off they went.</p>
+<p>Again: these are <em>not</em> necessarily processes in the operating-system
+meaning of the term - they don't <em>have to</em> run in parallel, and they are
+cheaper than &quot;real&quot; processes. You might as well create thousands of them, if
+you need to.</p>
+<p>In case you wondered: yes, this example is silly. The following, however,
+is not. Take the counter from above, but don't connect it with the
+reader. Take this recursive, filter-creating filter instead:</p>
+<pre><code># &quot;rec&quot; keyword needed for recursive progs
+rec filter:=prog(listen: chan of int)
+{
+    i:int;
+    prime:=&lt;-listen;
+    print(prime, &quot; &quot;);
+    send:=mk(chan of int);
+    begin filter(send);
+    for(;;)
+        if((i=&lt;-listen)%prime)
+            send&lt;-=i;
+};
+</code></pre>
+<p>...and you have the Sieve of Eratosthenes, implemented in just a
+couple of lines.</p>
+<p>Quite an elegant brain-teaser, isn't it?</p>
+<p>Still not interested? Well, what a shame...</p>

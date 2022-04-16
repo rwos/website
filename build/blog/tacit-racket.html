@@ -1,0 +1,90 @@
+<p><small>(There's also a <a href="http://r-wos.org/blog/tacit-racket-2">second part</a>)</small></p>
+<p>Just a quick technical note: tacit (aka point-free aka - hahaha - pointless)
+programming works just fine in Racket.</p>
+<p>Let's take the usual example problem: we want to get the average of a list of numbers.</p>
+<p>The average is the sum of all the numbers divided by the length of the list, so
+let's first make a sum function:</p>
+<pre><code>(define (sum ls) (apply + ls))
+</code></pre>
+<p>This would work, as would <code>(define (sum ls) (foldl + 0 ls))</code> - but there's still
+the &quot;ls&quot; parameter in there. Tacit programming is programming via function
+composition, without using explicit parameters. So, lets get rid of it.</p>
+<p>Let's take the apply definition above. We can see that <code>(sum ...)</code> is exactly the same as
+<code>(apply + ...)</code>, so if we could just transform the apply function to one that has
+the &quot;+&quot; already built-in and only takes the one remaining
+argument - the list - that would be great.</p>
+<p>And, why yes we can: The operation that helps us here is called &quot;currying&quot;
+<a href="http://en.wikipedia.org/wiki/Currying">because &quot;schönfinkeling&quot; would sound ridiculous</a>.</p>
+<pre><code>;;; curry is in #lang racket - if you use racket/base, just
+;;; (require racket/function)
+;;; &quot;-&gt;&quot; is the prompt
+
+-&gt; (curry apply)
+#&lt;procedure:curried&gt;
+
+-&gt; ((curry apply) +)
+#&lt;procedure:curried&gt;
+
+-&gt; (((curry apply) +) '(1 2 3))
+6
+</code></pre>
+<p>Aha! Now we have a function, <code>((curry apply) +)</code>, that takes a list of numbers
+as the only argument and returns the sum. So, why not call that function &quot;sum&quot;:</p>
+<pre><code>-&gt; (define sum ((curry apply) +))
+
+;; check if it still works
+-&gt; (sum '(1 2 3))
+6
+</code></pre>
+<p>Now we need a length function. For that, we just take the built-in <code>length</code> function.</p>
+<pre><code>-&gt; (length '(1 2 3))
+3
+</code></pre>
+<p>The average is now:</p>
+<pre><code>-&gt; (/ (sum '(1 2 3)) (length '(1 2 3)))
+2
+</code></pre>
+<p>We still have the list parameter (or, in this case, the list) in it, however.
+So let's take it out. There are probably ways to do that with just basic function
+combination and currying, but it's late at night so let's just cheat a little
+and define a higher-order function that does exactly what we want:</p>
+<pre><code>;; I called that function &quot;-&lt;&quot; because you shouldn't use it, as it's more a
+;; result of my limited knowledge of tacit programming than anything else.
+;; This is (probably) not the most elegant way to solve our problem.
+-&gt; (define (-&lt; head . fns)
+     (lambda (x) (apply head (map (lambda (fn) (fn x)) fns))))
+</code></pre>
+<p>This takes a &quot;head&quot; function and an arbitrary number of child functions and
+returns a function that takes an argument to which all the child functions are
+applied, with the head function getting applied to the results.</p>
+<p>That's a bit confusing to explain, but really simple to use:</p>
+<pre><code>-&gt; (-&lt; / sum length)
+#&lt;procedure&gt;
+
+-&gt; ((-&lt; / sum length) '(1 2 3))
+2
+</code></pre>
+<p>And with that little non-tacit cheat we now have a rather beautiful average function:</p>
+<pre><code>-&gt; (define avg (-&lt; / sum length))
+
+-&gt; (avg '(2 3 4 5 6))
+4
+-&gt; (avg '(1 2 3 4 5 6 7 8))
+9/2
+</code></pre>
+<p>Another important higher-order function for tacit programming that wasn't
+mentioned here is <code>compose</code>, as it's called in Racket. It combines functions
+and it's really very simple:</p>
+<pre><code>(compose foo bar baz)
+</code></pre>
+<p>is just the point-free version of</p>
+<pre><code>(lambda (x) (foo (bar (baz x))))
+</code></pre>
+<p>All of this seems like a lot of work just for avoiding explicit parameters, but
+once one has a small collection of primitives it's actually pretty easy to
+write new functions in a point-free style.</p>
+<p>Of course, whether or not you like tacit programming as a whole is a bit of a
+question of taste. It's certainly very compact and powerful, but it also can be
+very confusing at times. Just have a look at APL, J, or Forth for an example of what it
+looks like if one just takes tacit programming and runs with it.</p>
+<p>(<a href="http://r-wos.org/blog/tacit-racket-2">part 2</a>)</p>

@@ -1,0 +1,14 @@
+<p>One thing that is really nice about designing and implementing a programming language, is that you can define how it looks. Sounds simple, <em>is</em> simple - simply fun.</p>
+<p>The problems start when you have to actually choose one of the possibilities. Today on my plate: assignment.</p>
+<p>The assignment function (yes, function, not operator) will play a major role in my future programming language. As I have written before, it will basically be Forth-like. Which means, that it will have a dictionary. This dictionary (think &quot;big hash map&quot;) will contain everything - all the functions, all the global variables. Adding something to the dictionary will look something like this:</p>
+<pre>
+    (ASSIGNMENT_SYMBOL "name" [code])
+</pre>
+<p>or like this (both variants will be possible):</p>
+<pre>
+    [code] "name" ASSIGNMENT_SYMBOL
+</pre>
+<p>Now, it's pretty clear that C's <code>=</code> will read pretty bad. In my language's syntax, something denoting the word &quot;store&quot; would be more natural. However, typing <code>store</code> over and over again is just silly.</p>
+<p>Forth has a word named <code>!</code> for storing things in memory. I think this is pretty sweet, but I've become too used to C using it for logical NOT.</p>
+<p>Maybe <code>:</code> would be a better choice. But it looks stupid when it stands on its own. And looks are important, right?</p>
+<p>So, here I am, thinking about what symbol to use for assignment for about an hour now. I really have to work on my time management, I guess.</p>

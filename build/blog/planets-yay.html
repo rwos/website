@@ -1,0 +1,23 @@
+<p>I just got my little terrain generator to render the first planets.</p>
+<p>The generated terrain is not yet very realistic, the &quot;texture&quot; is just
+a height-map and the poles (not pictured) look <em>really</em> bad.</p>
+<p>Still: success! I managed to get something involving sine and cosine
+to actually work, sort of. And I regained my sixth grade math skills in
+the process...</p>
+<img src="http://r-wos.org/media/game-1-1.png">
+<img src="http://r-wos.org/media/game-1-2.png">
+<p>It's written in <a href="http://www.racket-lang.org">Racket</a>, which
+is a Scheme, which is a Lisp - which doesn't matter since I have yet to
+find OpenGL bindings that would not follow that strange standard OpenGL
+programming style.</p>
+<p>However, there are three advantages in using a Lisp over something
+like C: <code>read</code>, <code>eval</code>, and <code>print</code>.</p>
+<p>I've build a console into the generator's main window, which exposes
+an interactive read-eval-print-loop to the user. It's not yet hooked up
+to the generator's internals but evaluating standard Racket code does
+work:</p>
+<img src="http://r-wos.org/media/game-1-3.png">
+<p>(By the way - that sort of thing is not complicated in Racket. About
+twenty lines of code, including the text-field instantiation.)</p>
+<p>When that console is done, debugging and further development can happen
+interactively - with a live preview, as it were.</p>
