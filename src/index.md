@@ -1,4 +1,3 @@
----
 title: "Weeks of hacking can save you hours of planning"
 layout: base
 ---
