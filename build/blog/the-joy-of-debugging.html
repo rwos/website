@@ -1,4 +1,34 @@
-<p>I tested everything. I ran through every line thrice to make sure it was right. I hooked up gdb. I looked at wikis, example implementations, the reference documentation. I googled. And yet I couldn't seem to get alpha blended blitting to work.</p>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    <meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+    <meta name="Description" content="Homepage of Richard Wossal. Weeks of hacking can save you hours of planning.">
+    <title>The Joy Of Debugging | r-wos.org</title>
+    <style>
+    * { line-height: 140%; }
+    body { margin:15px auto; max-width:40em; padding: 0 1em; }
+    body { background: lightcyan; }
+    nav, main, aside { background: white; border: 4px ridge black; padding: 8px 1em; margin: 8px 0; }
+    nav { background: lightyellow; }
+    h1 { text-align: center; color: rebeccapurple; }
+    time { background: yellow }
+    {% include blink.css %}
+    </style>
+  </head>
+  <body>
+    <nav>
+      <img style="vertical-align: middle" src="/media/disk.gif">
+      <a href="/">Home</a> -
+      <a href="/blog">Blog</a> -
+      <a href="/feed.xml">RSS</a> -
+      <a href="/hacks">Hacks</a> -
+      <a href="/about">About</a>
+    </nav>
+    <main>
+      <h1>The Joy Of Debugging</h1>
+      <p><b><time datetime="2011-08-07 00:00:00 &#43;0000">2011-08-07 00:00:00 &#43;0000</time></b></p>
+      <p>I tested everything. I ran through every line thrice to make sure it was right. I hooked up gdb. I looked at wikis, example implementations, the reference documentation. I googled. And yet I couldn't seem to get alpha blended blitting to work.</p>
 <p>I have two (or more) surfaces (SDL terminology, think "screen buffer") and want to blit one onto the other, but with 50% opacity. There is nothing fancy about it - you just set a per-surface alpha value of 127 to the "top" surface and blit it onto the "bottom" one. Two lines of code, plus error handling. Easy. Trivial. <em>Why the fucking hell doesn't this work in my fucking program, for the fucking love of God?</em>.</p>
 <p>After about 2 hours of checking every function call, I switched into "monkey with a typewriter" mode. Randomly erasing and inserting stuff. Randomly changing things. Randomly eating bananas.</p>
 <p>Nothing. Everything else worked just fine - I just could not get the friggin' surfaces to blend onto each other, no matter what I tried.</p>
@@ -7,3 +37,7 @@
 <p>Yes, my to-be-blended surfaces came out of a ring buffer. Yes, there was the bug. It just returned the same surface over and over again - so I successfully blitted the same screens on top of each other. With 50% opacity. A graphical effect commonly known as "resource-wasting transparency-cancelling blending" (not a very catchy name, I know).</p>
 <p>So, the morale of the story is: check your ring buffer implementations first.</p>
 <p>Uh... or something like that, anyway.</p>
+
+    </main>
+  </body>
+</html>

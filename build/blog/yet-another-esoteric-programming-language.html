@@ -1,4 +1,34 @@
-<p>There's not much I can report here yet, but my programming language is under way. I finally decided on a syntax and some general attributes.</p>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    <meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+    <meta name="Description" content="Homepage of Richard Wossal. Weeks of hacking can save you hours of planning.">
+    <title>Yet Another Esoteric Programming Language | r-wos.org</title>
+    <style>
+    * { line-height: 140%; }
+    body { margin:15px auto; max-width:40em; padding: 0 1em; }
+    body { background: lightcyan; }
+    nav, main, aside { background: white; border: 4px ridge black; padding: 8px 1em; margin: 8px 0; }
+    nav { background: lightyellow; }
+    h1 { text-align: center; color: rebeccapurple; }
+    time { background: yellow }
+    {% include blink.css %}
+    </style>
+  </head>
+  <body>
+    <nav>
+      <img style="vertical-align: middle" src="/media/disk.gif">
+      <a href="/">Home</a> -
+      <a href="/blog">Blog</a> -
+      <a href="/feed.xml">RSS</a> -
+      <a href="/hacks">Hacks</a> -
+      <a href="/about">About</a>
+    </nav>
+    <main>
+      <h1>Yet Another Esoteric Programming Language</h1>
+      <p><b><time datetime="2011-07-21 00:00:00 &#43;0000">2011-07-21 00:00:00 &#43;0000</time></b></p>
+      <p>There's not much I can report here yet, but my programming language is under way. I finally decided on a syntax and some general attributes.</p>
 <p>It will be stack based and generally untyped, i.e. much like <a href="http://en.wikipedia.org/wiki/Forth_%28programming_language%29">Forth</a>. Everything will be a subroutine - all the way down to some (few) built-in routines.</p>
 <p>If you are unfamiliar with Forth: it's a very simple system. A word (Forth-terminology; think &quot;a subroutine&quot; or &quot;the name of a subroutine&quot;) is read in, searched for in a global table (commonly called &quot;the dictionary&quot;) and, if found, executed. Passing values between subroutines happens via a stack.</p>
 <p>The stack &quot;cells&quot; in my language will be 8 bit wide. The rationale behind this is that it's easy to implement on today's machines. The obvious downside is the limited integer range. But using traditional (i.e. fixed-width) integers <a title="Arbitrary Limits, or “64 Bits ought to be enough for anybody”" href="http://blog.r-wos.org/2011/abitrary-limits-or-64-bits-ought-to-be-enough-for-anybody/">you are going to a hit a limit anyway</a> - so why not hit it early on? That should make arbitrary-range numbers a pretty pressing need - which is exactly what <em>I</em> need to go through the hassle and implement them...</p>
@@ -7,3 +37,7 @@
 <p>I am on my way writing the interpreter (in ANSI C, for POSIX systems only). The parser/lexer (there is no real parser in Forth-like systems) is already done and I am currently debugging and deciding on the exact behaviour of the stack and the dictionary.</p>
 <p>As of now, the interpreter is a <em>very</em> simple program. It's about 300 lines of C now, with admittedly the whole built-ins still to do - but that shouldn't be so hard.</p>
 <p>I think the whole interpreter will end up weighting about 10k, statically linked. Not exactly as small and as minimal as Brainfuck, but still pretty nifty small for a language that should actually be usable by human beings.</p>
+
+    </main>
+  </body>
+</html>

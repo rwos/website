@@ -1,6 +1,40 @@
-<p>Apparently the kids today don't do XOR any more.</p>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    <meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+    <meta name="Description" content="Homepage of Richard Wossal. Weeks of hacking can save you hours of planning.">
+    <title>Where&#39;s My XOR? | r-wos.org</title>
+    <style>
+    * { line-height: 140%; }
+    body { margin:15px auto; max-width:40em; padding: 0 1em; }
+    body { background: lightcyan; }
+    nav, main, aside { background: white; border: 4px ridge black; padding: 8px 1em; margin: 8px 0; }
+    nav { background: lightyellow; }
+    h1 { text-align: center; color: rebeccapurple; }
+    time { background: yellow }
+    {% include blink.css %}
+    </style>
+  </head>
+  <body>
+    <nav>
+      <img style="vertical-align: middle" src="/media/disk.gif">
+      <a href="/">Home</a> -
+      <a href="/blog">Blog</a> -
+      <a href="/feed.xml">RSS</a> -
+      <a href="/hacks">Hacks</a> -
+      <a href="/about">About</a>
+    </nav>
+    <main>
+      <h1>Where&#39;s My XOR?</h1>
+      <p><b><time datetime="2011-08-02 00:00:00 &#43;0000">2011-08-02 00:00:00 &#43;0000</time></b></p>
+      <p>Apparently the kids today don't do XOR any more.</p>
 <p>My natural approach on graphically drawing things to the screen would be XORing some Bitmap with the screen. Then another XOR on the same position would &quot;delete&quot; that. After that I would XOR the Bitmap again, on a new position. Which - tada - results in an animated sequence.</p>
 <p>Problem is: SDL doesn't have any &quot;XOR this with that&quot; primitive. Or I just can't find it. And - at least this is what Google spits out on the topic - it's apparently okay to do a whole screen erase and redraw for every single frame.</p>
 <p>Seems a bit resource-wasting to me, but I'll try that and see how it works out. It sure would simplify some things. And I can imagine modern machines to be fast enough to do this at 40 frames per second. Still, I'm a bit worried whether the 400Mhz MIPS CPU in the NanoNote can handle it.</p>
 <p>Well, there's my old problem again: too much thinking, too little coding. I just cannot stand bad solutions - not in my own code, at least.</p>
 <p>Gotta work on that, when I think about it...</p>
+
+    </main>
+  </body>
+</html>

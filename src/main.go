@@ -1,11 +1,5 @@
 /// TODO
 /*
-   frontmatter - split on "---"
-       - top is yaml => redirects, title, etc
-       - bottom is markfown
-
-   dir structure like website
-
    some kind of magic to easily add pictures
 
    pictures and internal links should be checked
@@ -16,6 +10,7 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"html/template"
 	"io/ioutil"
 	"os"
 	"path"
@@ -36,15 +31,18 @@ type PageConfig struct {
 	Title    string
 	Subtitle string
 	Tags     []string
+	Date     string
 	Path     string
 	Dest     string
 	Link     string
+	Content  template.HTML
 }
 
 const contentBase = "content/"
 const buildBase = "../build/"
 
 var md goldmark.Markdown
+var layout *template.Template
 
 func main() {
 	// TODO: https://github.com/abhinav/goldmark-toc
@@ -67,6 +65,7 @@ func main() {
 			goldmarkhtml.WithUnsafe(),
 		),
 	)
+	layout = template.Must(template.ParseFiles("layout.html.tpl"))
 
 	files := []string{}
 	dirs := []string{}
@@ -93,15 +92,21 @@ func main() {
 	}
 
 	allTags := map[string][]PageConfig{} // tag => list of destination files that have that tag
+	pagesWhichNeedLayout := map[string]PageConfig{}
 
 	for _, p := range files {
 		dest := buildBase + strings.TrimPrefix(p, contentBase)
+		needsLayout := false
 		if strings.HasSuffix(dest, ".md") && !strings.HasSuffix(dest, "README.md") {
 			dest = strings.TrimSuffix(dest, ".md") + ".html"
+			needsLayout = true
 		}
 
 		fmt.Printf("rendering %s to %s\n", p, dest)
 		config, body := configAndBodyOf(p, dest)
+		if needsLayout {
+			pagesWhichNeedLayout[config.Dest] = config
+		}
 		for _, t := range config.Tags {
 			allTags[t] = append(allTags[t], config)
 		}
@@ -119,6 +124,9 @@ func main() {
 		err := os.MkdirAll(dir, 0755)
 		fatalIfError(err)
 		target := path.Join(dir, "index.html")
+		pagesWhichNeedLayout[target] = PageConfig{
+			Dest: target,
+		}
 		fmt.Printf("appending index to %s\n", target)
 		f, err := os.OpenFile(target, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 		fatalIfError(err)
@@ -139,6 +147,24 @@ func main() {
 		fatalIfError(err)
 		f.Close()
 	}
+
+	for _, c := range pagesWhichNeedLayout {
+		renderWithLayout(c)
+	}
+}
+
+func renderWithLayout(c PageConfig) {
+	if c.Dest == "" {
+		panic("no destination")
+	}
+	b, err := ioutil.ReadFile(c.Dest)
+	fatalIfError(err)
+	c.Content = template.HTML(string(b))
+	var buf bytes.Buffer
+	err = layout.Execute(&buf, c)
+	fatalIfError(err)
+	err = ioutil.WriteFile(c.Dest, buf.Bytes(), 0644)
+	fatalIfError(err)
 }
 
 func configAndBodyOf(p string, dest string) (config PageConfig, body string) {

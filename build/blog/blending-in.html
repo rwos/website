@@ -1,4 +1,34 @@
-<p>There are a multitude of different coding styles - and they usually differ widely between languages and environments. But it all comes down to two extremes: short and long.</p>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    <meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+    <meta name="Description" content="Homepage of Richard Wossal. Weeks of hacking can save you hours of planning.">
+    <title>Blending In | r-wos.org</title>
+    <style>
+    * { line-height: 140%; }
+    body { margin:15px auto; max-width:40em; padding: 0 1em; }
+    body { background: lightcyan; }
+    nav, main, aside { background: white; border: 4px ridge black; padding: 8px 1em; margin: 8px 0; }
+    nav { background: lightyellow; }
+    h1 { text-align: center; color: rebeccapurple; }
+    time { background: yellow }
+    {% include blink.css %}
+    </style>
+  </head>
+  <body>
+    <nav>
+      <img style="vertical-align: middle" src="/media/disk.gif">
+      <a href="/">Home</a> -
+      <a href="/blog">Blog</a> -
+      <a href="/feed.xml">RSS</a> -
+      <a href="/hacks">Hacks</a> -
+      <a href="/about">About</a>
+    </nav>
+    <main>
+      <h1>Blending In</h1>
+      <p><b><time datetime="2011-07-14 00:00:00 &#43;0000">2011-07-14 00:00:00 &#43;0000</time></b></p>
+      <p>There are a multitude of different coding styles - and they usually differ widely between languages and environments. But it all comes down to two extremes: short and long.</p>
 <p>In a Unix (read: ANSI or pre-ANSI C) environment the dominating style is the short one. It usually reads like a strange version of English written in a Latin-transcribed <a href="http://en.wikipedia.org/wiki/Hebrew_alphabet" target="_blank">Hebrew alphabet</a>: <code>strtr</code>, <code>creat</code>, <code>malloc</code>, <code>yhwh</code> (well, maybe not <code>yhwh</code>, but you get the point). Additionally, Unix and C are more or less free of upper-case letters.</p>
 <p>The other extreme is the OOP world: their camelCase or MixedCase style looks like... well, a camel? Uh... yeah, sure looks like a camel. And as you know, those guys tend to use really long names: <code>getLengthOfStringAsInteger</code> and so on.</p>
 <p>Ok, introduction done - main point:</p>
@@ -9,3 +39,7 @@
 <p>It is called <code>listOfThisAndThat</code> and that is how you <em>must</em> name it.</p>
 <p>Or else, everyone coming along afterwards - with the longCamelCaseNames parsing mode activated - will take <code>lotat</code> for a proper name or something - and will have to <em>waste time</em> going back through the code, trying to find out what the hell it really is.</p>
 <p>The worst style is no style at all.</p>
+
+    </main>
+  </body>
+</html>

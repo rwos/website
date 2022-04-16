@@ -4,7 +4,7 @@
     <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
     <meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
     <meta name="Description" content="Homepage of Richard Wossal. Weeks of hacking can save you hours of planning.">
-    <title>{{ page.title }} | r-wos.org</title>
+    <title>{{ .Title }} | r-wos.org</title>
     <style>
     * { line-height: 140%; }
     body { margin:15px auto; max-width:40em; padding: 0 1em; }
@@ -26,7 +26,9 @@
       <a href="/about">About</a>
     </nav>
     <main>
-      {{ content }}
+      <h1>{{ .Title }}</h1>
+      <p><b><time datetime="{{ .Date }}">{{ .Date }}</time></b></p>
+      {{ .Content }}
     </main>
   </body>
 </html>

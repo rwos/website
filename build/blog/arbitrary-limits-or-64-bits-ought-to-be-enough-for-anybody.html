@@ -1,4 +1,34 @@
-<p>Let's talk about integers.</p>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    <meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+    <meta name="Description" content="Homepage of Richard Wossal. Weeks of hacking can save you hours of planning.">
+    <title>Arbitrary Limits, or &#34;64 Bits ought to be enough for anybody&#34; | r-wos.org</title>
+    <style>
+    * { line-height: 140%; }
+    body { margin:15px auto; max-width:40em; padding: 0 1em; }
+    body { background: lightcyan; }
+    nav, main, aside { background: white; border: 4px ridge black; padding: 8px 1em; margin: 8px 0; }
+    nav { background: lightyellow; }
+    h1 { text-align: center; color: rebeccapurple; }
+    time { background: yellow }
+    {% include blink.css %}
+    </style>
+  </head>
+  <body>
+    <nav>
+      <img style="vertical-align: middle" src="/media/disk.gif">
+      <a href="/">Home</a> -
+      <a href="/blog">Blog</a> -
+      <a href="/feed.xml">RSS</a> -
+      <a href="/hacks">Hacks</a> -
+      <a href="/about">About</a>
+    </nav>
+    <main>
+      <h1>Arbitrary Limits, or &#34;64 Bits ought to be enough for anybody&#34;</h1>
+      <p><b><time datetime="2011-07-07 00:00:00 &#43;0000">2011-07-07 00:00:00 &#43;0000</time></b></p>
+      <p>Let's talk about integers.</p>
 <p>Yes, I heard you - yes, there are more interesting things in the world, but let's just stick to the good 'ol integer for now.</p>
 <p>What is an <a href="http://en.wikipedia.org/wiki/Integer_%28computer_science%29" target="_blank">integer</a>? Easy, right? It's a <del>16</del> <del>32</del> 64 Bit <del>signed</del> <del>unsigned</del> number with a maximum range of <del>-2^32</del> <del>-2^64</del> 0 (or -2^30 or -2^28 for languages with type tags?) to some thing like... (2^32 - 1) or like 2^58 if unsigned and with type tags or... well, up to a large number, you know.</p>
 <p>See the problem?</p>
@@ -25,3 +55,7 @@
 <p>[on a rainy autumn afternoon, a sad C programmer leaves the stage]</p>
 <p>[the end]</p>
 <p>Now, the morale of the story is this: <em>range-limited integers are wrong and dangerous</em> - in the wrong hands, that is. And they always fall in the wrong hands - and they will continue to do so. It's just not an option to think that you can train programmers to avoid these kind of overflows or underflows. In some cases, this is not exactly trivial. What <em>is</em> trivial, however is designing programming languages to use arbitrary-range integers. A web server, for example, written in such a language will still perform better than a C web server being constantly remotely induced to segfault and restart.</p>
+
+    </main>
+  </body>
+</html>
