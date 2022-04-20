@@ -1,6 +1,8 @@
 ---
 title: gti
 permalink: /hacks/gti
+tags:
+  - foo
 ---
 <p>I've finally implemented the command I keep typing all day: <code><b>gti</b></code>.</p>
 

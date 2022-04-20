@@ -6,23 +6,242 @@
     <meta name="Description" content="Homepage of Richard Wossal. Weeks of hacking can save you hours of planning.">
     <title>Blog | r-wos.org</title>
     <style>
-    * { line-height: 140%; }
-    body { margin:15px auto; max-width:40em; padding: 0 1em; }
-    body { background: lightcyan; }
-    nav, main, aside { background: white; border: 4px ridge black; padding: 8px 1em; margin: 8px 0; }
-    nav { background: lightyellow; }
-    h1 { text-align: center; color: rebeccapurple; }
-    time { background: yellow }
-    {% include blink.css %}
+
+.terminal .clipboard {
+ position:absolute;
+ bottom:0;
+ left:0;
+ opacity:0.01;
+ filter:alpha(opacity = 0.01);
+ filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0.01);
+ width:2px;
+}
+.cmd > .clipboard {
+ position:fixed;
+}
+.terminal {
+ padding:10px;
+ position:relative;
+ overflow:hidden;
+}
+.cmd {
+ padding:0;
+ margin:0;
+ height:1.3em;
+}
+.terminal .terminal-output div div,
+.terminal .prompt {
+ display:block;
+ line-height:14px;
+ height:16px;
+}
+.terminal {
+ font-family:FreeMono,monospace;
+ color:#33dd33;
+ background-color:#000f00;
+ font-size:14px;
+ line-height:16px;
+}
+.terminal .terminal-output div span {
+ display:inline-block;
+}
+.terminal .cmd span {
+ display:inline-block;
+}
+.terminal .cmd span.inverted {
+ background-color:#33dd33;
+ color:#000f00;
+}
+.terminal .terminal-output div div::-moz-selection,
+.terminal .terminal-output div span::-moz-selection {
+ background-color:#33dd33;
+ color:#000f00;
+}
+.terminal .terminal-output div div::selection,
+.terminal .terminal-output div span::selection,
+.terminal .cmd > span::selection,
+.terminal .prompt span::selection {
+ background-color:#33dd33;
+ color:#000f00;
+}
+.terminal .terminal-output div.error,
+.terminal .terminal-output div.error div {
+ color:#33dd33;
+}
+.tilda {
+ position:fixed;
+ top:0;
+ left:0;
+ width:100%;
+ z-index:1100;
+}
+.clear {
+ clear:both;
+}
+.terminal a {
+ color:#ccff66;
+}
+.terminal a:hover {
+ color:#ccff66;
+}
+body {
+ font-family:Helvetica,Arial,sans-serif;
+ font-size:11pt;
+ line-height:1.5em;
+ padding:0.5em;
+ margin:0em;
+ color:#33dd33;
+ background-color:#000f00;
+}
+main {
+ max-width:50em;
+ margin-left:auto;
+ margin-right:auto;
+}
+#footer,
+#footer * {
+ text-align:center;
+ font-size:9pt;
+ color:#226622;
+}
+#footer > a {
+ color:#226622;
+ text-decoration:underline;
+}
+h1,
+h2,
+h3,
+h4 {
+ color:#66ff66;
+ line-height:1em;
+ text-align:center !important;
+ font-family:Georgia,serif;
+ font-weight:normal;
+}
+a {
+ color:#ccff66;
+ text-decoration:none;
+}
+a img {
+ display:inline-block;
+ border:none;
+}
+a:hover {
+ color:#000f00 ! important;
+ background-color:#ffff00;
+ border-radius:5px 5px 5px 5px;
+ box-shadow:0px 0px 5px 4px #ffff00;
+}
+a:visited {
+ color:#aaaa00;
+}
+nav {
+ font-size:10pt;
+ text-align:center;
+}
+.header {
+ text-align:center !important;
+}
+h1 {
+ font-size:16pt;
+ border-top:1pt solid #66aa66;
+ padding-top:0.25em;
+ margin-top:1em;
+ display:inline-block;
+}
+hr {
+ border-style:none;
+ width:50%;
+ height:0pt;
+ border-top:2pt solid #339933;
+}
+dl {
+ display:inline-block;
+}
+dt {
+ padding-top:1em;
+ font-size:90%;
+}
+dt:first-letter {
+ font-size:110%;
+}
+dd {
+ padding-left:0.5em;
+}
+dd .descr {
+ margin:0pt;
+ margin-left:3em;
+ margin-bottom:0.5em;
+ padding 0pt;
+}
+.block {
+ margin:1em;
+ padding:4em;
+ padding-top:1.5em;
+ padding-bottom:2em;
+ border-top:2pt solid #339933;
+ border-bottom:2pt solid #339933;
+ border-radius:2em;
+ text-align:center;
+}
+.block * {
+ text-align:left;
+}
+input[type=text],
+textarea {
+ color:#33dd33;
+ background-color:#003f00;
+ border:2pt solid #003f00;
+ border-radius:0.25em;
+}
+input[type=text]:focus,
+textarea:focus {
+ border-top:2pt solid #339933;
+ border-bottom:2pt solid #339933;
+}
+input[type=button],
+input[type=submit] {
+ color:#33dd33;
+ background-color:#003f00;
+ border-radius:0.25em;
+ border:2pt solid #339933;
+}
+input[type=button]:hover,
+input[type=submit]:hover {
+ color:#000f00;
+ background-color:#ffff00;
+ border:2pt solid #ffff00;
+ box-shadow:0px 0px 5px 4px #ffff00;
+}
+.nav-prev {
+ float:left;
+ font-size:small;
+}
+.nav-next {
+ float:right;
+ font-size:small;
+}
+@media (max-width:500px) {
+ .block {
+  padding-left:0em;
+  padding-right:0em;
+ }
+ .nav-prev,
+ .nav-next {
+  float:none;
+ }
+}
+ 
+ 
     </style>
   </head>
   <body>
     <nav>
       <img style="vertical-align: middle" src="/media/disk.gif">
       <a href="/">Home</a> -
-      <a href="/blog">Blog</a> -
+      <a href="/blog/">Blog</a> -
       <a href="/feed.xml">RSS</a> -
-      <a href="/hacks">Hacks</a> -
+      <a href="/hacks/">Hacks</a> -
       <a href="/about">About</a>
     </nav>
     <main>
@@ -36,7 +255,7 @@
   {% endfor %}
 </ul>
 
-<dl><dt><a href="/blog/imagineeasy.html">I ain't gonna work on Maggie's farm no more</a></dt><dt><a href="/blog/noflo.html">NoUnderstand NoFlo</a></dt><dt><a href="/blog/test-driven.html">Test Driven Development</a></dt><dt><a href="/blog/gherkin.html">Given When Then</a></dt><dt><a href="/blog/owncloud.html">ownCloud</a></dt><dt><a href="/blog/racket-appreciation-day.html">Racket Appreciation Day</a></dt><dt><a href="/blog/wtf-js.html">wtf.js</a></dt><dt><a href="/blog/second-coffeescript.html">CoffeeScript - Second Impressions</a></dt><dt><a href="/blog/first-coffeescript.html">CoffeeScript - First Impressions</a></dt><dt><a href="/blog/wmii-color-status.html">Colored Text in wmii's Status Bar</a></dt><dt><a href="/blog/ludum-dare-26-postmortem.html">26th Ludum Dare - Postmortem</a></dt><dt><a href="/blog/dynamic-linking.html">Overwriting Dynamically Linked Stuff</a></dt><dt><a href="/blog/javahaha.html">Javahaha</a></dt><dt><a href="/blog/ludum-dare-26-timelapse.html">Ludum Dare 26 - Timelapse</a></dt><dt><a href="/blog/r-listing.html">Certainly Not Mainstream</a></dt><dt><a href="/blog/cray-1-disks-3.html">Continued</a></dt><dt><a href="/blog/cray-1-disks-2.html">Playing with Cray-1 Disks, Part 2</a></dt><dt><a href="/blog/cray-1-disks.html">Playing with Cray-1 Disks</a></dt><dt><a href="/blog/links.html">Links</a></dt><dt><a href="/blog/typography.html">Playing with Typography</a></dt><dt><a href="/blog/tacit-racket-2.html">Tacit Programming in Racket, Part&nbsp;2</a></dt><dt><a href="/blog/review-plt-games-february-2013.html">Review - PLT Games February 2013</a></dt><dt><a href="/blog/syntax-parameters.html">Syntax Parameters: Usage</a></dt><dt><a href="/blog/ping-turtle.html">Ping Turtle</a></dt><dt><a href="/blog/tododo.html">todo: do</a></dt><dt><a href="/blog/make-frp-mainstream.html">Make FRP Mainstream!</a></dt><dt><a href="/blog/forever-gui-2.html">A Graphical Forever Project, Part 2</a></dt><dt><a href="/blog/forever-gui.html">A Graphical Forever Project</a></dt><dt><a href="/blog/wrong-repo.html">You've picked the wrong repository</a></dt><dt><a href="/blog/racket-multiple-dispatch.html">Multiple Dispatch in Racket</a></dt><dt><a href="/blog/enterprise-php.html">Enterprise PHP</a></dt><dt><a href="/blog/vim-loop.html">The BASIC Magic in Vim</a></dt><dt><a href="/blog/true-color.html">True Color</a></dt><dt><a href="/blog/electric-dead-trees.html">Electric Dead Trees</a></dt><dt><a href="/blog/semantics.html">&lt;font color="green"&gt;</a></dt><dt><a href="/blog/tacit-racket.html">Tacit Programming in Racket</a></dt><dt><a href="/blog/happy-new-year.html">The most latest "new year" type post of the year</a></dt><dt><a href="/blog/doesnt-seem-safe.html">This doesn't seem safe to me</a></dt><dt><a href="/blog/and-now-for-something-completely-different.html">And Now for Something Completely Different</a></dt><dt><a href="/blog/art.html">Art</a></dt><dt><a href="/blog/what-a-language.html">What a Language!</a></dt><dt><a href="/blog/german-programming-apprenticeship-review.html">The German Programming Apprenticeship - A Review</a></dt><dt><a href="/blog/hardly-any-python-hardly-any-cry.html">Hardly Any Python, Hardly Any Cry</a></dt><dt><a href="/blog/joining-everything.html">Joining Everything</a></dt><dt><a href="/blog/multimedia.html">Multimedia</a></dt><dt><a href="/blog/convay-s-game-of-floating-point.html">Convay's Game of Floating Point</a></dt><dt><a href="/blog/ludum-dare-postmortem.html">Ludum Dare Postmortem</a></dt><dt><a href="/blog/assorted-stuff.html">Assorted Stuff</a></dt><dt><a href="/blog/greetings-from-mandelbrot.html">Greetings from Mandelbrot</a></dt><dt><a href="/blog/replicated-scrapyards.html">Replicated Scrapyards</a></dt><dt><a href="/blog/well-that-didn-t-work-out-so-well.html">Well, that didn't work out so well</a></dt><dt><a href="/blog/up-next.html">Up Next</a></dt><dt><a href="/blog/php-explained.html">PHP explained</a></dt><dt><a href="/blog/purely-functional-games.html">Purely Functional Games</a></dt><dt><a href="/blog/a-good-game-architecture-is-hard-to-find.html">A Good Game Architecture Is Hard to Find</a></dt><dt><a href="/blog/these-feet-are-made-for-walking.html">These feet are made for walking</a></dt><dt><a href="/blog/text-yay.html">Text! Yay!</a></dt><dt><a href="/blog/planets-yay.html">Planets! Yay!</a></dt><dt><a href="/blog/values-c-set-c-add1-c.html">(values C (set! C (add1 C)))</a></dt><dt><a href="/blog/oops.html">OOPs</a></dt><dt><a href="/blog/secret-alien-technology.html">Secret Alien Technology</a></dt><dt><a href="/blog/time.html">Time</a></dt><dt><a href="/blog/welcome-to-the-machine.html">Welcome to the Machine</a></dt><dt><a href="/blog/by-the-way.html">By the Way</a></dt><dt><a href="/blog/there-s-one-thing-wrong-with-python.html">There's one thing wrong with Python</a></dt><dt><a href="/blog/why.html">Why?</a></dt><dt><a href="/blog/modern-programming.html">Modern Programming</a></dt><dt><a href="/blog/channels-in-newsqueak.html">Channels in Newsqueak</a></dt><dt><a href="/blog/adventures-with-newsqueak-part-2.html">Adventures with Newsqueak, part 2</a></dt><dt><a href="/blog/adventures-with-newsqueak.html">Adventures with Newsqueak</a></dt><dt><a href="/blog/fuck-unity-fuck-gnome3-i-m-going-to-downgrade.html">Fuck Unity, Fuck GNOME3, I'm going to downgrade</a></dt><dt><a href="/blog/lifelong-learning.html">Lifelong Learning</a></dt><dt><a href="/blog/pure-functional-wtf.html">Pure Functional WTF</a></dt><dt><a href="/blog/the-dark-side.html">The Dark Side</a></dt><dt><a href="/blog/no-wordpress-no-cry.html">No Wordpress, No Cry</a></dt><dt><a href="/blog/never-mind.html">Never Mind</a></dt><dt><a href="/blog/oh-android.html">Oh, Android</a></dt><dt><a href="/blog/fractal-garden-2.html">Fractal Garden 2</a></dt><dt><a href="/blog/fractal-garden.html">Fractal Garden</a></dt><dt><a href="/blog/canvas-game-of-life.html">Canvas Game Of Life</a></dt><dt><a href="/blog/introducing-dadadodoweb.html">Introducing DadaDodoWeb</a></dt><dt><a href="/blog/choices.html">Choices</a></dt><dt><a href="/blog/screenshot-monday-1.html">Screenshot Monday 1</a></dt><dt><a href="/blog/on-android.html">On Android</a></dt><dt><a href="/blog/scope-creep.html">Scope Creep</a></dt><dt><a href="/blog/linux-filename-fails.html">Linux Filename Fails</a></dt><dt><a href="/blog/screenshot-monday-0.html">Screenshot Monday 0</a></dt><dt><a href="/blog/the-joy-of-debugging.html">The Joy Of Debugging</a></dt><dt><a href="/blog/where-s-my-xor-.html">Where's My XOR?</a></dt><dt><a href="/blog/more-cowbell-.html">More Cowbell!</a></dt><dt><a href="/blog/graphics-programming.html">Graphics Programming</a></dt><dt><a href="/blog/q-your-ides-use-vi.html">:q! your IDEs - use vi</a></dt><dt><a href="/blog/plan-9-is-dead-long-live-plan-9.html">Plan 9 Is Dead. Long Live Plan 9!</a></dt><dt><a href="/blog/you-can-t-escape-the-string-escape.html">You Can't Escape The String Escape</a></dt><dt><a href="/blog/i-m-back-and-it-hurts.html">I'm Back - And It Hurts</a></dt><dt><a href="/blog/join-the-tiling-side.html">Join The Tiling Side</a></dt><dt><a href="/blog/yet-another-esoteric-programming-language.html">Yet Another Esoteric Programming Language</a></dt><dt><a href="/blog/the-internet-the-best-internet-on-earth.html">The Internet - The Best Internet On Earth</a></dt><dt><a href="/blog/artificial-stupidity.html">Artificial Stupidity</a></dt><dt><a href="/blog/the-turing-machine-vs-the-coffee-machine.html">The Turing Machine vs. The Coffee Machine</a></dt><dt><a href="/blog/no-silver-cat-v-reflections-on-trusting-the-bazaar-or-lambda-and-painters-considered-harmful.html">No Silver cat -v: Reflections on Trusting the Bazaar, or, Lambda and Painters Considered Harmful</a></dt><dt><a href="/blog/nice-hacks-2.html">Nice Hacks 2</a></dt><dt><a href="/blog/nice-hacks-1.html">Nice Hacks 1</a></dt><dt><a href="/blog/blending-in.html">Blending In</a></dt><dt><a href="/blog/you-asked-for-it-you-got-it.html">You Asked For It - You Got It</a></dt><dt><a href="/blog/nice-hacks-0.html">Nice Hacks 0</a></dt><dt><a href="/blog/google-chrome-wasting-screen-estate.html">Google Chrome: Wasting Screen Estate</a></dt><dt><a href="/blog/pipes-for-lisp.html">Pipes for Lisp</a></dt><dt><a href="/blog/arbitrary-limits-or-64-bits-ought-to-be-enough-for-anybody.html">Arbitrary Limits, or "64 Bits ought to be enough for anybody"</a></dt><dt><a href="/blog/forwards-backwards-or-nil.html">Forwards, Backwards, or nil</a></dt>
+<dl><dt><a href="/blog/imagineeasy">I ain't gonna work on Maggie's farm no more</a></dt><dt><a href="/blog/noflo">NoUnderstand NoFlo</a></dt><dt><a href="/blog/test-driven">Test Driven Development</a></dt><dt><a href="/blog/gherkin">Given When Then</a></dt><dt><a href="/blog/owncloud">ownCloud</a></dt><dt><a href="/blog/racket-appreciation-day">Racket Appreciation Day</a></dt><dt><a href="/blog/wtf-js">wtf.js</a></dt><dt><a href="/blog/second-coffeescript">CoffeeScript - Second Impressions</a></dt><dt><a href="/blog/first-coffeescript">CoffeeScript - First Impressions</a></dt><dt><a href="/blog/wmii-color-status">Colored Text in wmii's Status Bar</a></dt><dt><a href="/blog/ludum-dare-26-postmortem">26th Ludum Dare - Postmortem</a></dt><dt><a href="/blog/dynamic-linking">Overwriting Dynamically Linked Stuff</a></dt><dt><a href="/blog/javahaha">Javahaha</a></dt><dt><a href="/blog/ludum-dare-26-timelapse">Ludum Dare 26 - Timelapse</a></dt><dt><a href="/blog/r-listing">Certainly Not Mainstream</a></dt><dt><a href="/blog/cray-1-disks-3">Continued</a></dt><dt><a href="/blog/cray-1-disks-2">Playing with Cray-1 Disks, Part 2</a></dt><dt><a href="/blog/cray-1-disks">Playing with Cray-1 Disks</a></dt><dt><a href="/blog/links">Links</a></dt><dt><a href="/blog/typography">Playing with Typography</a></dt><dt><a href="/blog/tacit-racket-2">Tacit Programming in Racket, Part&nbsp;2</a></dt><dt><a href="/blog/review-plt-games-february-2013">Review - PLT Games February 2013</a></dt><dt><a href="/blog/syntax-parameters">Syntax Parameters: Usage</a></dt><dt><a href="/blog/ping-turtle">Ping Turtle</a></dt><dt><a href="/blog/tododo">todo: do</a></dt><dt><a href="/blog/make-frp-mainstream">Make FRP Mainstream!</a></dt><dt><a href="/blog/forever-gui-2">A Graphical Forever Project, Part 2</a></dt><dt><a href="/blog/forever-gui">A Graphical Forever Project</a></dt><dt><a href="/blog/wrong-repo">You've picked the wrong repository</a></dt><dt><a href="/blog/racket-multiple-dispatch">Multiple Dispatch in Racket</a></dt><dt><a href="/blog/enterprise-php">Enterprise PHP</a></dt><dt><a href="/blog/vim-loop">The BASIC Magic in Vim</a></dt><dt><a href="/blog/true-color">True Color</a></dt><dt><a href="/blog/electric-dead-trees">Electric Dead Trees</a></dt><dt><a href="/blog/semantics">&lt;font color="green"&gt;</a></dt><dt><a href="/blog/tacit-racket">Tacit Programming in Racket</a></dt><dt><a href="/blog/happy-new-year">The most latest "new year" type post of the year</a></dt><dt><a href="/blog/doesnt-seem-safe">This doesn't seem safe to me</a></dt><dt><a href="/blog/and-now-for-something-completely-different">And Now for Something Completely Different</a></dt><dt><a href="/blog/art">Art</a></dt><dt><a href="/blog/what-a-language">What a Language!</a></dt><dt><a href="/blog/german-programming-apprenticeship-review">The German Programming Apprenticeship - A Review</a></dt><dt><a href="/blog/hardly-any-python-hardly-any-cry">Hardly Any Python, Hardly Any Cry</a></dt><dt><a href="/blog/joining-everything">Joining Everything</a></dt><dt><a href="/blog/multimedia">Multimedia</a></dt><dt><a href="/blog/convay-s-game-of-floating-point">Convay's Game of Floating Point</a></dt><dt><a href="/blog/ludum-dare-postmortem">Ludum Dare Postmortem</a></dt><dt><a href="/blog/assorted-stuff">Assorted Stuff</a></dt><dt><a href="/blog/greetings-from-mandelbrot">Greetings from Mandelbrot</a></dt><dt><a href="/blog/replicated-scrapyards">Replicated Scrapyards</a></dt><dt><a href="/blog/well-that-didn-t-work-out-so-well">Well, that didn't work out so well</a></dt><dt><a href="/blog/up-next">Up Next</a></dt><dt><a href="/blog/php-explained">PHP explained</a></dt><dt><a href="/blog/purely-functional-games">Purely Functional Games</a></dt><dt><a href="/blog/a-good-game-architecture-is-hard-to-find">A Good Game Architecture Is Hard to Find</a></dt><dt><a href="/blog/these-feet-are-made-for-walking">These feet are made for walking</a></dt><dt><a href="/blog/text-yay">Text! Yay!</a></dt><dt><a href="/blog/planets-yay">Planets! Yay!</a></dt><dt><a href="/blog/values-c-set-c-add1-c">(values C (set! C (add1 C)))</a></dt><dt><a href="/blog/oops">OOPs</a></dt><dt><a href="/blog/secret-alien-technology">Secret Alien Technology</a></dt><dt><a href="/blog/time">Time</a></dt><dt><a href="/blog/welcome-to-the-machine">Welcome to the Machine</a></dt><dt><a href="/blog/by-the-way">By the Way</a></dt><dt><a href="/blog/there-s-one-thing-wrong-with-python">There's one thing wrong with Python</a></dt><dt><a href="/blog/why">Why?</a></dt><dt><a href="/blog/modern-programming">Modern Programming</a></dt><dt><a href="/blog/channels-in-newsqueak">Channels in Newsqueak</a></dt><dt><a href="/blog/adventures-with-newsqueak-part-2">Adventures with Newsqueak, part 2</a></dt><dt><a href="/blog/adventures-with-newsqueak">Adventures with Newsqueak</a></dt><dt><a href="/blog/fuck-unity-fuck-gnome3-i-m-going-to-downgrade">Fuck Unity, Fuck GNOME3, I'm going to downgrade</a></dt><dt><a href="/blog/lifelong-learning">Lifelong Learning</a></dt><dt><a href="/blog/pure-functional-wtf">Pure Functional WTF</a></dt><dt><a href="/blog/the-dark-side">The Dark Side</a></dt><dt><a href="/blog/no-wordpress-no-cry">No Wordpress, No Cry</a></dt><dt><a href="/blog/never-mind">Never Mind</a></dt><dt><a href="/blog/oh-android">Oh, Android</a></dt><dt><a href="/blog/fractal-garden-2">Fractal Garden 2</a></dt><dt><a href="/blog/fractal-garden">Fractal Garden</a></dt><dt><a href="/blog/canvas-game-of-life">Canvas Game Of Life</a></dt><dt><a href="/blog/introducing-dadadodoweb">Introducing DadaDodoWeb</a></dt><dt><a href="/blog/choices">Choices</a></dt><dt><a href="/blog/screenshot-monday-1">Screenshot Monday 1</a></dt><dt><a href="/blog/on-android">On Android</a></dt><dt><a href="/blog/scope-creep">Scope Creep</a></dt><dt><a href="/blog/linux-filename-fails">Linux Filename Fails</a></dt><dt><a href="/blog/screenshot-monday-0">Screenshot Monday 0</a></dt><dt><a href="/blog/the-joy-of-debugging">The Joy Of Debugging</a></dt><dt><a href="/blog/where-s-my-xor-">Where's My XOR?</a></dt><dt><a href="/blog/more-cowbell-">More Cowbell!</a></dt><dt><a href="/blog/graphics-programming">Graphics Programming</a></dt><dt><a href="/blog/q-your-ides-use-vi">:q! your IDEs - use vi</a></dt><dt><a href="/blog/plan-9-is-dead-long-live-plan-9">Plan 9 Is Dead. Long Live Plan 9!</a></dt><dt><a href="/blog/you-can-t-escape-the-string-escape">You Can't Escape The String Escape</a></dt><dt><a href="/blog/i-m-back-and-it-hurts">I'm Back - And It Hurts</a></dt><dt><a href="/blog/join-the-tiling-side">Join The Tiling Side</a></dt><dt><a href="/blog/yet-another-esoteric-programming-language">Yet Another Esoteric Programming Language</a></dt><dt><a href="/blog/the-internet-the-best-internet-on-earth">The Internet - The Best Internet On Earth</a></dt><dt><a href="/blog/artificial-stupidity">Artificial Stupidity</a></dt><dt><a href="/blog/the-turing-machine-vs-the-coffee-machine">The Turing Machine vs. The Coffee Machine</a></dt><dt><a href="/blog/no-silver-cat-v-reflections-on-trusting-the-bazaar-or-lambda-and-painters-considered-harmful">No Silver cat -v: Reflections on Trusting the Bazaar, or, Lambda and Painters Considered Harmful</a></dt><dt><a href="/blog/nice-hacks-2">Nice Hacks 2</a></dt><dt><a href="/blog/nice-hacks-1">Nice Hacks 1</a></dt><dt><a href="/blog/blending-in">Blending In</a></dt><dt><a href="/blog/you-asked-for-it-you-got-it">You Asked For It - You Got It</a></dt><dt><a href="/blog/nice-hacks-0">Nice Hacks 0</a></dt><dt><a href="/blog/google-chrome-wasting-screen-estate">Google Chrome: Wasting Screen Estate</a></dt><dt><a href="/blog/pipes-for-lisp">Pipes for Lisp</a></dt><dt><a href="/blog/arbitrary-limits-or-64-bits-ought-to-be-enough-for-anybody">Arbitrary Limits, or "64 Bits ought to be enough for anybody"</a></dt><dt><a href="/blog/forwards-backwards-or-nil">Forwards, Backwards, or nil</a></dt>
 </dl>
     </main>
   </body>

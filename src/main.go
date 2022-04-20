@@ -117,8 +117,33 @@ func main() {
 		fatalIfError(err)
 	}
 
-	// render indices
 	fmt.Printf("processing tags\n")
+
+	// make sure every tag has a page tagged with "tags"
+	for tag, _ := range allTags {
+		if tag == "tags" {
+			continue
+		}
+		foundInTags := false
+		for _, page := range allTags["tags"] {
+			if strings.ToLower(page.Title) == tag {
+				foundInTags = true
+				break
+			}
+		}
+		if !foundInTags {
+			target := path.Join(buildBase, tag, "index.html")
+			fmt.Printf("tag %s has no explicit index page - creating one at %s\n", tag, target)
+			allTags["tags"] = append(allTags["tags"], PageConfig{
+				Dest:     target,
+				Link:     "/" + strings.TrimSuffix(strings.TrimPrefix(target, buildBase), "index.html"),
+				Title:    tag,
+				Subtitle: fmt.Sprintf("All things tagged \"%s\"", tag),
+			})
+		}
+	}
+
+	// render indices
 	for tag, files := range allTags {
 		dir := path.Join(buildBase, tag)
 		fmt.Printf("creating dir %s\n", dir)
@@ -126,6 +151,7 @@ func main() {
 		fatalIfError(err)
 		target := path.Join(dir, "index.html")
 		if pagesWhichNeedLayout[target].Dest == "" {
+			/// XXX??? what is this for again? XXX XXX XXX XXX XXX XXX
 			pagesWhichNeedLayout[target] = PageConfig{
 				Dest:     target,
 				Title:    tag,
@@ -156,6 +182,13 @@ func main() {
 			fatalIfError(err)
 			if c.Subtitle != "" {
 				_, err = f.WriteString(fmt.Sprintf(`<dd>%s<dd>`, c.Subtitle))
+				fatalIfError(err)
+			}
+			for _, t := range c.Tags {
+				if t == tag {
+					continue
+				}
+				_, err = f.WriteString(fmt.Sprintf(`<dd><a href="/%s">#%s</a><dd>`, t, t))
 				fatalIfError(err)
 			}
 		}
@@ -207,7 +240,8 @@ func configAndBodyOf(p string, dest string) (config PageConfig, body string) {
 	// config: applying defaults
 	config.Path = p
 	config.Dest = dest
-	config.Link = "/" + strings.TrimPrefix(dest, buildBase)
+	config.Link = "/" + strings.TrimSuffix(strings.TrimPrefix(dest, buildBase), "index.html")
+	config.Link = strings.TrimSuffix(config.Link, ".html")
 	if config.Title == "" {
 		config.Title = titleFromPath(p)
 	}
