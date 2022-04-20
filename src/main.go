@@ -17,6 +17,7 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
+	"time"
 
 	chroma "github.com/alecthomas/chroma/formatters/html"
 	"github.com/yuin/goldmark"
@@ -32,11 +33,14 @@ type PageConfig struct {
 	Title    string
 	Subtitle string
 	Tags     []string
-	Date     string
+	Date     time.Time
 	Path     string
 	Dest     string
 	Link     string
 	Content  template.HTML
+	Index    struct {
+		Disabled bool
+	}
 }
 
 const contentBase = "content/"
@@ -94,6 +98,7 @@ func main() {
 
 	allTags := map[string][]PageConfig{} // tag => list of destination files that have that tag
 	pagesWhichNeedLayout := map[string]PageConfig{}
+	noIndexPlease := map[string]bool{}
 
 	for _, p := range files {
 		dest := buildBase + strings.TrimPrefix(p, contentBase)
@@ -105,6 +110,9 @@ func main() {
 
 		fmt.Printf("rendering %s to %s\n", p, dest)
 		config, body := configAndBodyOf(p, dest)
+		if config.Index.Disabled {
+			noIndexPlease[config.Dest] = true
+		}
 		if needsLayout {
 			pagesWhichNeedLayout[config.Dest] = config
 		}
@@ -143,7 +151,7 @@ func main() {
 		}
 	}
 
-	// render indices
+	// add automatic indices to index pages
 	for tag, files := range allTags {
 		dir := path.Join(buildBase, tag)
 		fmt.Printf("creating dir %s\n", dir)
@@ -158,6 +166,10 @@ func main() {
 				Subtitle: fmt.Sprintf("All things tagged \"%s\"", tag),
 			}
 		}
+		if noIndexPlease[target] {
+			fmt.Printf("no automatic index for %s\n", target)
+			continue
+		}
 		fmt.Printf("appending index to %s\n", target)
 		f, err := os.OpenFile(target, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 		fatalIfError(err)
@@ -169,9 +181,9 @@ func main() {
 				return files[i].Subtitle != ""
 			}
 			if files[i].Date == files[j].Date {
-				return files[i].Title > files[j].Title
+				return files[i].Title < files[j].Title
 			}
-			return files[i].Date > files[j].Date
+			return files[i].Date.After(files[j].Date)
 		})
 		_, err = f.WriteString("\n<dl>")
 		fatalIfError(err)
@@ -184,11 +196,22 @@ func main() {
 				_, err = f.WriteString(fmt.Sprintf(`<dd>%s<dd>`, c.Subtitle))
 				fatalIfError(err)
 			}
+			tagsToDisplay := []string{}
 			for _, t := range c.Tags {
 				if t == tag {
 					continue
 				}
-				_, err = f.WriteString(fmt.Sprintf(`<dd><a href="/%s">#%s</a><dd>`, t, t))
+				tagsToDisplay = append(tagsToDisplay, t)
+			}
+			sort.Strings(tagsToDisplay)
+			if len(tagsToDisplay) > 0 {
+				_, err = f.WriteString(fmt.Sprintf(`<dd>`))
+				fatalIfError(err)
+				for _, t := range tagsToDisplay {
+					_, err = f.WriteString(fmt.Sprintf(`<a href="/%s">#%s</a> `, t, t))
+					fatalIfError(err)
+				}
+				_, err = f.WriteString(fmt.Sprintf(`</dd>`))
 				fatalIfError(err)
 			}
 		}
@@ -227,8 +250,23 @@ func configAndBodyOf(p string, dest string) (config PageConfig, body string) {
 		contents := strings.SplitN(string(b), "\n---\n", 2)
 		mdBody := contents[0]
 		if len(contents) == 2 {
-			err := yaml.Unmarshal([]byte(contents[0]), &config)
+			tmp := struct {
+				Title    string
+				Subtitle string
+				Tags     []string
+				Date     string
+				Noindex  bool
+			}{}
+			err := yaml.Unmarshal([]byte(contents[0]), &tmp)
 			fatalIfError(err)
+			config.Title = tmp.Title
+			config.Subtitle = tmp.Subtitle
+			config.Tags = tmp.Tags
+			config.Index.Disabled = tmp.Noindex
+			if tmp.Date != "" {
+				config.Date, err = time.Parse("2006-01-02 15:04:05 -0700", tmp.Date)
+				fatalIfError(err)
+			}
 			mdBody = contents[1]
 		}
 		var buf bytes.Buffer
@@ -261,11 +299,20 @@ func configAndBodyOf(p string, dest string) (config PageConfig, body string) {
 	for _, t := range tagsFromPath(p) {
 		config.Tags = append(config.Tags, t)
 	}
+	if !config.Date.IsZero() {
+		config.Tags = append(config.Tags, config.Date.Format("2006"))
+	}
 	if len(config.Tags) == 1 &&
 		(strings.HasSuffix(p, config.Tags[0]+"/index.md") ||
 			strings.HasSuffix(p, config.Tags[0]+"/index.html")) {
 		// tag index file => remove its own tag, add "tags" tag
 		config.Tags = []string{"tags"}
+	}
+	if strings.Contains(body, "<img") {
+		config.Tags = append(config.Tags, "images")
+	}
+	if strings.Contains(body, "<pre>") {
+		config.Tags = append(config.Tags, "code")
 	}
 	// make tags unique
 	uniqueTags := map[string]bool{}

@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    <meta name="Viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+    <meta name="Description" content="Homepage of Richard Wossal. Weeks of hacking can save you hours of planning.">
+    <title>2011 | r-wos.org</title>
+    <style>
+
+.terminal .clipboard {
+ position:absolute;
+ bottom:0;
+ left:0;
+ opacity:0.01;
+ filter:alpha(opacity = 0.01);
+ filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0.01);
+ width:2px;
+}
+.cmd > .clipboard {
+ position:fixed;
+}
+.terminal {
+ padding:10px;
+ position:relative;
+ overflow:hidden;
+}
+.cmd {
+ padding:0;
+ margin:0;
+ height:1.3em;
+}
+.terminal .terminal-output div div,
+.terminal .prompt {
+ display:block;
+ line-height:14px;
+ height:16px;
+}
+.terminal {
+ font-family:FreeMono,monospace;
+ color:#33dd33;
+ background-color:#000f00;
+ font-size:14px;
+ line-height:16px;
+}
+.terminal .terminal-output div span {
+ display:inline-block;
+}
+.terminal .cmd span {
+ display:inline-block;
+}
+.terminal .cmd span.inverted {
+ background-color:#33dd33;
+ color:#000f00;
+}
+.terminal .terminal-output div div::-moz-selection,
+.terminal .terminal-output div span::-moz-selection {
+ background-color:#33dd33;
+ color:#000f00;
+}
+.terminal .terminal-output div div::selection,
+.terminal .terminal-output div span::selection,
+.terminal .cmd > span::selection,
+.terminal .prompt span::selection {
+ background-color:#33dd33;
+ color:#000f00;
+}
+.terminal .terminal-output div.error,
+.terminal .terminal-output div.error div {
+ color:#33dd33;
+}
+.tilda {
+ position:fixed;
+ top:0;
+ left:0;
+ width:100%;
+ z-index:1100;
+}
+.clear {
+ clear:both;
+}
+.terminal a {
+ color:#ccff66;
+}
+.terminal a:hover {
+ color:#ccff66;
+}
+body {
+ font-family:Helvetica,Arial,sans-serif;
+ font-size:11pt;
+ line-height:1.5em;
+ padding:0.5em;
+ margin:0em;
+ color:#33dd33;
+ background-color:#000f00;
+}
+main {
+ max-width:50em;
+ margin-left:auto;
+ margin-right:auto;
+}
+#footer,
+#footer * {
+ text-align:center;
+ font-size:9pt;
+ color:#226622;
+}
+#footer > a {
+ color:#226622;
+ text-decoration:underline;
+}
+h1,
+h2,
+h3,
+h4 {
+ color:#66ff66;
+ line-height:1em;
+ text-align:center !important;
+ font-family:Georgia,serif;
+ font-weight:normal;
+}
+a {
+ color:#ccff66;
+ text-decoration:none;
+}
+a img {
+ display:inline-block;
+ border:none;
+}
+a:hover {
+ color:#000f00 ! important;
+ background-color:#ffff00;
+ border-radius:5px 5px 5px 5px;
+ box-shadow:0px 0px 5px 4px #ffff00;
+}
+a:visited {
+ color:#aaaa00;
+}
+nav {
+ font-size:10pt;
+ text-align:center;
+}
+.header {
+ text-align:center !important;
+}
+h1 {
+ font-size:16pt;
+ border-top:1pt solid #66aa66;
+ padding-top:0.25em;
+ margin-top:1em;
+ display:inline-block;
+}
+hr {
+ border-style:none;
+ width:50%;
+ height:0pt;
+ border-top:2pt solid #339933;
+}
+dl {
+ display:inline-block;
+}
+dt {
+ padding-top:1em;
+ font-size:90%;
+}
+dt:first-letter {
+ font-size:110%;
+}
+dd {
+ padding-left:0.5em;
+}
+dd .descr {
+ margin:0pt;
+ margin-left:3em;
+ margin-bottom:0.5em;
+ padding 0pt;
+}
+.block {
+ margin:1em;
+ padding:4em;
+ padding-top:1.5em;
+ padding-bottom:2em;
+ border-top:2pt solid #339933;
+ border-bottom:2pt solid #339933;
+ border-radius:2em;
+ text-align:center;
+}
+.block * {
+ text-align:left;
+}
+input[type=text],
+textarea {
+ color:#33dd33;
+ background-color:#003f00;
+ border:2pt solid #003f00;
+ border-radius:0.25em;
+}
+input[type=text]:focus,
+textarea:focus {
+ border-top:2pt solid #339933;
+ border-bottom:2pt solid #339933;
+}
+input[type=button],
+input[type=submit] {
+ color:#33dd33;
+ background-color:#003f00;
+ border-radius:0.25em;
+ border:2pt solid #339933;
+}
+input[type=button]:hover,
+input[type=submit]:hover {
+ color:#000f00;
+ background-color:#ffff00;
+ border:2pt solid #ffff00;
+ box-shadow:0px 0px 5px 4px #ffff00;
+}
+.nav-prev {
+ float:left;
+ font-size:small;
+}
+.nav-next {
+ float:right;
+ font-size:small;
+}
+@media (max-width:500px) {
+ .block {
+  padding-left:0em;
+  padding-right:0em;
+ }
+ .nav-prev,
+ .nav-next {
+  float:none;
+ }
+}
+ 
+ 
+    </style>
+  </head>
+  <body>
+    <nav>
+      <img style="vertical-align: middle" src="/media/disk.gif">
+      <a href="/">Home</a> -
+      <a href="/blog/">Blog</a> -
+      <a href="/feed.xml">RSS</a> -
+      <a href="/hacks/">Hacks</a> -
+      <a href="/about">About</a>
+    </nav>
+    <main>
+      <h1>2011</h1>
+      <p><b><time datetime="0001-01-01 00:00:00 &#43;0000 UTC">0001-01-01 00:00:00 &#43;0000 UTC</time></b></p>
+      
+<dl><dt><a href="/blog/there-s-one-thing-wrong-with-python">There's one thing wrong with Python</a></dt><dd><a href="/blog">#blog</a> <a href="/code">#code</a> </dd><dt><a href="/blog/why">Why?</a></dt><dd><a href="/blog">#blog</a> <a href="/code">#code</a> </dd><dt><a href="/blog/modern-programming">Modern Programming</a></dt><dd><a href="/blog">#blog</a> <a href="/code">#code</a> <a href="/images">#images</a> </dd><dt><a href="/blog/channels-in-newsqueak">Channels in Newsqueak</a></dt><dd><a href="/blog">#blog</a> <a href="/code">#code</a> </dd><dt><a href="/blog/adventures-with-newsqueak-part-2">Adventures with Newsqueak, part 2</a></dt><dd><a href="/blog">#blog</a> <a href="/code">#code</a> </dd><dt><a href="/blog/adventures-with-newsqueak">Adventures with Newsqueak</a></dt><dd><a href="/blog">#blog</a> </dd><dt><a href="/blog/fuck-unity-fuck-gnome3-i-m-going-to-downgrade">Fuck Unity, Fuck GNOME3, I'm going to downgrade</a></dt><dd><a href="/blog">#blog</a> </dd><dt><a href="/blog/lifelong-learning">Lifelong Learning</a></dt><dd><a href="/blog">#blog</a> </dd><dt><a href="/blog/pure-functional-wtf">Pure Functional WTF</a></dt><dd><a href="/blog">#blog</a> </dd><dt><a href="/blog/the-dark-side">The Dark Side</a></dt><dd><a href="/blog">#blog</a> <a href="/images">#images</a> </dd><dt><a href="/blog/never-mind">Never Mind</a></dt><dd><a href="/blog">#blog</a> </dd><dt><a href="/blog/no-wordpress-no-cry">No Wordpress, No Cry</a></dt><dd><a href="/blog">#blog</a> </dd><dt><a href="/blog/oh-android">Oh, Android</a></dt><dd><a href="/blog">#blog</a> </dd><dt><a href="/blog/fractal-garden-2">Fractal Garden 2</a></dt><dd><a href="/blog">#blog</a> <a href="/images">#images</a> </dd><dt><a href="/blog/fractal-garden">Fractal Garden</a></dt><dd><a href="/blog">#blog</a> </dd><dt><a href="/blog/canvas-game-of-life">Canvas Game Of Life</a></dt><dd><a href="/blog">#blog</a> </dd><dt><a href="/blog/introducing-dadadodoweb">Introducing DadaDodoWeb</a></dt><dd><a href="/blog">#blog</a> </dd><dt><a href="/blog/choices">Choices</a></dt><dd><a href="/blog">#blog</a> <a href="/code">#code</a> </dd><dt><a href="/blog/screenshot-monday-1">Screenshot Monday 1</a></dt><dd><a href="/blog">#blog</a> <a href="/images">#images</a> </dd><dt><a href="/blog/on-android">On Android</a></dt><dd><a href="/blog">#blog</a> </dd><dt><a href="/blog/scope-creep">Scope Creep</a></dt><dd><a href="/blog">#blog</a> </dd><dt><a href="/blog/linux-filename-fails">Linux Filename Fails</a></dt><dd><a href="/blog">#blog</a> </dd><dt><a href="/blog/screenshot-monday-0">Screenshot Monday 0</a></dt><dd><a href="/blog">#blog</a> <a href="/images">#images</a> </dd><dt><a href="/blog/the-joy-of-debugging">The Joy Of Debugging</a></dt><dd><a href="/blog">#blog</a> <a href="/images">#images</a> </dd><dt><a href="/blog/where-s-my-xor-">Where's My XOR?</a></dt><dd><a href="/blog">#blog</a> </dd><dt><a href="/blog/more-cowbell-">More Cowbell!</a></dt><dd><a href="/blog">#blog</a> <a href="/images">#images</a> </dd><dt><a href="/blog/graphics-programming">Graphics Programming</a></dt><dd><a href="/blog">#blog</a> </dd><dt><a href="/blog/q-your-ides-use-vi">:q! your IDEs - use vi</a></dt><dd><a href="/blog">#blog</a> </dd><dt><a href="/blog/plan-9-is-dead-long-live-plan-9">Plan 9 Is Dead. Long Live Plan 9!</a></dt><dd><a href="/blog">#blog</a> <a href="/images">#images</a> </dd><dt><a href="/blog/you-can-t-escape-the-string-escape">You Can't Escape The String Escape</a></dt><dd><a href="/blog">#blog</a> <a href="/code">#code</a> </dd><dt><a href="/blog/i-m-back-and-it-hurts">I'm Back - And It Hurts</a></dt><dd><a href="/blog">#blog</a> </dd><dt><a href="/blog/join-the-tiling-side">Join The Tiling Side</a></dt><dd><a href="/blog">#blog</a> <a href="/images">#images</a> </dd><dt><a href="/blog/yet-another-esoteric-programming-language">Yet Another Esoteric Programming Language</a></dt><dd><a href="/blog">#blog</a> </dd><dt><a href="/blog/the-internet-the-best-internet-on-earth">The Internet - The Best Internet On Earth</a></dt><dd><a href="/blog">#blog</a> </dd><dt><a href="/blog/artificial-stupidity">Artificial Stupidity</a></dt><dd><a href="/blog">#blog</a> <a href="/code">#code</a> </dd><dt><a href="/blog/the-turing-machine-vs-the-coffee-machine">The Turing Machine vs. The Coffee Machine</a></dt><dd><a href="/blog">#blog</a> </dd><dt><a href="/blog/no-silver-cat-v-reflections-on-trusting-the-bazaar-or-lambda-and-painters-considered-harmful">No Silver cat -v: Reflections on Trusting the Bazaar, or, Lambda and Painters Considered Harmful</a></dt><dd><a href="/blog">#blog</a> </dd><dt><a href="/blog/nice-hacks-2">Nice Hacks 2</a></dt><dd><a href="/blog">#blog</a> </dd><dt><a href="/blog/blending-in">Blending In</a></dt><dd><a href="/blog">#blog</a> <a href="/code">#code</a> </dd><dt><a href="/blog/nice-hacks-1">Nice Hacks 1</a></dt><dd><a href="/blog">#blog</a> </dd><dt><a href="/blog/you-asked-for-it-you-got-it">You Asked For It - You Got It</a></dt><dd><a href="/blog">#blog</a> <a href="/code">#code</a> </dd><dt><a href="/blog/nice-hacks-0">Nice Hacks 0</a></dt><dd><a href="/blog">#blog</a> </dd><dt><a href="/blog/google-chrome-wasting-screen-estate">Google Chrome: Wasting Screen Estate</a></dt><dd><a href="/blog">#blog</a> <a href="/images">#images</a> </dd><dt><a href="/blog/arbitrary-limits-or-64-bits-ought-to-be-enough-for-anybody">Arbitrary Limits, or "64 Bits ought to be enough for anybody"</a></dt><dd><a href="/blog">#blog</a> </dd><dt><a href="/blog/pipes-for-lisp">Pipes for Lisp</a></dt><dd><a href="/blog">#blog</a> </dd><dt><a href="/blog/forwards-backwards-or-nil">Forwards, Backwards, or nil</a></dt><dd><a href="/blog">#blog</a> </dd>
+</dl>
+    </main>
+  </body>
+</html>

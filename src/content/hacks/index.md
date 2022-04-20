@@ -2,6 +2,7 @@
 title: Hacks
 subtitle: 'and <a href="/hacks/gti"><code>gti</code></a>'
 permalink: /hacks
+noindex: true
 ---
 
 <p>Some old, quick hacks - not polished - hardly usable - use at own risk, if at all</p>

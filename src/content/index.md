@@ -1,6 +1,6 @@
 ---
 title: "Weeks of hacking can save you hours of planning"
-layout: base
+noindex: true
 ---
 <h1>Weeks of hacking can save you<br>hours of planning</h1>
 
